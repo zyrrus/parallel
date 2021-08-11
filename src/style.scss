@@ -35,6 +35,18 @@ body {
   }
 }
 
+// Mixins
+@mixin parallel-lines($color, $width, $gap) {
+  content: "";
+  position: absolute;
+  border-top: $color solid 0.1em;
+  border-bottom: $color solid 0.1em;
+  height: $width;
+  left: 0;
+  right: 0;
+  top: $gap;
+}
+
 .bg-image {
   position: fixed;
   width: 100%;
@@ -53,7 +65,7 @@ body {
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  height: 75vh;
+  height: 88vh;
 
   &__titles {
     display: flex;
@@ -72,14 +84,7 @@ body {
 
       // Parallel Lines
       &::after {
-        content: "";
-        position: absolute;
-        border-top: $grey-alpha solid 0.1em;
-        border-bottom: $grey-alpha solid 0.1em;
-        height: 1rem;
-        left: 0;
-        right: 0;
-        top: 120%;
+        @include parallel-lines($grey-alpha, 1rem, 120%);
       }
     }
 
@@ -124,11 +129,26 @@ body {
   flex-direction: column;
   row-gap: 3rem;
   align-items: center;
+  justify-content: space-evenly;
 
   &__card {
     width: 90%;
-    height: 30rem;
+    max-width: 60rem;
     background-color: $white-alpha;
     border-radius: 2rem;
+    padding: 2.2rem;
+    line-height: 1.4;
+
+    h1 {
+      position: relative;
+      width: max-content;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-family: $font-mono;
+
+      &::after {
+        @include parallel-lines($grey-alpha, 0.4rem, 100%);
+      }
+    }
   }
 }
