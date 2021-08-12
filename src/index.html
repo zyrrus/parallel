@@ -6,23 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Parallel || Home</title>
+
+    <script>
+        
+        function toggleMenu() {
+            // const navToggle = document.querySelector('.nav__toggle');
+            const navList = document.querySelector('.nav__list');
+            
+            navList.classList.toggle('nav__list--open');
+
+        }
+    </script>
 </head>
 <body>
     <div class="bg-image"></div>
+    <nav class="nav">
+        <h2 class="nav__title">Parallel</h2>
+
+        <button class="nav__toggle" onClick="toggleMenu()"><div class="nav__icon"></div></button>
+
+        <ul class="nav__list">
+            <li class="nav__item nav__item--active"><a href="#">Home</a></li>
+            <li class="nav__item"><a href="#">Discover</a></li>
+            <li class="nav__item"><a href="#">Contact</a></li>
+            <li class="nav__item"><a href="#">Sign In</a></li>
+            <li class="nav__item nav__item--emphasize"><a href="#">Sign Up</a></li>
+        </ul>
+    </nav>
     <div class="header">
-        <nav>
-            <h2>Parallel</h2>
-            <ul>
-                <li><a href="#" class="disabled">Home</a></li>
-                <li><a href="#">Discover</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Sign In</a></li>
-                <li><a href="#" class="emphasis">Sign Up</a></li>
-            </ul>
-        </nav>
-
         <div class="header__titles">
-
             <h1 class="header__titles--main">Parallel</h1>
             <h2 class="header__titles--sub">Connect educators with video creators.</h2>
         </div>
@@ -35,7 +47,7 @@
     <div class="content">
         <div class="content__card">
             <h2>About</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto officia iste quaerat accusamus laudantium, omnis repellat culpa quam cumque numquam. Porro accusamus numquam suscipit molestiae laboriosam quae aut, omnis laborum quibusdam quod nihil eveniet reiciendis unde incidunt molestias? Quae blanditiis quam illo nisi est accusantium laboriosam delectus facilis nihil! Accusantium.</p>
+            <p>Parallel is a platform meant to connect busy educators with eager content creators. Anyone with ideas worth sharing is encouraged to sign up as an "Educator" and post "jobs" on the discover page. Content creators can sign up as "Animators" to accept these jobs from educators. Alternatively, animators can make their own discover page posts to present their skills so educators are able to request an animator's work.</p>
         </div>
     </div>
 
