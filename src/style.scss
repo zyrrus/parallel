@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400;1,500&family=Roboto+Slab:wght@400;500;700&display=swap");
 
 $black: #0e0e0e;
-$black-alpha: rgba(0, 0, 0, 0.8);
+$black-alpha: #0e0e0ecc;
 $white: #fff;
-$white-alpha: rgba(256, 256, 256, 0.6);
-$grey: rgb(168, 168, 168);
-$grey-alpha: rgba(119, 119, 119, 0.6);
-// $disabled: #777;
-$highlight: #ffe8b7;
+$white-alpha: #ffffff99;
+$grey: #a8a8a8;
+$grey-alpha: #77777799;
+$accent: #ffe8b7;
+$accent-alpha: #ffe8b754;
 
 $font-mono: "DM Mono", monospace;
 $font-serif: "Roboto Slab", serif;
@@ -18,54 +18,135 @@ $font-serif: "Roboto Slab", serif;
   box-sizing: border-box;
 }
 
-body {
-  font-family: $font-serif;
+::selection {
+  background: $accent;
   color: $black;
 }
 
-@media screen and (min-height: 601px) {
-  body {
-    font-size: 14pt;
-  }
+body {
+  font-family: $font-serif;
+  color: $black;
+  background-color: $black;
 }
 
-@media screen and (max-height: 600px) {
-  body {
-    font-size: 10pt;
-  }
-}
-
-// Mixins
-@mixin parallel-lines($color, $width, $gap) {
+// Mixins ---------------------------------------
+@mixin logo($width-gap, $left-gap) {
   content: "";
   position: absolute;
-  border-top: $color solid 0.1em;
-  border-bottom: $color solid 0.1em;
-  height: $width;
-  left: 0;
-  right: 0;
-  top: $gap;
+  border-left: $accent-alpha solid 0.1em;
+  border-right: $accent-alpha solid 0.1em;
+  top: 0;
+  bottom: 0;
+  width: $width-gap;
+  left: $left-gap;
+}
+
+@mixin pill() {
+  background-color: $black-alpha;
+  color: $white;
+  text-decoration: none;
+  width: max-content;
+  border: $white solid 2px;
+  border-radius: 99em;
+  padding: 0.75em 1.75em;
+  transition: background-color 250ms ease-in-out;
+
+  &:hover,
+  :focus {
+    background-color: $white;
+    color: $black;
+    font-weight: bold;
+  }
+}
+
+// Temporary
+@mixin border {
+  border: red solid 1px;
 }
 
 .bg-image {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
   z-index: -10;
-  background-image: linear-gradient($black-alpha, $black-alpha),
+  background-image: linear-gradient(0deg, $black 0%, $black-alpha 100%),
     url(/src/math-bg.jpg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: repeat;
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
 }
 
+nav {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 5rem;
+  top: 0;
+  background-color: $black;
+
+  h2 {
+    position: relative;
+    margin-left: 2em;
+    color: $accent;
+
+    &::before {
+      @include logo(0.4em, -1em);
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1.5em;
+    justify-content: space-between;
+    margin: 1rem;
+
+    li a {
+      @include pill();
+      padding: 0.5em 1em;
+
+      &.emphasis {
+        background-color: $accent;
+        color: $black;
+        font-weight: bold;
+        border: $accent solid 2px;
+
+        &:hover,
+        :focus {
+          background-color: $black;
+          color: $accent;
+        }
+      }
+
+      &.disabled {
+        color: $grey-alpha;
+        border: $grey-alpha solid 2px;
+        background-color: none;
+
+        &:hover,
+        :focus {
+          background-color: $black;
+          color: $grey-alpha;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}
+
+// Home Page ------------------------------------
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  row-gap: 3rem;
+  margin-bottom: 5rem;
   width: 100%;
-  height: 88vh;
+  height: 80vh;
 
   &__titles {
     display: flex;
@@ -74,17 +155,17 @@ body {
     justify-content: center;
     text-align: center;
     letter-spacing: 0.3ch;
+    row-gap: 3rem;
 
     &--main {
       position: relative;
-      color: $white;
+      color: $accent;
       font-family: $font-mono;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
+      font-size: 3rem;
+      margin-left: 1em;
 
-      // Parallel Lines
       &::after {
-        @include parallel-lines($grey-alpha, 1rem, 120%);
+        @include logo(0.4em, -0.9em);
       }
     }
 
@@ -100,26 +181,11 @@ body {
     flex-flow: row wrap;
     justify-content: center;
     width: 100%;
-    margin-block: 3rem;
     column-gap: 3rem;
     row-gap: 2rem;
 
     &__btn {
-      background-color: $black-alpha;
-      color: $white;
-      text-decoration: none;
-      width: max-content;
-      border: $white solid 2px;
-      border-radius: 99em;
-      padding: 0.75em 1.75em;
-      transition: background-color 250ms ease-in-out;
-
-      &:hover,
-      :focus {
-        background-color: $white;
-        color: $black;
-        font-weight: bold;
-      }
+      @include pill();
     }
   }
 }
@@ -136,19 +202,12 @@ body {
     max-width: 60rem;
     background-color: $white-alpha;
     border-radius: 2rem;
-    padding: 2.2rem;
+    padding: 2rem;
     line-height: 1.4;
 
-    h1 {
-      position: relative;
-      width: max-content;
-      margin-bottom: 1rem;
-      font-size: 2rem;
+    h2 {
+      margin-bottom: 0.25em;
       font-family: $font-mono;
-
-      &::after {
-        @include parallel-lines($grey-alpha, 0.4rem, 100%);
-      }
     }
   }
 }
