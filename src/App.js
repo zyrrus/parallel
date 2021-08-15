@@ -6,11 +6,12 @@ import {
 } from 'react-router-dom';
 import './styles/style.css';
 
+import BasePage from './pages/BasePage.jsx';
 import Home from './pages/Home.jsx';
 import Discover from './pages/Discover.jsx';
 import Contact from './pages/Contact.jsx';
-import Register from './pages/Register.jsx';
-import BasePage from './pages/BasePage.jsx';
+import LogIn from './pages/Login.jsx';
+import SignUp from './pages/Signup.jsx';
 
 
 export default function App() {
@@ -20,7 +21,8 @@ export default function App() {
             <Switch>
                 <Route path="/discover"><Discover/></Route>
                 <Route path="/contact"><Contact/></Route>
-                <Route path="/register"><Register/></Route>
+                <Route path="/login"><LogIn/></Route>
+                <Route path="/signup"><SignUp/></Route>
                 <Route path={["/", "/home"]}><Home/></Route>
             </Switch>
         </BasePage>

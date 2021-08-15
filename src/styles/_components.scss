@@ -27,6 +27,16 @@
         inset: -0.2em;
         background-color: $black;
 
+        // Remove
         z-index: -1;
     }
+}
+
+.surface {
+    background-color: $grey;
+
+    h2 {}
+    h3 {}
+    img {}
+    p {}
 }
