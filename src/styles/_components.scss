@@ -1,0 +1,32 @@
+.button {
+    color: $white;
+    background-color: $black-alpha;
+
+    &--active {
+        background-color: $grey-alpha;
+    }
+
+    &--emphasized {
+        color: $black;
+
+        background-color: $accent;
+        &--active {
+            background-color: $accent-alpha;
+        }
+    }
+}
+
+.title {
+    position: relative;
+    width: max-content;
+    color: $accent;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: -0.2em;
+        background-color: $black;
+
+        z-index: -1;
+    }
+}
