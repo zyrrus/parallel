@@ -1,0 +1,156 @@
+// Basic tags -----------------------------------
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    background-color: $black;
+    font-family: $font-serif;
+    color: $black;
+}
+
+h1,
+h2,
+h3 {
+    font-family: $font-mono;
+}
+
+// Navbar ---------------------------------------
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include flex-row();
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: $navbar-size;
+    background-color: $black;
+    z-index: 10;
+
+    ul {
+        position: relative;
+    }
+}
+
+.nav-list {
+    @include flex-row();
+    align-items: center;
+    column-gap: 1em;
+
+    &__drawer {
+        position: absolute;
+        @include flex-col();
+        background-color: $white;
+
+        &--open {
+            visibility: visible;
+            left: 0;
+            right: 0;
+            top: $navbar-size;
+        }
+
+        &__backface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            // remove
+            background-color: $grey-alpha;
+        }
+    }
+}
+
+.nav-icon {
+    position: relative;
+    border-top: $accent-alpha solid 0.2rem;
+    border-bottom: $accent-alpha solid 0.2rem;
+    width: 100%;
+    height: 70%;
+
+    &::after {
+        content: "";
+        position: absolute;
+        background-color: $accent-alpha;
+        width: 100%;
+        height: 0.2rem;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+
+    &:hover,
+    &:focus {
+        border-color: $accent;
+
+        &::after {
+            background-color: $accent;
+        }
+    }
+
+    &__container {
+        position: relative;
+        width: $navbar-size - 2rem;
+        height: $navbar-size - 2rem;
+        margin: 1rem;
+        background-color: unset;
+        border: none;
+    }
+}
+
+// Navbar for mobile
+@media screen and (max-width: $mobile-size) {
+    .nav-icon {
+        visibility: visible;
+    }
+
+    .nav-list {
+        position: absolute;
+        bottom: 100%;
+    }
+}
+
+// Navbar for desktops
+@media screen and (min-width: $mobile-size) {
+    .nav-icon {
+        visibility: hidden;
+    }
+}
+
+// Background image -----------------------------
+.bg-image {
+    position: absolute;
+    top: $navbar-size;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background-image: linear-gradient(0deg, $black 0%, $black-alpha 100%),
+        $bg-image;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+// Containers -----------------------------------
+.flex-parent {
+    @include flex-col();
+    align-items: center;
+}
+
+.content {
+    position: relative;
+    width: 90%;
+    max-width: 60rem;
+    height: 100%;
+    padding-top: $navbar-size;
+}

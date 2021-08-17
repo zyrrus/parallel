@@ -1,30 +1,21 @@
 import React from 'react';
 
-import Title from '../components/Title.jsx';
-import Button from '../components/Button.jsx';
+import Navbar from '../components/Navbar.jsx';
 
-
-function Navbar() {
+function BGImage() {
     return (
-        <nav>
-            <Title />
-            <ul>
-                {/* able to change class names when active */}
-                <li><Button to="/home">Home</Button></li>
-                <li><Button to="/discover">Discover</Button></li>
-                <li><Button to="/contact">Contact</Button></li>
-                <li><Button to="/register" emphasized>Register</Button></li>
-            </ul>
-        </nav>
+        <div className="bg-image"></div>
     );
 }
 
-export default function BasePage(props) {
+export default function BasePage({ children }) {
   return (
-    // add background image class
-    <div>
+    <div className="flex-parent">
+        <BGImage />
         <Navbar />
-        {props.children}
+        <div className="content">
+            { children }
+        </div>
     </div>
   );
 }

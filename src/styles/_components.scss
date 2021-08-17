@@ -19,14 +19,30 @@
 .title {
     position: relative;
     width: max-content;
+    padding-left: 1ch;
     color: $accent;
 
     &::before {
         content: "";
         position: absolute;
-        inset: -0.2em;
-        background-color: $black;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 0.4ch;
+        border-left: 0.1em solid $accent-alpha;
+        border-right: 0.1em solid $accent-alpha;
+    }
+}
 
-        z-index: -1;
+.surface {
+    background-color: $white-alpha;
+
+    h2 {
+    }
+    h3 {
+    }
+    img {
+    }
+    p {
     }
 }

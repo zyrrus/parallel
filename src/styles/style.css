@@ -1,4 +1,187 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400;1,500&family=Roboto+Slab:wght@400;500;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background-color: #0e0e0e;
+  font-family: "Roboto Slab", serif;
+  color: #0e0e0e;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "DM Mono", monospace;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  height: 4rem;
+  background-color: #0e0e0e;
+  z-index: 10;
+}
+
+nav ul {
+  position: relative;
+}
+
+.nav-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 1em;
+          column-gap: 1em;
+}
+
+.nav-list__drawer {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #fff;
+}
+
+.nav-list__drawer--open {
+  visibility: visible;
+  left: 0;
+  right: 0;
+  top: 4rem;
+}
+
+.nav-list__drawer__backface {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #77777799;
+}
+
+.nav-icon {
+  position: relative;
+  border-top: #ffe8b754 solid 0.2rem;
+  border-bottom: #ffe8b754 solid 0.2rem;
+  width: 100%;
+  height: 70%;
+}
+
+.nav-icon::after {
+  content: "";
+  position: absolute;
+  background-color: #ffe8b754;
+  width: 100%;
+  height: 0.2rem;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.nav-icon:hover, .nav-icon:focus {
+  border-color: #ffe8b7;
+}
+
+.nav-icon:hover::after, .nav-icon:focus::after {
+  background-color: #ffe8b7;
+}
+
+.nav-icon__container {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin: 1rem;
+  background-color: unset;
+  border: none;
+}
+
+@media screen and (max-width: 720px) {
+  .nav-icon {
+    visibility: visible;
+  }
+  .nav-list {
+    position: absolute;
+    bottom: 100%;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .nav-icon {
+    visibility: hidden;
+  }
+}
+
+.bg-image {
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#0e0e0e), to(#0e0e0ecc)), url(../assets/images/math-bg.jpg);
+  background-image: linear-gradient(0deg, #0e0e0e 0%, #0e0e0ecc 100%), url(../assets/images/math-bg.jpg);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.flex-parent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.content {
+  position: relative;
+  width: 90%;
+  max-width: 60rem;
+  height: 100%;
+  padding-top: 4rem;
+}
+
 .button {
   color: #fff;
   background-color: #0e0e0ecc;
@@ -22,14 +205,22 @@
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  padding-left: 1ch;
   color: #ffe8b7;
 }
 
 .title::before {
   content: "";
   position: absolute;
-  inset: -0.2em;
-  background-color: #0e0e0e;
-  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0.4ch;
+  border-left: 0.1em solid #ffe8b754;
+  border-right: 0.1em solid #ffe8b754;
+}
+
+.surface {
+  background-color: #ffffff99;
 }
 /*# sourceMappingURL=style.css.map */
