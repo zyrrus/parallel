@@ -1,5 +1,5 @@
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
     Switch,
     Route,
 } from 'react-router-dom';
@@ -9,22 +9,21 @@ import BasePage from './pages/BasePage.jsx';
 import Home from './pages/Home.jsx';
 import Discover from './pages/Discover.jsx';
 import Contact from './pages/Contact.jsx';
-import LogIn from './pages/Login.jsx';
-import SignUp from './pages/Signup.jsx';
+import Register from './pages/Register.jsx';
 
 
 export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
         <BasePage>
             <Switch>
                 <Route path="/discover"><Discover/></Route>
                 <Route path="/contact"><Contact/></Route>
-                <Route path="/login"><LogIn/></Route>
-                <Route path="/signup"><SignUp/></Route>
+                <Route path="/login"><Register loginFirst/></Route>
+                <Route path="/signup"><Register/></Route>
                 <Route path={["/", "/home"]}><Home/></Route>
             </Switch>
         </BasePage>
-    </Router>
+    </BrowserRouter>
   );
 }

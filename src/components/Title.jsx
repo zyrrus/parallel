@@ -1,3 +1,9 @@
+import { Link } from "react-router-dom";
+
 export default function Title() {
-    return <h1 className='title'>Parallel</h1>;
+    return (
+        <Link to='/home'>
+            <h1 className='title'>Parallel</h1>
+        </Link>
+    );
 }
