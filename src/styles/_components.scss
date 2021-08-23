@@ -1,19 +1,52 @@
 .button {
     color: $white;
     background-color: $black-alpha;
+    padding: 0.6em 1.2em;
+    border-radius: 99em;
+    border: 2px solid $white;
+    white-space: nowrap;
+
+    &:hover {
+        color: $black;
+        background-color: $white;
+    }
 
     &--active {
-        background-color: $grey-alpha;
+        color: $grey-alpha;
+        border-color: $grey-alpha;
+
+        &:hover {
+            color: $grey-alpha;
+            background-color: $black;
+        }
     }
 
     &--emphasized {
         color: $black;
-
         background-color: $accent;
+        border-color: $accent;
+
+        &:hover {
+            color: $accent;
+            background-color: $black;
+        }
+
         &--active {
-            background-color: $accent-alpha;
+            color: $accent-alpha;
+            background-color: $black;
+            border-color: $accent-alpha;
+
+            &:hover {
+                color: $accent-alpha;
+                background-color: $black;
+            }
         }
     }
+}
+
+.button-container {
+    @include flex-row();
+    column-gap: 1em;
 }
 
 .title {
@@ -34,28 +67,44 @@
     }
 }
 
+.subtitle {
+    color: $grey-alpha;
+    text-align: center;
+}
+
 .surface {
     background-color: $white-alpha;
-
+    padding: 1.5rem;
+    border-radius: 1.5rem;
     h2 {
+        text-align: center;
     }
     h3 {
-    }
-    img {
+        text-align: center;
+        color: $dark-grey-alpha;
     }
     p {
     }
 }
 
-.surface {
-    background-color: $grey;
+.post {
+    width: 18rem;
+    // height: 23rem;
+}
 
-    h2 {
-    }
-    h3 {
-    }
-    img {
-    }
-    p {
-    }
+.post-container {
+    @include flex-row();
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.error-message {
+    color: $error;
+    font-weight: bold;
+}
+
+.link {
+    text-decoration: underline;
 }

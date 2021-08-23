@@ -16,7 +16,7 @@ const EmailInput = (props) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <p className='errorMessage'>{emailError}</p>
+            <p className='error-message'>{emailError}</p>
         </>
     );
 };
@@ -33,7 +33,7 @@ const PassInput = (props) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <p className='errorMessage'>{passwordError}</p>
+            <p className='error-message'>{passwordError}</p>
         </>
     );
 };
@@ -72,7 +72,9 @@ export default function SignUp(props) {
                         <button onClick={handleLogin}>Log In</button>
                         <p>
                             Don't have an account?
-                            <Link to='/signup'>Sign Up</Link>
+                            <a href='/signup' className='link'>
+                                Sign Up
+                            </a>
                         </p>
                     </>
                 ) : (
@@ -80,7 +82,9 @@ export default function SignUp(props) {
                         <button onClick={handleSignup}>Sign Up</button>
                         <p>
                             Already have an account?
-                            <Link to='/login'>Log In</Link>
+                            <a href='/login' className='link'>
+                                Log In
+                            </a>
                         </p>
                     </>
                 )}

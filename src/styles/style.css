@@ -24,6 +24,11 @@ h3 {
   font-family: "DM Mono", monospace;
 }
 
+a {
+  text-decoration: none;
+  color: #0e0e0ecc;
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -62,8 +67,11 @@ nav ul {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  list-style: none;
   -webkit-column-gap: 1em;
           column-gap: 1em;
+  row-gap: 2em;
+  padding-right: 1rem;
 }
 
 .nav-list__drawer {
@@ -75,14 +83,24 @@ nav ul {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #fff;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-block: 2rem;
+  background-color: #0e0e0e;
 }
 
 .nav-list__drawer--open {
   visibility: visible;
   left: 0;
   right: 0;
-  top: 4rem;
+  z-index: -1;
+  -webkit-transform: translateY(130%);
+          transform: translateY(130%);
+  -webkit-transition: -webkit-transform 600ms ease;
+  transition: -webkit-transform 600ms ease;
+  transition: transform 600ms ease;
+  transition: transform 600ms ease, -webkit-transform 600ms ease;
 }
 
 .nav-list__drawer__backface {
@@ -91,7 +109,7 @@ nav ul {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #77777799;
+  z-index: -2;
 }
 
 .nav-icon {
@@ -137,7 +155,8 @@ nav ul {
   }
   .nav-list {
     position: absolute;
-    bottom: 100%;
+    bottom: 150%;
+    padding-right: 0;
   }
 }
 
@@ -175,29 +194,80 @@ nav ul {
 }
 
 .content {
-  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  row-gap: 3rem;
   width: 90%;
   max-width: 60rem;
   height: 100%;
   padding-top: 4rem;
+  margin-top: 4rem;
 }
 
 .button {
   color: #fff;
   background-color: #0e0e0ecc;
+  padding: 0.6em 1.2em;
+  border-radius: 99em;
+  border: 2px solid #fff;
+  white-space: nowrap;
+}
+
+.button:hover {
+  color: #0e0e0e;
+  background-color: #fff;
 }
 
 .button--active {
-  background-color: #77777799;
+  color: #77777799;
+  border-color: #77777799;
+}
+
+.button--active:hover {
+  color: #77777799;
+  background-color: #0e0e0e;
 }
 
 .button--emphasized {
   color: #0e0e0e;
   background-color: #ffe8b7;
+  border-color: #ffe8b7;
+}
+
+.button--emphasized:hover {
+  color: #ffe8b7;
+  background-color: #0e0e0e;
 }
 
 .button--emphasized--active {
-  background-color: #ffe8b754;
+  color: #ffe8b754;
+  background-color: #0e0e0e;
+  border-color: #ffe8b754;
+}
+
+.button--emphasized--active:hover {
+  color: #ffe8b754;
+  background-color: #0e0e0e;
+}
+
+.button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-column-gap: 1em;
+          column-gap: 1em;
 }
 
 .title {
@@ -220,11 +290,55 @@ nav ul {
   border-right: 0.1em solid #ffe8b754;
 }
 
-.surface {
-  background-color: #ffffff99;
+.subtitle {
+  color: #77777799;
+  text-align: center;
 }
 
 .surface {
-  background-color: #a8a8a8;
+  background-color: #ffffff99;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+}
+
+.surface h2 {
+  text-align: center;
+}
+
+.surface h3 {
+  text-align: center;
+  color: #50505099;
+}
+
+.post {
+  width: 18rem;
+}
+
+.post-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 2rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.error-message {
+  color: #ce5b5b;
+  font-weight: bold;
+}
+
+.link {
+  text-decoration: underline;
 }
 /*# sourceMappingURL=style.css.map */

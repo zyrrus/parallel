@@ -23,6 +23,11 @@ h3 {
     font-family: $font-mono;
 }
 
+a {
+    text-decoration: none;
+    color: $black-alpha;
+}
+
 // Navbar ---------------------------------------
 nav {
     position: fixed;
@@ -44,18 +49,25 @@ nav {
 .nav-list {
     @include flex-row();
     align-items: center;
+    list-style: none;
     column-gap: 1em;
+    row-gap: 2em;
+    padding-right: 1rem;
 
     &__drawer {
         position: absolute;
         @include flex-col();
-        background-color: $white;
+        height: fit-content;
+        padding-block: 2rem;
+        background-color: $black;
 
         &--open {
             visibility: visible;
             left: 0;
             right: 0;
-            top: $navbar-size;
+            z-index: -1;
+            transform: translateY(130%);
+            transition: transform 600ms ease;
         }
 
         &__backface {
@@ -64,8 +76,9 @@ nav {
             left: 0;
             width: 100vw;
             height: 100vh;
+            z-index: -2;
             // remove
-            background-color: $grey-alpha;
+            // background-color: $dark-grey-alpha;
         }
     }
 }
@@ -115,7 +128,8 @@ nav {
 
     .nav-list {
         position: absolute;
-        bottom: 100%;
+        bottom: 150%;
+        padding-right: 0;
     }
 }
 
@@ -148,9 +162,12 @@ nav {
 }
 
 .content {
-    position: relative;
+    @include flex-col();
+    align-items: center;
+    row-gap: 3rem;
     width: 90%;
     max-width: 60rem;
     height: 100%;
     padding-top: $navbar-size;
+    margin-top: $navbar-size;
 }

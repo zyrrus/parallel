@@ -1,16 +1,21 @@
 import Title from "../components/Title.jsx";
 import Surface from "../components/Surface.jsx";
+import Button from "../components/Button.jsx";
 
 function Subtitle() {
-    return <h2>Connect educators with video creators.</h2>;
+    return <h2 class='subtitle'>Connect educators with video creators.</h2>;
 }
 
 function Buttons() {
-    return <p>buttons</p>;
+    return (
+        <div className='button-container'>
+            <Button to='/signup'>I'm an educator</Button>
+            <Button to='/signup'>I'm an animator</Button>
+        </div>
+    );
 }
 
 function About() {
-    // Switch to card component
     return (
         <Surface>
             <h2>About</h2>
