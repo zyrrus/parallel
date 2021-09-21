@@ -1,16 +1,17 @@
 import Title from "../components/Title.jsx";
 import Surface from "../components/Surface.jsx";
-import Button from "../components/Button.jsx";
+import { ButtonTo } from "../components/Buttons.jsx";
 
 function Subtitle() {
-    return <h2 class='subtitle'>Connect educators with video creators.</h2>;
+    return <h2 className='subtitle'>Connect educators with video creators.</h2>;
 }
 
 function Buttons() {
     return (
         <div className='button-container'>
-            <Button to='/signup'>I'm an educator</Button>
-            <Button to='/signup'>I'm an animator</Button>
+            {/* This should probably go to discover with the proper filter enabled */}
+            <ButtonTo to='/signup'>I'm an educator</ButtonTo>
+            <ButtonTo to='/signup'>I'm an animator</ButtonTo>
         </div>
     );
 }

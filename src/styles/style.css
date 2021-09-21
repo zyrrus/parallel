@@ -210,12 +210,45 @@ nav ul {
   height: 100%;
   padding-top: 4rem;
   margin-top: 4rem;
+  padding-bottom: 5rem;
+}
+
+form {
+  font-family: "Roboto Slab", serif;
+  color: #0e0e0e;
+}
+
+form label {
+  display: block;
+  margin-top: 0.5em;
+}
+
+form input {
+  display: block;
+  width: 100%;
+  height: 2em;
+  padding: 1.5em 1em;
+  border: 2px solid #0e0e0ecc;
+  border-radius: 99em;
+  background-color: #fff;
+}
+
+form button {
+  margin-inline: auto;
+}
+
+form a {
+  padding-left: 0.5ch;
 }
 
 .button {
   color: #fff;
   background-color: #0e0e0ecc;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   padding: 0.6em 1.2em;
+  margin-block: 0.6em;
   border-radius: 99em;
   border: 2px solid #fff;
   white-space: nowrap;
@@ -290,6 +323,10 @@ nav ul {
   border-right: 0.1em solid #ffe8b754;
 }
 
+nav .title {
+  margin-left: 1ch;
+}
+
 .subtitle {
   color: #77777799;
   text-align: center;
@@ -312,6 +349,7 @@ nav ul {
 
 .post {
   width: 18rem;
+  height: 23rem;
 }
 
 .post-container {

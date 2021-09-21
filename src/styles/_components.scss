@@ -1,7 +1,9 @@
 .button {
     color: $white;
     background-color: $black-alpha;
+    width: max-content;
     padding: 0.6em 1.2em;
+    margin-block: 0.6em;
     border-radius: 99em;
     border: 2px solid $white;
     white-space: nowrap;
@@ -53,6 +55,7 @@
     position: relative;
     width: max-content;
     padding-left: 1ch;
+
     color: $accent;
 
     &::before {
@@ -65,6 +68,10 @@
         border-left: 0.1em solid $accent-alpha;
         border-right: 0.1em solid $accent-alpha;
     }
+}
+
+nav .title {
+    margin-left: 1ch;
 }
 
 .subtitle {
@@ -89,7 +96,7 @@
 
 .post {
     width: 18rem;
-    // height: 23rem;
+    height: 23rem;
 }
 
 .post-container {
