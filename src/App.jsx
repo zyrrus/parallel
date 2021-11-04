@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import fire from "./fire";
+import { handleSignUp } from "./firehandler";
 
 function Account() {
     return (
@@ -65,8 +65,7 @@ function SignUp() {
     const { register, handleSubmit } = useForm();
     const handleSignup = (data) => {
         console.log(data);
-        // fire.auth()
-        //     .createUserWithEmailAndPassword(email, password)
+        handleSignUp(data.username, data.email, data.password);
     };
 
     return (
