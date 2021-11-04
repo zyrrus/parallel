@@ -1,3 +1,7 @@
+import { useForm } from "react-hook-form";
+
+import fire from "./fire";
+
 function Account() {
     return (
         <section>
@@ -6,19 +10,51 @@ function Account() {
     );
 }
 
+function Input({ label, data, register }) {
+    return (
+        <>
+            <label htmlFor={data}>{label}</label>
+            <input
+                placeholder={label}
+                {...register(data, { required: true })}
+            />
+            <br />
+        </>
+    );
+}
+
+function Password({ register }) {
+    return (
+        <>
+            <label htmlFor='password'>Password</label>
+            <input
+                placeholder='Password'
+                type='password'
+                {...register("password", { required: true })}
+            />
+            <br />
+        </>
+    );
+}
+
 function LogIn() {
+    const { register, handleSubmit } = useForm();
+    const handleLogin = (data) => {
+        console.log(data);
+    };
+
     return (
         <div className='login'>
             <h3>Log In</h3>
-            <form>
-                <input
-                    type='text'
-                    name='username'
-                    placeholder='username or email'
+            <form onSubmit={handleSubmit(handleLogin)}>
+                {/* Username or Email */}
+                <Input
+                    label='Username or Email'
+                    data='user-or-email'
+                    register={register}
                 />
-                <br />
-                <input type='password' name='password' placeholder='password' />
-                <br />
+                {/* Password */}
+                <Password register={register} />
                 <input type='submit' value='Submit' />
             </form>
         </div>
@@ -26,22 +62,38 @@ function LogIn() {
 }
 
 function SignUp() {
+    const { register, handleSubmit } = useForm();
+    const handleSignup = (data) => {
+        console.log(data);
+        // fire.auth()
+        //     .createUserWithEmailAndPassword(email, password)
+    };
+
     return (
         <div className='signup'>
             <h3>Sign Up</h3>
-            <form>
-                <input type='text' name='username' placeholder='username' />
-                <br />
-                <input type='email' name='email' placeholder='email' />
-                <br />
-                <input type='password' name='password' placeholder='password' />
-                <br />
+            <form onSubmit={handleSubmit(handleSignup)}>
+                {/* Username */}
+                <Input label='Username' data='username' register={register} />
+                {/* Email */}
+                <Input label='Email' data='email' register={register} />
+                {/* Password */}
+                <Password register={register} />
+                {/* Account Type */}
                 <label>Account type:</label>
                 <br />
-                <input type='radio' name='account-type' />
+                <input
+                    {...register("account ", { required: true })}
+                    type='radio'
+                    value='animator'
+                />
                 <label>Animator</label>
                 <br />
-                <input type='radio' name='account-type' />
+                <input
+                    {...register("account ", { required: true })}
+                    type='radio'
+                    value='educator'
+                />
                 <label>Educator</label>
                 <br />
                 <input type='submit' value='Submit' />
