@@ -9,11 +9,15 @@ export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
-        onAuthStateChanged(fireAuth, (user) => {
-            setCurrentUser(user);
-            if (user) setIsSignedIn(true);
-        });
-    }, []);
+        onAuthStateChanged(
+            fireAuth,
+            (user) => {
+                setCurrentUser(user);
+                setIsSignedIn(user ? true : false);
+            },
+            [onAuthStateChanged]
+        );
+    });
 
     return (
         <UserContext.Provider value={{ isSignedIn, currentUser }}>

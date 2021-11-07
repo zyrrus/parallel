@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { handleSignUp, handleLogIn } from "./handlers/firehandler";
+import {
+    handleSignUp,
+    handleLogIn,
+    handleSignOut,
+} from "./handlers/firehandler";
 import { UserContext } from "./hooks/userContext";
 
 function Account() {
@@ -8,33 +12,31 @@ function Account() {
 
     const handleLogout = () => {
         console.log("Logging out");
+        handleSignOut();
     };
     const handleDelete = () => {
         console.log("Deleting account");
     };
 
-    if (!isSignedIn) {
-        return (
-            <section>
-                <h1>Account</h1>
-                <p>Not logged in</p>
-            </section>
-        );
-    }
-
     return (
         <section>
             <h1>Account</h1>
-            <p>{currentUser.displayName}</p>
-            <p>{currentUser.email}</p>
-            <p>{currentUser.uid}</p>
 
-            <div className='button' onClick={handleLogout}>
-                Log Out
-            </div>
-            <div className='button' onClick={handleDelete}>
-                Delete Account
-            </div>
+            {isSignedIn && currentUser ? (
+                <>
+                    <p>{currentUser.displayName}</p>
+                    <p>{currentUser.email}</p>
+                    <p>{currentUser.uid}</p>
+                    <div className='button' onClick={handleLogout}>
+                        Log Out
+                    </div>
+                    <div className='button' onClick={handleDelete}>
+                        Delete Account
+                    </div>
+                </>
+            ) : (
+                <p>Not logged in</p>
+            )}
         </section>
     );
 }

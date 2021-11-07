@@ -3,6 +3,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
+    signOut,
     deleteUser,
 } from "firebase/auth";
 import {
@@ -13,8 +14,6 @@ import {
     getDocs,
     setDoc,
 } from "firebase/firestore/lite";
-
-// TODO: clear console.logs
 
 // User sign up (create user)
 export const handleSignUp = (username, email, password) => {
@@ -94,11 +93,12 @@ export const handleLogIn = async (usernameOrEmail, password) => {
         });
 };
 
-// Get current user
+// Sign out
+export const handleSignOut = () => {
+    signOut(fireAuth);
+};
 
 // Get user profile
-
-// Get provider-specific info (won't need)
 
 // Update user profile
 
