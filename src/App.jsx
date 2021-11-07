@@ -1,11 +1,40 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-
-import { handleSignUp } from "./firehandler";
+import { handleSignUp, handleLogIn } from "./handlers/firehandler";
+import { UserContext } from "./hooks/userContext";
 
 function Account() {
+    const { isSignedIn, currentUser } = useContext(UserContext);
+
+    const handleLogout = () => {
+        console.log("Logging out");
+    };
+    const handleDelete = () => {
+        console.log("Deleting account");
+    };
+
+    if (!isSignedIn) {
+        return (
+            <section>
+                <h1>Account</h1>
+                <p>Not logged in</p>
+            </section>
+        );
+    }
+
     return (
         <section>
             <h1>Account</h1>
+            <p>{currentUser.displayName}</p>
+            <p>{currentUser.email}</p>
+            <p>{currentUser.uid}</p>
+
+            <div className='button' onClick={handleLogout}>
+                Log Out
+            </div>
+            <div className='button' onClick={handleDelete}>
+                Delete Account
+            </div>
         </section>
     );
 }
@@ -40,7 +69,8 @@ function Password({ register }) {
 function LogIn() {
     const { register, handleSubmit } = useForm();
     const handleLogin = (data) => {
-        console.log(data);
+        console.log("login:", data);
+        handleLogIn(data.input, data.password);
     };
 
     return (
@@ -50,7 +80,7 @@ function LogIn() {
                 {/* Username or Email */}
                 <Input
                     label='Username or Email'
-                    data='user-or-email'
+                    data='input'
                     register={register}
                 />
                 {/* Password */}
@@ -64,7 +94,7 @@ function LogIn() {
 function SignUp() {
     const { register, handleSubmit } = useForm();
     const handleSignup = (data) => {
-        console.log(data);
+        console.log("signup:", data);
         handleSignUp(data.username, data.email, data.password);
     };
 
