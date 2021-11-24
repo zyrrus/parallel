@@ -50,13 +50,12 @@ export const handleSignUp = (username, email, password) => {
                 console.log("Username already exists");
                 deleteUser(user);
                 console.log("deleting", username);
-                // TODO: throw error
+                throw new Error("Username already exists");
             }
         })
         .catch((error) => {
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            // ..
+            const errorMessage = error.message;
+            console.log("SIGNUP ERROR", errorMessage);
         });
 };
 
@@ -88,8 +87,9 @@ export const handleLogIn = async (usernameOrEmail, password) => {
             // ...
         })
         .catch((error) => {
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
+            cons = error.code;
+            const errorMessage = error.message;
+            console.log("SIGNIN ERROR", errorMessage);
         });
 };
 
