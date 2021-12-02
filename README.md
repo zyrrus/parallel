@@ -6,6 +6,6 @@ Fully implement Parallel's back-end before styling it.
 
 ## TODO:
 
--   Posts not displaying properly
+-   Posts not finished (delete current user's posts, cancel button for making a post)
 -   Throw all appropriate errors
 -   clear all console.logs

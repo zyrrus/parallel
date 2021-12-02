@@ -1,4 +1,11 @@
-import { collection, getDocs, addDoc } from "firebase/firestore/lite";
+import {
+    collection,
+    getDocs,
+    addDoc,
+    doc,
+    deleteDoc,
+    Timestamp,
+} from "firebase/firestore/lite";
 import { fireDB } from "../fire";
 
 export const postingHandler = async (user, postData, setError) => {
@@ -8,13 +15,23 @@ export const postingHandler = async (user, postData, setError) => {
         title: title,
         body: body,
         username: user.displayName,
-        useruid: user.uid,
+        uid: user.uid,
+        timestamp: Timestamp.now(),
     });
 };
 
 export const getPostsHandler = async () => {
     const postsRef = collection(fireDB, "posts");
     const postsQuery = await getDocs(postsRef);
-    // console.log(postsQuery.docs.map((doc) => doc.data()));
-    return postsQuery.docs.map((doc) => doc.data());
+    return postsQuery.docs.map((doc) => {
+        return {
+            id: doc.id,
+            post: doc.data(),
+        };
+    });
+};
+
+export const deletePostHandler = (id) => {
+    const postRef = doc(fireDB, "posts", id);
+    deleteDoc(postRef);
 };
