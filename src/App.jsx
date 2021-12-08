@@ -16,15 +16,20 @@ import { UserContext } from "./hooks/userContext";
 
 function Account() {
     const { register, handleSubmit } = useForm();
-    const { isSignedIn, currentUser } = useContext(UserContext);
+    const { isSignedIn, currentUser, setIsSignedIn } = useContext(UserContext);
     const [error, setError] = useError();
     const [showPopup, setShowPopup] = useState(false);
 
     const handleLogout = () => {
-        signOutHandler();
+        signOutHandler(setIsSignedIn);
     };
     const handleDelete = async (data) => {
-        await deleteHandler(currentUser, data.password, setError);
+        await deleteHandler(
+            currentUser,
+            data.password,
+            setError,
+            setIsSignedIn
+        );
         setShowPopup(false);
     };
     const handleCancelDelete = () => {
@@ -105,9 +110,10 @@ function Password({ register }) {
 function LogIn() {
     const { register, handleSubmit } = useForm();
     const [error, setError] = useError();
+    const { setIsSignedIn } = useContext(UserContext);
 
     const handleLogin = (data) => {
-        logInHandler(data, setError);
+        logInHandler(data, setError, setIsSignedIn);
     };
 
     return (
@@ -130,9 +136,10 @@ function LogIn() {
 function SignUp() {
     const { register, handleSubmit } = useForm();
     const [error, setError] = useError();
+    const { setIsSignedIn } = useContext(UserContext);
 
     const handleSignup = (data) => {
-        signUpHandler(data, setError);
+        signUpHandler(data, setError, setIsSignedIn);
     };
 
     return (
@@ -224,7 +231,7 @@ function Discover() {
                     {post.timestamp.toDate().toLocaleString()}
                 </h5>
                 <p>{post.body}</p>
-                {isSignedIn && currentUser.uid === post.uid && (
+                {isSignedIn && currentUser && currentUser.uid === post.uid && (
                     <input
                         type='button'
                         value='Delete Post'
@@ -255,6 +262,7 @@ function Discover() {
                     )}
                 </>
             )}
+            {console.log("rerendering")}
             {posts.map((doc) => makePost(doc))}
         </section>
     );
