@@ -32,11 +32,14 @@ export default function Discover() {
     };
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            const fetchedPosts = await getPostsHandler();
-            setPosts(fetchedPosts);
+        let isSubscribed = true;
+        getPostsHandler().then((fetchPosts) => {
+            if (isSubscribed) setPosts(fetchPosts);
+        });
+
+        return () => {
+            isSubscribed = false;
         };
-        fetchPosts();
     }, [posts]);
 
     const postPopup = (
