@@ -46,9 +46,8 @@ export default function Account() {
             <Surface>
                 {isSignedIn && currentUser ? (
                     <>
-                        <p>{currentUser.displayName}</p>
-                        <p>{currentUser.email}</p>
-                        <p>{currentUser.uid}</p>
+                        <p>Username: {currentUser.displayName}</p>
+                        <p>Email: {currentUser.email}</p>
                         <input
                             type='button'
                             value='Log Out'
