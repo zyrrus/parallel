@@ -21,10 +21,11 @@ export const UserProvider = ({ children }) => {
         });
         console.log("2 auth changed", isSignedIn, currentUser);
         return observer;
-    }, []);
+    }, [isSignedIn, currentUser]);
 
     return (
-        <UserContext.Provider value={{ isSignedIn, currentUser }}>
+        <UserContext.Provider
+            value={{ isSignedIn, currentUser, setIsSignedIn, setCurrentUser }}>
             {children}
         </UserContext.Provider>
     );

@@ -20,15 +20,17 @@ export const postingHandler = async (user, postData, setError) => {
     });
 };
 
-export const getPostsHandler = async () => {
+export const getPostsHandler = async (setError, setPosts) => {
     const postsRef = collection(fireDB, "posts");
     const postsQuery = await getDocs(postsRef);
-    return postsQuery.docs.map((doc) => {
+
+    const fetchedPosts = postsQuery.docs.map((doc) => {
         return {
             id: doc.id,
             post: doc.data(),
         };
     });
+    setPosts(fetchedPosts);
 };
 
 export const deletePostHandler = (id) => {

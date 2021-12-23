@@ -16,12 +16,12 @@ import { UserContext } from "./hooks/userContext";
 
 function Account() {
     const { register, handleSubmit } = useForm();
-    const { isSignedIn, currentUser } = useContext(UserContext);
+    const { isSignedIn, currentUser, setIsSignedIn } = useContext(UserContext);
     const [error, setError] = useError();
     const [showPopup, setShowPopup] = useState(false);
 
     const handleLogout = () => {
-        signOutHandler();
+        signOutHandler(setIsSignedIn);
     };
     const handleDelete = async (data) => {
         await deleteHandler(currentUser, data.password, setError);
@@ -196,9 +196,8 @@ function Discover() {
     };
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            const fetchedPosts = await getPostsHandler();
-            setPosts(fetchedPosts);
+        const fetchPosts = () => {
+            getPostsHandler(setError, setPosts);
         };
         fetchPosts();
     }, []);

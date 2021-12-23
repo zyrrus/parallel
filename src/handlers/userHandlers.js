@@ -98,7 +98,8 @@ export const logInHandler = async (userData, setError) => {
 };
 
 // Sign out
-export const signOutHandler = () => {
+export const signOutHandler = (setIsSignedIn) => {
+    setIsSignedIn(false);
     signOut(fireAuth);
 };
 
