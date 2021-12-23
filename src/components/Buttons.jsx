@@ -24,5 +24,3 @@ export function ButtonDo({ onClick, emphasized, children }) {
         </p>
     );
 }
-
-export default { ButtonDo, ButtonTo };

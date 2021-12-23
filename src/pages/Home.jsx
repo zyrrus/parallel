@@ -3,13 +3,15 @@ import Surface from "../components/Surface.jsx";
 import { ButtonTo } from "../components/Buttons.jsx";
 
 function Subtitle() {
-    return <h2 className='subtitle'>Connect educators with video creators.</h2>;
+    return (
+        <h2 className='subtitle'>Connect educators with content creators.</h2>
+    );
 }
 
 function Buttons() {
     return (
         <div className='button-container'>
-            {/* This should probably go to discover with the proper filter enabled */}
+            {/* This should probably redirect to discover with the proper filter enabled */}
             <ButtonTo to='/register'>I'm an educator</ButtonTo>
             <ButtonTo to='/register'>I'm an animator</ButtonTo>
         </div>
@@ -27,7 +29,7 @@ function About() {
                 discover page. Content creators can sign up as "Animators" to
                 accept these jobs from educators. Alternatively, animators can
                 make their own discover page posts to present their skills so
-                educators are able to request an animator's work.
+                that educators can commission their work.
             </p>
         </Surface>
     );
