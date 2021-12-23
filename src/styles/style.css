@@ -235,6 +235,7 @@ form input {
 
 form button {
   margin-inline: auto;
+  font-family: "Roboto Slab", serif;
 }
 
 form a {
