@@ -31,6 +31,47 @@ export default function Contact() {
                     </ul>
                 </div>
             </Surface>
+
+            <h1>Future improvements</h1>
+            <Surface classes={["contact"]}>
+                <ul>
+                    <li>
+                        <h4>Upgrade the Discover page.</h4>
+                        <p>
+                            The current posting is boring and almost useless.
+                            Things like tags, filters for those tags, and a
+                            user-tailored feed would dramatically improve the
+                            page.
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Add more account features</h4>
+                        <p>
+                            Profile pictures, email verification, change
+                            password, add bio, add fields of study/interest
+                            (these could determine what shows up in the discover
+                            feed)
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Improve the look and feel</h4>
+                        <p>
+                            Fix minor annoyances and add icons + more animations
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Check for performance issues</h4>
+                        <p>
+                            My reckless use of useEffect would probably give
+                            React devs nightmares... maybe I should look into
+                            that.
+                        </p>
+                    </li>
+                    <li>
+                        <h4>…</h4>
+                    </li>
+                </ul>
+            </Surface>
         </>
     );
 }
