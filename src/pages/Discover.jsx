@@ -8,6 +8,8 @@ import {
 import useError from "../hooks/useError";
 import { UserContext } from "../hooks/userContext";
 import Input from "../components/Input";
+import Surface from "../components/Surface";
+import { ButtonDo } from "../components/Buttons";
 
 export default function Discover() {
     const { register, handleSubmit } = useForm();
@@ -35,7 +37,7 @@ export default function Discover() {
             setPosts(fetchedPosts);
         };
         fetchPosts();
-    }, []);
+    }, [posts]);
 
     const postPopup = (
         <form onSubmit={handleSubmit(handlePosting)}>
@@ -51,7 +53,7 @@ export default function Discover() {
     const makePost = (doc) => {
         const post = doc.post;
         return (
-            <div key={doc.id}>
+            <Surface key={doc.id} classes={["post"]}>
                 <h3>{post.title}</h3>
                 <h5>
                     {post.username} at{" "}
@@ -65,32 +67,31 @@ export default function Discover() {
                         onClick={() => handleDeletePost(doc.id)}
                     />
                 )}
-            </div>
+            </Surface>
         );
     };
 
     return (
-        <section>
+        <>
             <h1>Discover</h1>
 
             {isSignedIn && currentUser && (
                 <>
                     {showPopup ? (
-                        postPopup
+                        <Surface>{postPopup}</Surface>
                     ) : (
                         <>
-                            <p style={{ color: "red" }}>{error}</p>
-                            <input
-                                type='button'
-                                value='+ Post'
-                                onClick={() => setShowPopup(true)}
-                            />
+                            {error && <p style={{ color: "red" }}>{error}</p>}
+                            <ButtonDo onClick={() => setShowPopup(true)}>
+                                + New Post
+                            </ButtonDo>
                         </>
                     )}
                 </>
             )}
-            {console.log("rerendering")}
-            {posts.map((doc) => makePost(doc))}
-        </section>
+            <div className='post-container'>
+                {posts.map((doc) => makePost(doc))}
+            </div>
+        </>
     );
 }

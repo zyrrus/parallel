@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { signOutHandler, deleteHandler } from "../handlers/userHandlers";
 import useError from "../hooks/useError";
 import { UserContext } from "../hooks/userContext";
 import Password from "../components/Password";
+import Surface from "../components/Surface";
 
 export default function Account() {
     const { register, handleSubmit } = useForm();
@@ -37,36 +39,38 @@ export default function Account() {
         </form>
     );
 
+    if (!isSignedIn) return <Navigate to='/register' />;
     return (
-        <section>
+        <>
             <h1>Account</h1>
-
-            {isSignedIn && currentUser ? (
-                <>
-                    <p>{currentUser.displayName}</p>
-                    <p>{currentUser.email}</p>
-                    <p>{currentUser.uid}</p>
-                    <input
-                        type='button'
-                        value='Log Out'
-                        onClick={handleLogout}
-                    />
-                    {showPopup ? (
-                        pwPopup
-                    ) : (
-                        <>
-                            <p style={{ color: "red" }}>{error}</p>
-                            <input
-                                type='button'
-                                value='Delete Account'
-                                onClick={() => setShowPopup(true)}
-                            />
-                        </>
-                    )}
-                </>
-            ) : (
-                <p>Not logged in</p>
-            )}
-        </section>
+            <Surface>
+                {isSignedIn && currentUser ? (
+                    <>
+                        <p>{currentUser.displayName}</p>
+                        <p>{currentUser.email}</p>
+                        <p>{currentUser.uid}</p>
+                        <input
+                            type='button'
+                            value='Log Out'
+                            onClick={handleLogout}
+                        />
+                        {showPopup ? (
+                            pwPopup
+                        ) : (
+                            <>
+                                <p style={{ color: "red" }}>{error}</p>
+                                <input
+                                    type='button'
+                                    value='Delete Account'
+                                    onClick={() => setShowPopup(true)}
+                                />
+                            </>
+                        )}
+                    </>
+                ) : (
+                    <p>Not logged in</p>
+                )}
+            </Surface>
+        </>
     );
 }

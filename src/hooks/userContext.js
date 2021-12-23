@@ -9,7 +9,6 @@ export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
-        console.log("1 auth changed", isSignedIn, currentUser);
         const observer = onAuthStateChanged(fireAuth, (user) => {
             if (user) {
                 setCurrentUser(user);
@@ -19,7 +18,6 @@ export const UserProvider = ({ children }) => {
                 setIsSignedIn(false);
             }
         });
-        console.log("2 auth changed", isSignedIn, currentUser);
         return observer;
     }, [currentUser, isSignedIn]);
 

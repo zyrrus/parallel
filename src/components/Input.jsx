@@ -4,6 +4,7 @@ export default function Input({ label, data, register }) {
             <label htmlFor={data}>{label}</label>
             <input
                 placeholder={label}
+                type='text'
                 {...register(data, { required: true })}
             />
             <br />

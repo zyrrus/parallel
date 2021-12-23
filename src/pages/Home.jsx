@@ -10,8 +10,8 @@ function Buttons() {
     return (
         <div className='button-container'>
             {/* This should probably go to discover with the proper filter enabled */}
-            <ButtonTo to='/signup'>I'm an educator</ButtonTo>
-            <ButtonTo to='/signup'>I'm an animator</ButtonTo>
+            <ButtonTo to='/register'>I'm an educator</ButtonTo>
+            <ButtonTo to='/register'>I'm an animator</ButtonTo>
         </div>
     );
 }

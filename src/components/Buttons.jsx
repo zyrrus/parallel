@@ -1,4 +1,4 @@
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export function ButtonTo({ to, emphasized, children }) {
     // Redirect button
@@ -8,7 +8,7 @@ export function ButtonTo({ to, emphasized, children }) {
         <NavLink
             to={to}
             className={classes}
-            activeClassName={classes + "--active"}>
+            activeclassname={classes + "--active"}>
             {children}
         </NavLink>
     );

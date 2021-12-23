@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400;1,500&family=Roboto+Slab:wght@400;500;700&display=swap");
 * {
   margin: 0;
@@ -27,6 +28,14 @@ h3 {
 a {
   text-decoration: none;
   color: #0e0e0ecc;
+}
+
+h1 {
+  color: #ffe8b7;
+}
+
+ul h3 {
+  text-align: left;
 }
 
 nav {
@@ -213,36 +222,26 @@ nav ul {
   padding-bottom: 5rem;
 }
 
-form {
-  font-family: "Roboto Slab", serif;
-  color: #0e0e0e;
+label {
+  display: block;
 }
 
-form label {
-  display: block;
+input {
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 99rem;
+}
+
+input[type="radio"] + label {
+  display: inline;
+}
+
+input[type="button"], input[type="submit"] {
   margin-top: 0.5em;
+  margin-right: 0.5em;
 }
 
-form input {
-  display: block;
-  width: 100%;
-  height: 2em;
-  padding: 1.5em 1em;
-  border: 2px solid #0e0e0ecc;
-  border-radius: 99em;
-  background-color: #fff;
-}
-
-form button {
-  margin-inline: auto;
-  font-family: "Roboto Slab", serif;
-}
-
-form a {
-  padding-left: 0.5ch;
-}
-
-.button {
+.button, input[type="button"], input[type="submit"] {
   color: #fff;
   background-color: #0e0e0ecc;
   width: -webkit-max-content;
@@ -255,7 +254,7 @@ form a {
   white-space: nowrap;
 }
 
-.button:hover {
+.button:hover, input:hover[type="button"], input:hover[type="submit"] {
   color: #0e0e0e;
   background-color: #fff;
 }
@@ -345,12 +344,21 @@ nav .title {
 
 .surface h3 {
   text-align: center;
-  color: #50505099;
+  color: #0e0e0ecc;
 }
 
 .post {
-  width: 18rem;
-  height: 23rem;
+  width: 20rem;
+}
+
+.post h3 {
+  text-align: left;
+  color: #0e0e0e;
+}
+
+.post h5 {
+  color: #505050;
+  font-weight: unset;
 }
 
 .post-container {
@@ -379,5 +387,47 @@ nav .title {
 
 .link {
   text-decoration: underline;
+}
+
+.contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  row-gap: 1em;
+}
+
+.contact h3 {
+  text-align: left;
+}
+
+.contact ul {
+  list-style: inside;
+}
+
+.contact ul li::marker {
+  content: "─ ";
+  color: #0e0e0e;
+  font-weight: bold;
+}
+
+.register {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 1rem;
 }
 /*# sourceMappingURL=style.css.map */

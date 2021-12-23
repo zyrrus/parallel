@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../hooks/userContext";
 
 import Title from "./Title.jsx";
 import { ButtonTo } from "./Buttons.jsx";
@@ -19,6 +20,7 @@ const NavListItem = ({ to, title, emphasized }) => {
 
 export default function Navbar() {
     const [drawerOpen, setDrawer] = useState(false);
+    const { isSignedIn } = useContext(UserContext);
 
     const toggleDrawer = () => setDrawer((state) => !state);
     const removeDrawer = () => setDrawer(false);
@@ -46,7 +48,12 @@ export default function Navbar() {
                 <NavListItem to='/' title='Home' />
                 <NavListItem to='/discover' title='Discover' />
                 <NavListItem to='/contact' title='Contact' />
-                <NavListItem to='/register' title='Sign Up' emphasized />
+
+                {isSignedIn ? (
+                    <NavListItem to='/account' title='Account' emphasized />
+                ) : (
+                    <NavListItem to='/register' title='Sign Up' emphasized />
+                )}
             </ul>
         </nav>
     );

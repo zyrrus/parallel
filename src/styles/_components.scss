@@ -88,15 +88,20 @@ nav .title {
     }
     h3 {
         text-align: center;
-        color: $dark-grey-alpha;
-    }
-    p {
+        color: $black-alpha;
     }
 }
 
 .post {
-    width: 18rem;
-    height: 23rem;
+    width: 20rem;
+    h3 {
+        text-align: left;
+        color: $black;
+    }
+    h5 {
+        color: $dark-grey;
+        font-weight: unset;
+    }
 }
 
 .post-container {
@@ -114,4 +119,32 @@ nav .title {
 
 .link {
     text-decoration: underline;
+}
+
+.contact {
+    @include flex-col();
+    row-gap: 1em;
+
+    h3 {
+        text-align: left;
+    }
+
+    ul {
+        list-style: inside;
+
+        li::marker {
+            content: "─ ";
+            color: $black;
+            font-weight: bold;
+        }
+        // |⟩
+    }
+}
+
+.register {
+    width: 100%;
+    @include flex-row();
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 }
