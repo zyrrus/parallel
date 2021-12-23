@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore/lite";
 
 // User sign up (create user)
-export const signUpHandler = async (userData, setError) => {
+export const signUpHandler = async (userData, setError, setIsSignedIn) => {
     const { email, username, password, account } = userData;
 
     // Check for invalid usernames
@@ -61,6 +61,8 @@ export const signUpHandler = async (userData, setError) => {
                 email: email,
                 account: account,
             });
+
+            setIsSignedIn(true);
         })
         .catch((error) => {
             const errorMessage = error.message;
@@ -69,7 +71,7 @@ export const signUpHandler = async (userData, setError) => {
 };
 
 // User sign in
-export const logInHandler = async (userData, setError) => {
+export const logInHandler = async (userData, setError, setIsSignedIn) => {
     const { input, password } = userData;
     let email;
 
@@ -90,7 +92,9 @@ export const logInHandler = async (userData, setError) => {
 
     // Sign in with Firebase
     signInWithEmailAndPassword(fireAuth, email, password)
-        .then((userCredential) => {})
+        .then((userCredential) => {
+            setIsSignedIn(true);
+        })
         .catch((error) => {
             const errorMessage = error.message;
             setError(errorMessage);
@@ -99,17 +103,22 @@ export const logInHandler = async (userData, setError) => {
 
 // Sign out
 export const signOutHandler = (setIsSignedIn) => {
-    setIsSignedIn(false);
-    signOut(fireAuth);
+    signOut(fireAuth).then(setIsSignedIn(false));
 };
 
 // Delete profile
-export const deleteHandler = async (user, password, setError) => {
+export const deleteHandler = async (
+    user,
+    password,
+    setError,
+    setIsSignedIn
+) => {
     return await reauthHandler(user, password)
-        .then(() =>
+        .then(() => {
             // Delete account
-            deleteUser(user)
-        )
+            deleteUser(user);
+            setIsSignedIn(false);
+        })
         .then(() => {
             // Remove profile data from database
             const userRef = doc(fireDB, "users", user.uid);
