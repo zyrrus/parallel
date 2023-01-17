@@ -26,7 +26,7 @@ import "@fontsource/fira-code/400.css";
 import "@fontsource/fira-code/500.css";
 import "@fontsource/fira-code/600.css";
 import "@fontsource/fira-code/700.css";
-import Header from "@components/Header";
+import PageWrapper from "@components/PageWrapper";
 
 const MyApp: AppType<{ session: Session | null }> = ({
     Component,
@@ -48,8 +48,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
                     />
                 </Head>
                 <CssBaseline />
-                <Header />
-                <Component {...pageProps} />
+                <PageWrapper>
+                    <Component {...pageProps} />
+                </PageWrapper>
             </SessionProvider>
         </ThemeProvider>
     );
