@@ -1,4 +1,4 @@
-import type { SxProps, Theme } from "@mui/material";
+import { Button, Theme } from "@mui/material";
 import {
     AppBar,
     Container,
@@ -9,7 +9,10 @@ import {
     Tab,
     Tabs,
 } from "@mui/material";
+import type { SystemStyleObject } from "@mui/system";
 import type { ReactNode } from "react";
+
+const routes: string[] = ["projects", "explore", "go premium", "profile"];
 
 export default function Header() {
     return (
@@ -21,21 +24,23 @@ export default function Header() {
                     </Typography>
                 </Box>
                 <Stack direction="row" columnGap={10}>
-                    <Typography noWrap variant="h6" fontWeight={400}>
-                        Route 1
-                    </Typography>
-                    <Typography noWrap variant="h6" fontWeight={400}>
-                        Route 2
-                    </Typography>
-                    <Typography noWrap variant="h6" fontWeight={400}>
-                        Route 3
-                    </Typography>
-                    <Typography noWrap variant="h6" fontWeight={400}>
-                        Route 4
-                    </Typography>
+                    {routes.map((route) => (
+                        <Button
+                            key={route}
+                            // sx={{ my: 2, color: "white", display: "block" }}
+                        >
+                            <Typography
+                                variant="h5"
+                                fontWeight={400}
+                                color="contrast"
+                            >
+                                {route}
+                            </Typography>
+                        </Button>
+                    ))}
                 </Stack>
             </HeaderWrapper>
-            <HeaderWrapper>
+            <HeaderWrapper sxToolbar={{ justifyContent: "center" }}>
                 <Tabs variant="scrollable" scrollButtons>
                     <Tab label="Instructions" />
                     <Tab label="Sign Up" />
@@ -51,10 +56,10 @@ export default function Header() {
 
 function HeaderWrapper({
     children,
-    sxToolbar = [],
+    sxToolbar,
 }: {
     children: ReactNode;
-    sxToolbar?: SxProps<Theme>;
+    sxToolbar?: SystemStyleObject<Theme>;
 }) {
     return (
         <AppBar
@@ -70,9 +75,7 @@ function HeaderWrapper({
                 <Toolbar
                     sx={[
                         { justifyContent: "space-between" },
-                        ...(Array.isArray(sxToolbar)
-                            ? (sxToolbar as SxProps<Theme>)
-                            : [sxToolbar]),
+                        sxToolbar ?? null,
                     ]}
                 >
                     {children}
