@@ -8,7 +8,7 @@ export const theme = createTheme({
             paper: "#424242",
         },
         text: {
-            primary: "#ffffff",
+            primary: "rgba(255,255,255)",
             secondary: "rgba(255,255,255,0.7)",
             disabled: "rgba(255,255,255,0.5)",
         },
@@ -52,5 +52,38 @@ export const theme = createTheme({
     },
     typography: {
         fontFamily: "Murecho",
+        h1: {
+            fontSize: "4.209rem",
+            fontWeight: 700,
+            lineHeight: 1.05,
+        },
+        h2: {
+            fontSize: "3.157rem",
+            fontWeight: 700,
+            lineHeight: 1.3,
+        },
+        h3: {
+            fontSize: "2.369rem",
+            fontWeight: 700,
+            lineHeight: 1.3,
+        },
+        h4: {
+            fontSize: "1.777rem",
+            fontWeight: 700,
+            lineHeight: 1.3,
+        },
+        h5: {
+            fontSize: "1.333rem",
+            fontWeight: 700,
+            lineHeight: 1.3,
+        },
+        // h6: {
+        //     fontSize: "4rem",
+        //     fontWeight: 700,
+        //     lineHeight: 1.05,
+        // },
+        body1: {
+            lineHeight: 1.75,
+        },
     },
 });
