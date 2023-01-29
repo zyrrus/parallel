@@ -6,12 +6,14 @@ const Hero = () => {
     return (
         <Grid
             container
+            direction={{ xs: "column", md: "row" }}
             alignItems="center"
+            justifyContent="center"
             columnSpacing={8}
             rowSpacing={6}
-            sx={{ mt: { xs: 0, sm: 8 } }}
+            sx={{ minHeight: "100vh" }}
         >
-            <Grid item xs={12} md={7}>
+            <Grid item md={7}>
                 <Typography
                     variant="h1"
                     color="primary"
@@ -42,11 +44,10 @@ const Hero = () => {
                     , our mission is to make high-quality educational content
                     accessible to all. By connecting educators with experienced
                     creators, we make it easy to create engaging and informative
-                    videos that can be used in the classroom or online. Join us
-                    and make a difference in the world of education.
+                    videos that can be used in the classroom or online.
                 </Typography>
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item md={5}>
                 <SignUpCTA />
             </Grid>
         </Grid>
@@ -68,12 +69,16 @@ const SignUpCTA = () => {
                     justifyContent="space-between"
                     alignItems="center"
                     wrap="nowrap"
+                    columnGap={2}
                 >
                     <Grid item>
-                        <Typography variant="h3" color="primary">
-                            Get Started
+                        <Typography variant="h3" color="primary" sx={{ mb: 2 }}>
+                            Sign up here
                         </Typography>
-                        <Typography>Sign up here</Typography>
+                        <Typography>
+                            Join us and make a difference in the world of
+                            education.
+                        </Typography>
                     </Grid>
                     <Grid item>
                         <PlayArrowRoundedIcon
