@@ -27,7 +27,7 @@ export default function PageWrapper({ children }: { children: ReactNode }) {
                 minHeight: "100vh",
             }}
         >
-            {/* <Header /> */}
+            <Header />
             <Box
                 sx={{
                     flexGrow: 1,
@@ -44,7 +44,7 @@ export default function PageWrapper({ children }: { children: ReactNode }) {
                     }}
                 >
                     {children}
-                    {/* <Footer /> */}
+                    <Footer />
                 </Box>
             </Box>
         </Box>
