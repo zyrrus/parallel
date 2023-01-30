@@ -52,6 +52,9 @@ export const theme = createTheme({
     },
     typography: {
         fontFamily: "Murecho",
+        allVariants: {
+            textTransform: "none",
+        },
         h1: {
             fontSize: "4.209rem",
             fontWeight: 700,
@@ -74,7 +77,7 @@ export const theme = createTheme({
         },
         h5: {
             fontSize: "1.333rem",
-            fontWeight: 700,
+            fontWeight: 500,
             lineHeight: 1.3,
         },
         // h6: {
