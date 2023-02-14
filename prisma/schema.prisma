@@ -56,12 +56,3 @@ model VerificationToken {
 }
 
 // === Parallel ==========================================================
-
-model Project {
-    id         String  @id @default(cuid())
-    title      String
-    isComplete Boolean @default(false)
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
