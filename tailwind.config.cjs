@@ -6,7 +6,7 @@ module.exports = {
       center: true,
       padding: "1.5rem",
     },
-    screens: {},
+    // screens: {},
     colors: {
       fg: {
         DEFAULT: "#A3A395",
@@ -87,6 +87,11 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-murecho)"],
+      },
+      backgroundImage: {
+        radial:
+          "radial-gradient(circle farthest-side at 100% 50%, #DEB887 0%, rgba(48, 48, 48, 0) 50%)",
+        //   grid: `url('./public/grid.svg')`,
       },
     },
   },
