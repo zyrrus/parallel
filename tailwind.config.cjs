@@ -90,7 +90,7 @@ module.exports = {
       },
       backgroundImage: {
         radial:
-          "radial-gradient(circle farthest-side at 100% 50%, #DEB887 0%, rgba(48, 48, 48, 0) 50%)",
+          "radial-gradient(circle farthest-side at center, #deb887 0%, #00000000 100%)",
         //   grid: `url('./public/grid.svg')`,
       },
     },
