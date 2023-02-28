@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Image from "next/image";
 import Button from "@components/Button";
 import Divider from "@components/Divider";
+import Text from "@components/Text";
 
 const Home: NextPage = () => {
   return (
@@ -19,15 +20,21 @@ const Home: NextPage = () => {
 
 export default Home;
 
+// === Sections =====================================================
+
 const Hero: React.FC = () => {
   return (
     <section className="custom-home-bg">
       <div className="container">
-        <h1 className="text-5xl font-bold leading-tight text-primary drop-shadow-blur">
+        <Text
+          tag="h1"
+          color="primary"
+          className="leading-tight drop-shadow-blur"
+        >
           Collaborate with experts.
           <br />
           Educate the world.
-        </h1>
+        </Text>
         <p className="mt-6 mb-16 text-3xl font-bold drop-shadow-blur">
           Get connected with Parallel
         </p>
