@@ -3,7 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { SSRProvider } from "react-aria";
 import Head from "next/head";
-import { api } from "../utils/api";
+import { api } from "@utils/api";
 
 import "@styles/globals.css";
 import Layout from "@components/Layout";
