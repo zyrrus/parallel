@@ -1,5 +1,7 @@
 import type { VariantProps } from "class-variance-authority";
+import { cx } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+import { text } from "./Text";
 
 const button = cva(
   [
@@ -12,8 +14,8 @@ const button = cva(
   {
     variants: {
       size: {
-        default: "text-2xl px-14 py-4",
-        small: "text-lg px-10 py-3",
+        default: "px-14 py-4",
+        small: "px-10 py-3",
       },
     },
   }
@@ -31,7 +33,13 @@ const Button: React.FC<Props> = ({
   variant = { size: "default" },
 }) => {
   return (
-    <button className={button(variant)} onClick={onClick}>
+    <button
+      className={cx(
+        button(variant),
+        text({ size: variant.size === "default" ? "h4" : "h6" })
+      )}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

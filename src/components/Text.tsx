@@ -1,79 +1,67 @@
 import React from "react";
-import { cx } from "class-variance-authority";
-import type {
-  Tag,
-  ColorEnding,
-  Size,
-  Weight,
-  Hundred,
-  TwSize,
-  TwWeight,
-  TwColor,
-} from "@utils/types/tw";
-import { weights } from "@utils/types/tw";
+import { cva } from "class-variance-authority";
+import type { Tag, Weight } from "@utils/types/tw";
 
-/*
-    THIS NEEDS TO BE ABLE TO HANDLE TYPOGRAPHY SIZE AT SMALL BREAKPOINTS
-    (IT CAN'T CURRENTLY)
- */
+export const text = cva("", {
+  variants: {
+    size: {
+      p: "text-sm md:text-base 2xl:text-lg",
+      h1: "text-3xl md:text-4xl 2xl:text-5xl",
+      h2: "text-2xl md:text-3xl 2xl:text-4xl",
+      h3: "text-xl md:text-2xl 2xl:text-3xl",
+      h4: "text-lg md:text-xl 2xl:text-2xl",
+      h5: "text-base md:text-lg 2xl:text-xl",
+      h6: "text-sm md:text-base 2xl:text-lg",
+    },
+    weight: {
+      p: "font-normal",
+      h1: "font-bold",
+      h2: "font-bold",
+      h3: "font-bold",
+      h4: "font-bold",
+      h5: "font-semibold",
+      h6: "font-semibold",
+      thin: "font-thin",
+      extralight: "font-extralight",
+      light: "font-light",
+      normal: "font-normal",
+      medium: "font-medium",
+      semibold: "font-semibold",
+      bold: "font-bold",
+      extrabold: "font-extrabold",
+      black: "font-black",
+    },
+  },
+});
 
 interface Props {
   children: React.ReactNode;
-  tag?: Tag;
-  color?: ColorEnding;
+  tag?: Tag | "span";
+  styleLike?: Tag;
   // Override default tag styling
-  size?: Size;
-  weight?: Weight | Hundred;
+  size?: Tag;
+  weight?: Weight;
   className?: string;
-  overrideStyles?: boolean;
 }
 
 const Text: React.FC<Props> = ({
   children,
   tag = "p",
-  color,
+  styleLike,
   size,
   weight,
-  className,
-  overrideStyles = false,
+  className = "",
 }) => {
-  const styleMap: Record<Tag, { size: TwSize; weight: TwWeight }> = {
-    p: { size: "text-base", weight: "font-normal" },
-    h1: { size: "text-5xl", weight: "font-bold" },
-    h2: { size: "text-4xl", weight: "font-bold" },
-    h3: { size: "text-3xl", weight: "font-bold" },
-    h4: { size: "text-2xl", weight: "font-bold" },
-    h5: { size: "text-base", weight: "font-semibold" },
-    h6: { size: "text-base", weight: "font-semibold" },
-  };
-
-  const twDefaultColor: TwColor = "text-fg";
-  const twDefaultSize: TwSize = styleMap[tag].size;
-  const twDefaultWeight: TwWeight = styleMap[tag].weight;
-
-  const twParamColor: TwColor | undefined =
-    color === undefined ? undefined : `text-${color}`;
-  const twParamSize: TwSize | undefined =
-    size === undefined ? undefined : `text-${size}`;
-  const twParamWeight: TwWeight | undefined =
-    weight === undefined
-      ? undefined
-      : `font-${
-          (typeof weight === "number" ? weights[weight / 100] : weight) ??
-          "normal"
-        }`;
+  const styleTag: Tag = tag === "span" ? "p" : tag;
 
   return React.createElement(
     tag,
     {
-      className: overrideStyles
-        ? className
-        : cx(
-            className,
-            twParamColor ?? twDefaultColor,
-            twParamSize ?? twDefaultSize,
-            twParamWeight ?? twDefaultWeight
-          ),
+      className: text({
+        className: className,
+        size: size ?? styleLike ?? styleTag,
+        weight: weight ?? styleLike ?? styleTag,
+      }),
     },
     children
   );

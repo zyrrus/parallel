@@ -26,18 +26,14 @@ const Hero: React.FC = () => {
   return (
     <section className="custom-home-bg">
       <div className="container">
-        <Text
-          tag="h1"
-          color="primary"
-          className="leading-tight drop-shadow-blur"
-        >
+        <Text tag="h1" className="leading-tight text-primary drop-shadow-blur">
           Collaborate with experts.
           <br />
           Educate the world.
         </Text>
-        <p className="mt-6 mb-16 text-3xl font-bold drop-shadow-blur">
+        <Text size="h3" weight="bold" className="mt-6 mb-16 drop-shadow-blur">
           Get connected with Parallel
-        </p>
+        </Text>
         <Button>Get Started</Button>
       </div>
     </section>
@@ -47,15 +43,15 @@ const Hero: React.FC = () => {
 const About: React.FC = () => {
   return (
     <section className="container">
-      <h2 className="mb-5 text-center text-4xl font-bold text-primary">
+      <Text tag="h2" className="mb-5 text-center text-primary">
         About Parallel
-      </h2>
-      <p className="mx-auto mb-24 max-w-6xl text-center">
+      </Text>
+      <Text className="mx-auto mb-24 max-w-6xl text-center">
         Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
         Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
         mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
         tellus.
-      </p>
+      </Text>
       <div className="grid grid-cols-[1fr_2fr_1fr] grid-rows-2 items-center gap-x-24 gap-y-9">
         <AboutRow
           title="For Educators"
@@ -88,7 +84,7 @@ interface AboutRowProps {
   children: string;
   imgUrl: string;
   altText: string;
-  row: "1" | "2";
+  row: number | `${number}`;
   iconOnRight?: boolean;
 }
 
@@ -115,8 +111,10 @@ const AboutRow: React.FC<AboutRowProps> = ({
         }`}
       />
       <div className="col-start-2">
-        <h3 className="mb-3 text-2xl font-bold">{title}</h3>
-        <p>{children}</p>
+        <Text tag="h3" styleLike="h4" className="mb-3">
+          {title}
+        </Text>
+        <Text>{children}</Text>
       </div>
     </>
   );
@@ -125,16 +123,18 @@ const AboutRow: React.FC<AboutRowProps> = ({
 const Premium: React.FC = () => {
   return (
     <section className="container text-center">
-      <h2 className="text-4xl font-bold text-primary">Parallel Premium</h2>
-      <p className="my-5">
+      <Text tag="h2" className="text-primary">
+        Parallel Premium
+      </Text>
+      <Text className="my-5">
         Using Parallel is completely free, but you can enjoy exclusive features
         and support the platform with our premium version.
-      </p>
+      </Text>
       <a
         href="#"
         className="font-semibold text-tertiary hover:text-tertiary-600"
       >
-        Learn more about Premium
+        <Text>Learn more about Premium</Text>
       </a>
     </section>
   );
