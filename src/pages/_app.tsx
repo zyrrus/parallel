@@ -1,18 +1,12 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { Murecho } from "@next/font/google";
+import { SSRProvider } from "react-aria";
 import Head from "next/head";
 import { api } from "../utils/api";
 
-import "../styles/globals.css";
-
-const murecho = Murecho({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-murecho",
-});
+import "@styles/globals.css";
+import Layout from "@components/Layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -25,11 +19,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="============" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={`${murecho.variable} font-sans`}>
+      <SSRProvider>
         <SessionProvider session={session}>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </SessionProvider>
-      </div>
+      </SSRProvider>
     </>
   );
 };

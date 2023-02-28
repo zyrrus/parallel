@@ -13,23 +13,25 @@ a {
   @apply text-lg;
 }
 
-.custom-radial-bg {
-  min-height: 100vh;
-  overflow-x: clip;
+.custom-home-bg {
+  @apply relative z-0 flex min-h-screen items-center overflow-x-clip;
 }
 
-.custom-radial-bg::before {
+.custom-home-bg::before {
+  @apply absolute -z-10 aspect-square;
   content: "";
-  position: absolute;
-  z-index: -10;
-  top: 0;
-  left: 0;
-  width: 140vh;
-  transform: translate(66%, -33%);
-  aspect-ratio: 1 / 1;
+  top: -100vmin;
+  right: -50vmin;
+  width: 200vmin;
   background: radial-gradient(
     circle farthest-side at center,
     #deb887 0%,
     #00000000 100%
   );
+}
+
+.custom-home-bg::after {
+  @apply absolute inset-0 -z-10 object-cover;
+  content: "";
+  background-image: url("/grid.svg");
 }
