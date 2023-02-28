@@ -30,7 +30,7 @@ const Layout: React.FC<Props> = ({ children }) => {
 
   return (
     <main className={layout()}>
-      <Header />
+      <Header isOnHomePage={isOnHomePage} />
       {children}
     </main>
   );
