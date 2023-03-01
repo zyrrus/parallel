@@ -52,71 +52,45 @@ const About: React.FC = () => {
         mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
         tellus.
       </Text>
-      <div className="grid grid-cols-[1fr_2fr_1fr] grid-rows-2 items-center gap-x-24 gap-y-9">
-        <AboutRow
-          title="For Educators"
-          imgUrl="/images/about-educators.svg"
-          altText="for educators"
-          row="1"
-        >
-          Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-          Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-          mattis ligula consectetur, ultrices mauris.
-        </AboutRow>
-        <AboutRow
-          title="For Content Creators"
-          imgUrl="/images/about-creators.svg"
-          altText="for content creators"
-          row="2"
-          iconOnRight
-        >
-          Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-          Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-          mattis ligula consectetur, ultrices mauris.
-        </AboutRow>
+      <div className="grid grid-cols-1 gap-x-24 gap-y-9 md:grid-cols-[1fr_2fr_1fr] md:items-center">
+        <div className="md:col-start-2">
+          <Text tag="h3" styleLike="h4" className="mb-3">
+            For Educators
+          </Text>
+          <Text>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
+            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
+            fringilla, mattis ligula consectetur, ultrices mauris.
+          </Text>
+        </div>
+        <Image
+          priority
+          src="/images/about-educators.svg"
+          height={200}
+          width={200}
+          alt="for educators"
+          className="w-24 justify-self-start md:w-auto"
+        />
+        <Image
+          priority
+          src="/images/about-creators.svg"
+          height={200}
+          width={200}
+          alt="for content creators"
+          className="w-24 justify-self-end md:w-auto"
+        />
+        <div className="md:col-start-2">
+          <Text tag="h3" styleLike="h4" className="mb-3">
+            For Content Creators
+          </Text>
+          <Text>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
+            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
+            fringilla, mattis ligula consectetur, ultrices mauris.
+          </Text>
+        </div>
       </div>
     </section>
-  );
-};
-
-interface AboutRowProps {
-  title: string;
-  children: string;
-  imgUrl: string;
-  altText: string;
-  row: number | `${number}`;
-  iconOnRight?: boolean;
-}
-
-const AboutRow: React.FC<AboutRowProps> = ({
-  title,
-  children,
-  imgUrl,
-  altText,
-  row,
-  iconOnRight = false,
-}) => {
-  return (
-    <>
-      <Image
-        priority
-        src={imgUrl}
-        height={200}
-        width={200}
-        alt={altText}
-        className={`row-start-${row} ${
-          iconOnRight
-            ? "col-start-3 justify-self-start"
-            : "col-start-1 justify-self-end"
-        }`}
-      />
-      <div className="col-start-2">
-        <Text tag="h3" styleLike="h4" className="mb-3">
-          {title}
-        </Text>
-        <Text>{children}</Text>
-      </div>
-    </>
   );
 };
 
@@ -130,11 +104,13 @@ const Premium: React.FC = () => {
         Using Parallel is completely free, but you can enjoy exclusive features
         and support the platform with our premium version.
       </Text>
-      <a
-        href="#"
-        className="font-semibold text-tertiary hover:text-tertiary-600"
-      >
-        <Text>Learn more about Premium</Text>
+      <a href="#">
+        <Text
+          weight="semibold"
+          className="text-tertiary hover:text-tertiary-600"
+        >
+          Learn more about Premium
+        </Text>
       </a>
     </section>
   );
