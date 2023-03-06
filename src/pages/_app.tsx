@@ -6,7 +6,7 @@ import Head from "next/head";
 import { api } from "@utils/api";
 
 import "@styles/globals.css";
-import Layout from "@components/Layout";
+import Layout from "@components/layouts/Layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

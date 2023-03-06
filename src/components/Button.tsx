@@ -14,31 +14,37 @@ const button = cva(
   {
     variants: {
       size: {
-        default: "px-14 py-4",
-        small: "px-10 py-3",
+        default: "px-14 py-3",
+        small: "px-10 py-2",
       },
     },
   }
 );
 
 interface Props {
-  children: React.ReactNode;
-  onClick?: () => void;
   variant?: VariantProps<typeof button>;
 }
 
-const Button: React.FC<Props> = ({
+const Button: React.FC<
+  Props &
+    React.DetailedHTMLProps<
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+      HTMLButtonElement
+    >
+> = ({
   children,
-  onClick,
   variant = { size: "default" },
+  className,
+  ...buttonProps
 }) => {
   return (
     <button
       className={cx(
         button(variant),
-        text({ size: variant.size === "default" ? "h4" : "h6" })
+        text({ size: variant.size === "default" ? "h4" : "h6" }),
+        className
       )}
-      onClick={onClick}
+      {...buttonProps}
     >
       {children}
     </button>

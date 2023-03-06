@@ -3,6 +3,7 @@ import Image from "next/image";
 import Button from "@components/Button";
 import Divider from "@components/Divider";
 import Text from "@components/Text";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   return (
@@ -23,6 +24,12 @@ export default Home;
 // === Sections =====================================================
 
 const Hero: React.FC = () => {
+  const router = useRouter();
+
+  const handleCTA = () => {
+    void router.push("/auth/sign-up");
+  };
+
   return (
     <section className="custom-home-bg">
       <div className="container">
@@ -34,7 +41,7 @@ const Hero: React.FC = () => {
         <Text size="h3" weight="bold" className="mt-6 mb-16 drop-shadow-blur">
           Get connected with Parallel
         </Text>
-        <Button>Get Started</Button>
+        <Button onClick={handleCTA}>Get Started</Button>
       </div>
     </section>
   );

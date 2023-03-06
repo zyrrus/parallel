@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { cva, cx } from "class-variance-authority";
 import Button from "@components/Button";
 import Text from "@components/Text";
+import { useRouter } from "next/router";
 
 const header = cva(
   ["fixed top-0 z-50 w-full transition-all duration-300 ease-in-out"],
@@ -15,12 +16,13 @@ const header = cva(
   }
 );
 
-interface Props {
-  isOnHomePage: boolean;
-}
-
-const Header: React.FC<Props> = ({ isOnHomePage }) => {
+const HomeHeader: React.FC = () => {
   const [isLargeBar, setIsLargeBar] = useState(true);
+  const router = useRouter();
+
+  const handleSignUp = () => {
+    void router.push("/auth/sign-up");
+  };
 
   // Scroll Listener
   useEffect(() => {
@@ -76,10 +78,12 @@ const Header: React.FC<Props> = ({ isOnHomePage }) => {
             <Text weight="medium">Premium</Text>
           </a>
         </div>
-        <Button variant={{ size: "small" }}>Sign Up</Button>
+        <Button variant={{ size: "small" }} onClick={handleSignUp}>
+          Sign Up
+        </Button>
       </nav>
     </header>
   );
 };
 
-export default Header;
+export default HomeHeader;
