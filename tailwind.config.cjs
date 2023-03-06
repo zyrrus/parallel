@@ -93,10 +93,12 @@ module.exports = {
           "radial-gradient(circle farthest-side at center, #deb887 0%, #00000000 100%)",
       },
       boxShadow: {
+        "solid-raised": "14px 28px 0px rgba(0, 0, 0, 0.2)",
         solid: "12px 24px 0px rgba(0, 0, 0, 0.2)",
         "solid-lowered": "10px 20px 0px rgba(0, 0, 0, 0.2)",
+        "solid-medium": "8px 16px 0px rgba(0, 0, 0, 0.2)",
+        "solid-medium-lowered": "6px 12px 0px rgba(0, 0, 0, 0.2)",
         "solid-lowest": "2px 4px 0px rgba(0, 0, 0, 0.2)",
-        "solid-raised": "14px 28px 0px rgba(0, 0, 0, 0.2)",
       },
       dropShadow: {
         blur: "0 0 5px #303030",
