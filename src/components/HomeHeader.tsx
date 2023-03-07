@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { cva, cx } from "class-variance-authority";
-import Button from "@components/Button";
+import { Anchor } from "@components/Button";
 import Text from "@components/Text";
 import { useRouter } from "next/router";
 
@@ -18,11 +18,6 @@ const header = cva(
 
 const HomeHeader: React.FC = () => {
   const [isLargeBar, setIsLargeBar] = useState(true);
-  const router = useRouter();
-
-  const handleSignUp = () => {
-    void router.push("/auth/sign-up");
-  };
 
   // Scroll Listener
   useEffect(() => {
@@ -78,9 +73,9 @@ const HomeHeader: React.FC = () => {
             <Text weight="medium">Premium</Text>
           </a>
         </div>
-        <Button variant={{ size: "small" }} onClick={handleSignUp}>
+        <Anchor variant={{ size: "small" }} href="/auth/sign-up">
           Sign Up
-        </Button>
+        </Anchor>
       </nav>
     </header>
   );

@@ -1,15 +1,17 @@
-import Button from "@components/Button";
+import { Button } from "@components/Button";
 import TextInput from "@components/TextInput";
 import Text from "@components/Text";
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from "next";
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 import Image from "next/image";
 import Divider from "@components/Divider";
 import type { ZodString } from "zod";
 import { z } from "zod";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface FormInputField {
   name: string;
@@ -20,9 +22,9 @@ interface FormInputField {
   autoComplete?: string;
 }
 
-export default function SignIn({
+const SignIn = ({
   csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const fields: FormInputField[] = [
     {
       name: "name",
@@ -68,14 +70,20 @@ export default function SignIn({
     },
   ];
 
+  const router = useRouter();
+
+  const handleAuth = () => {
+    // void signIn("email", { email });
+    // router.back();
+  };
+
   return (
     <>
       <Text styleLike="h3" className="my-6 mx-10 text-center text-primary">
         Sign up. Get Connected.
       </Text>
       <form
-        method="post"
-        action="/api/auth/callback/credentials"
+        onSubmit={handleAuth}
         className="flex w-full max-w-lg flex-col items-center justify-center gap-y-2.5 px-4"
       >
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
@@ -88,7 +96,7 @@ export default function SignIn({
       </form>
       <Text className="mt-8 mb-12">
         Already have an account?{" "}
-        <a href="#">
+        <Link href="/auth/sign-in">
           <Text
             tag="span"
             weight="semibold"
@@ -96,7 +104,7 @@ export default function SignIn({
           >
             Sign in
           </Text>
-        </a>
+        </Link>
       </Text>
       <div className="w-full min-w-max max-w-md px-12">
         <Divider>or sign up with</Divider>
@@ -108,19 +116,30 @@ export default function SignIn({
       </div>
     </>
   );
-}
+};
 
 const AuthWith: React.FC<{ name: string }> = ({ name }) => {
+  const nameLowercase = name.toLowerCase();
+  const router = useRouter();
+
+  const handleAuth = async () => {
+    await signIn(nameLowercase);
+    // await router.push("/projects");
+  };
+
   return (
-    <div className="rounded-full shadow-solid-medium transition-all hover:shadow-solid-medium-lowered active:shadow-solid-lowest">
+    <button
+      onClick={() => void handleAuth()}
+      className="rounded-full shadow-solid-medium transition-all hover:shadow-solid-medium-lowered active:shadow-solid-lowest"
+    >
       <Image
-        src={`/${name.toLowerCase()}.svg`}
+        src={`/${nameLowercase}.svg`}
         alt={`sign up with ${name}`}
         width={40}
         height={40}
         className="rounded-full bg-black hover:opacity-75 active:opacity-50"
       />
-    </div>
+    </button>
   );
 };
 
@@ -131,3 +150,5 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     },
   };
 }
+
+export default SignIn;

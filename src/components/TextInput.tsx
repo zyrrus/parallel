@@ -25,7 +25,7 @@ const TextInput: React.FC<
       <label htmlFor={name} className="mb-1 block text-fg">
         <Text weight="bold">{label}</Text>
       </label>
-      <Text size="h4">
+      <Text size="h5">
         <input name={name} type={type} className={input()} {...inputProps} />
       </Text>
     </div>

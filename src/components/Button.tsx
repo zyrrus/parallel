@@ -1,7 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
-import { cx } from "class-variance-authority";
-import { cva } from "class-variance-authority";
-import { text } from "./Text";
+import { cx, cva } from "class-variance-authority";
+import Text, { text } from "@components/Text";
 
 const button = cva(
   [
@@ -25,15 +24,15 @@ interface Props {
   variant?: VariantProps<typeof button>;
 }
 
-const Button: React.FC<
+export const Button: React.FC<
   Props &
     React.DetailedHTMLProps<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
       HTMLButtonElement
     >
 > = ({
-  children,
   variant = { size: "default" },
+  children,
   className,
   ...buttonProps
 }) => {
@@ -51,4 +50,34 @@ const Button: React.FC<
   );
 };
 
-export default Button;
+export const Anchor: React.FC<
+  Props &
+    React.DetailedHTMLProps<
+      React.AnchorHTMLAttributes<HTMLAnchorElement>,
+      HTMLAnchorElement
+    >
+> = ({
+  variant = { size: "default" },
+  children,
+  className,
+  ...anchorProps
+}) => {
+  return (
+    <a {...anchorProps}>
+      <Text
+        styleLike={variant.size === "default" ? "h4" : "h6"}
+        className={cx(button(variant), className)}
+      >
+        {children}
+      </Text>
+    </a>
+    // <div className={cx(button(variant), className)}>
+    //   <a
+    //     className={text({ size: variant.size === "default" ? "h4" : "h6" })}
+    //     {...anchorProps}
+    //   >
+    //     {children}
+    //   </a>
+    // </div>
+  );
+};
