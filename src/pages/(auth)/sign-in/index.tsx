@@ -5,72 +5,29 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from "next";
-import { getCsrfToken, signIn } from "next-auth/react";
+import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Divider from "@components/Divider";
-import type { ZodString } from "zod";
-import { z } from "zod";
 import { useRouter } from "next/router";
-import Link from "next/link";
-
-interface FormInputField {
-  name: string;
-  label: string;
-  validator: ZodString;
-  type?: string;
-  placeholder?: string;
-  autoComplete?: string;
-}
+import { useEffect } from "react";
+import Layout from "@components/layouts/Layout";
+import { SignInFields } from "@constants/auth";
 
 const SignIn = ({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const fields: FormInputField[] = [
-    {
-      name: "name",
-      label: "Full Name",
-      placeholder: "Enter your full name",
-      validator: z
-        .string({
-          required_error: "Full name is required",
-        })
-        .min(1, { message: "Name must not be empty" }),
-    },
-    {
-      name: "username",
-      label: "Username",
-      placeholder: "Enter your username",
-      validator: z
-        .string({
-          required_error: "Username is required",
-        })
-        .min(3, { message: "Username must be at least 3 characters long" }),
-    },
-    {
-      type: "email",
-      name: "email",
-      label: "Email",
-      placeholder: "Enter your email",
-      autoComplete: "email",
-      validator: z
-        .string({
-          required_error: "Email is required",
-        })
-        .email({ message: "Invalid email address" }),
-    },
-    {
-      type: "password",
-      name: "password",
-      label: "Password",
-      placeholder: "Enter your password",
-      validator: z.string({
-        required_error: "Password is required",
-      }),
-      //   .regex(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, { message: "Password must contain ..." }),
-    },
-  ];
-
   const router = useRouter();
+
+  const { data: sessionData } = useSession();
+  //   useEffect(() => {
+  //     if (sessionData) {
+  //       console.log("Has session", sessionData);
+  //       if (sessionData.user) {
+  //         console.log(`Hello ${sessionData.user.id}`);
+  //         void router.push("/projects");
+  //       }
+  //     }
+  //   }, [sessionData]);
 
   const handleAuth = () => {
     // void signIn("email", { email });
@@ -78,43 +35,42 @@ const SignIn = ({
   };
 
   return (
-    <>
+    <Layout layout="auth">
       <Text styleLike="h3" className="my-6 mx-10 text-center text-primary">
-        Sign up. Get Connected.
+        Welcome back. Sign in.
       </Text>
       <form
         onSubmit={handleAuth}
         className="flex w-full max-w-lg flex-col items-center justify-center gap-y-2.5 px-4"
       >
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        {fields.map(({ name, ...fieldProps }) => (
+        {SignInFields.map(({ name, ...fieldProps }) => (
           <TextInput key={name} {...fieldProps} />
         ))}
         <Button type="submit" className="mt-12">
-          Sign Up
+          Sign In
         </Button>
       </form>
       <Text className="mt-8 mb-12">
-        Already have an account?{" "}
-        <Link href="/auth/sign-in">
-          <Text
-            tag="span"
-            weight="semibold"
-            className="text-tertiary hover:text-tertiary-600"
-          >
-            Sign in
-          </Text>
-        </Link>
+        {"Don't have an account? "}
+        <Text
+          tag="a"
+          href="/auth/sign-up"
+          weight="semibold"
+          className="text-tertiary hover:text-tertiary-600"
+        >
+          Sign up
+        </Text>
       </Text>
       <div className="w-full min-w-max max-w-md px-12">
-        <Divider>or sign up with</Divider>
+        <Divider>or sign in with</Divider>
       </div>
       <div className="my-8 flex flex-row gap-x-6">
         <AuthWith name="GitHub" />
         <AuthWith name="Google" />
         <AuthWith name="Apple" />
       </div>
-    </>
+    </Layout>
   );
 };
 

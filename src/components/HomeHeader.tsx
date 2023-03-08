@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { cva, cx } from "class-variance-authority";
-import { Anchor } from "@components/Button";
+import { Anchor, Button } from "@components/Button";
 import Text from "@components/Text";
-import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const header = cva(
   ["fixed top-0 z-50 w-full transition-all duration-300 ease-in-out"],
@@ -73,9 +73,9 @@ const HomeHeader: React.FC = () => {
             <Text weight="medium">Premium</Text>
           </a>
         </div>
-        <Anchor variant={{ size: "small" }} href="/auth/sign-up">
-          Sign Up
-        </Anchor>
+        <Button variant={{ size: "small" }} onClick={() => void signIn()}>
+          Sign In
+        </Button>
       </nav>
     </header>
   );

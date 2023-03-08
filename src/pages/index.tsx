@@ -1,12 +1,19 @@
-import { type NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+} from "next";
 import Image from "next/image";
-import { Anchor } from "@components/Button";
+import { Button } from "@components/Button";
 import Divider from "@components/Divider";
 import Text from "@components/Text";
+import Layout from "@components/layouts/Layout";
+import { getServerAuthSession } from "@server/auth";
+import { signIn } from "next-auth/react";
 
 const Home: NextPage = () => {
   return (
-    <>
+    <Layout layout="home">
       <Hero />
       <Divider />
       <About />
@@ -14,8 +21,22 @@ const Home: NextPage = () => {
       <Premium />
       <Divider />
       <CTA />
-    </>
+    </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session && session.user) {
+    return {
+      redirect: { destination: "/projects", permanent: true },
+    };
+  }
+
+  return { props: { session } };
 };
 
 export default Home;
@@ -34,7 +55,7 @@ const Hero: React.FC = () => {
         <Text size="h3" weight="bold" className="mt-6 mb-16 drop-shadow-blur">
           Get connected with Parallel
         </Text>
-        <Anchor href="/auth/sign-up">Get Started</Anchor>
+        <Button onClick={() => void signIn()}>Get Started</Button>
       </div>
     </section>
   );
@@ -119,9 +140,9 @@ const Premium: React.FC = () => {
 const CTA: React.FC = () => {
   return (
     <section>
-      <Anchor href="/auth/sign-up" className="mx-auto">
+      <Button onClick={() => void signIn()} className="mx-auto">
         Sign Up Now
-      </Anchor>
+      </Button>
     </section>
   );
 };

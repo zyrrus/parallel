@@ -25,23 +25,11 @@ const layoutWrappers: Record<
 
 interface Props {
   children: React.ReactNode;
+  layout?: LayoutWrapper;
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
-  const router = useRouter();
-  const [wrapperType, setWrapperType] = useState<LayoutWrapper>("none");
-
-  useEffect(() => {
-    const getLayoutType = (): LayoutWrapper => {
-      if (router.pathname === "/") return "home";
-      else if (router.pathname.startsWith("/auth/")) return "auth";
-      // TODO: insert other cases
-      return "none";
-    };
-    setWrapperType(getLayoutType());
-  }, [router.pathname]);
-
-  const ContextualLayout = layoutWrappers[wrapperType];
+const Layout: React.FC<Props> = ({ layout = "none", children }) => {
+  const ContextualLayout = layoutWrappers[layout];
 
   return (
     <main className={`${murecho.variable} font-sans`}>

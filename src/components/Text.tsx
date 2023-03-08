@@ -1,6 +1,7 @@
 import React from "react";
 import { cva } from "class-variance-authority";
 import type { Tag, Weight } from "@utils/types/tw";
+import Link from "next/link";
 
 export const text = cva("", {
   variants: {
@@ -36,8 +37,9 @@ export const text = cva("", {
 
 interface Props {
   children: React.ReactNode;
-  tag?: Tag | "span";
+  tag?: Tag | "span" | "a";
   styleLike?: Tag;
+  href?: string;
   // Override default tag styling
   size?: Tag;
   weight?: Weight;
@@ -48,12 +50,29 @@ const Text: React.FC<Props> = ({
   children,
   tag = "p",
   styleLike,
+  href = "#",
   size,
   weight,
   className = "",
 }) => {
-  const styleTag: Tag = tag === "span" ? "p" : tag;
+  // Links
+  if (tag === "a") {
+    return (
+      <Link
+        href={href}
+        className={text({
+          className: className,
+          size: size ?? styleLike ?? "p",
+          weight: weight ?? styleLike ?? "p",
+        })}
+      >
+        {children}
+      </Link>
+    );
+  }
 
+  // Other tags
+  const styleTag: Tag = tag === "span" ? "p" : tag;
   return React.createElement(
     tag,
     {
