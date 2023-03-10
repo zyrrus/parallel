@@ -19,7 +19,16 @@ const Projects: NextPage = ({
       <Text tag="h1">Projects</Text>
       <Text>Signed in as {session?.user?.id}</Text>
 
-      <Button onClick={() => void signOut()}>Sign Out</Button>
+      <Button
+        onClick={() =>
+          void signOut({
+            callbackUrl: "/",
+            redirect: true,
+          })
+        }
+      >
+        Sign Out
+      </Button>
     </Layout>
   );
 };
