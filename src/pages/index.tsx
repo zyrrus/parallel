@@ -140,7 +140,7 @@ const Premium: React.FC = () => {
 const CTA: React.FC = () => {
   return (
     <section>
-      <Button onClick={() => void signIn()} className="mx-auto">
+      <Button onClick={() => void signIn()} className="mx-auto block">
         Sign Up Now
       </Button>
     </section>
