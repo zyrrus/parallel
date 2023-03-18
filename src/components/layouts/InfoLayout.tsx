@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 
 export const InfoLayout: React.FC<Children> = ({ children }) => {
   return (
-    <>
+    <main>
       <Link
         href="/"
         className="relative flex min-h-screen flex-col items-center justify-center"
@@ -15,6 +15,6 @@ export const InfoLayout: React.FC<Children> = ({ children }) => {
         />
       </Link>
       {children}
-    </>
+    </main>
   );
 };

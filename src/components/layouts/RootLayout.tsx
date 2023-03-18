@@ -9,5 +9,5 @@ const murecho = Murecho({
 });
 
 export const RootLayout: React.FC<Children> = ({ children }) => {
-  return <main className={`${murecho.variable} font-sans`}>{children}</main>;
+  return <div className={`${murecho.variable} font-sans`}>{children}</div>;
 };
