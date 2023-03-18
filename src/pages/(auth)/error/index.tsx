@@ -1,8 +1,8 @@
-import Layout from "@components/layouts/Layout";
+import { InfoLayout } from "@components/layouts";
 import { type NextPage } from "next";
 
 const Error: NextPage = () => {
-  return <Layout layout="info">Error</Layout>;
+  return <InfoLayout>Error</InfoLayout>;
 };
 
 export default Error;

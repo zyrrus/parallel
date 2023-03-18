@@ -1,6 +1,5 @@
 import { Button } from "@components/Button";
-import TextInput from "@components/TextInput";
-import Text from "@components/Text";
+import { TextInput } from "@components/TextInput";
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
@@ -10,8 +9,11 @@ import Image from "next/image";
 import Divider from "@components/Divider";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Layout from "@components/layouts/Layout";
+import { InfoLayout } from "@components/layouts";
 import { SignInFields } from "@constants/auth";
+import { typo } from "@styles/typography";
+import { cx } from "class-variance-authority";
+import Link from "next/link";
 
 const SignIn = ({
   csrfToken,
@@ -35,10 +37,15 @@ const SignIn = ({
   };
 
   return (
-    <Layout layout="auth">
-      <Text styleLike="h3" className="my-6 mx-10 text-center text-primary">
+    <InfoLayout>
+      <h1
+        className={cx(
+          typo({ tag: "h3" }),
+          "my-6 mx-10 text-center text-primary"
+        )}
+      >
         Welcome back. Sign in.
-      </Text>
+      </h1>
       <form
         onSubmit={handleAuth}
         className="flex w-full max-w-lg flex-col items-center justify-center gap-y-2.5 px-4"
@@ -51,17 +58,18 @@ const SignIn = ({
           Sign In
         </Button>
       </form>
-      <Text className="mt-8 mb-12">
+      <p className={cx(typo({ tag: "p" }), "mt-8 mb-12")}>
         {"Don't have an account? "}
-        <Text
-          tag="a"
-          href="/auth/sign-up"
-          weight="semibold"
-          className="text-tertiary hover:text-tertiary-600"
+        <Link
+          href="/auth/sign-in"
+          className={cx(
+            typo({ size: "base" }),
+            "font-semibold text-tertiary hover:text-tertiary-600"
+          )}
         >
           Sign up
-        </Text>
-      </Text>
+        </Link>
+      </p>
       <div className="w-full min-w-max max-w-md px-12">
         <Divider>or sign in with</Divider>
       </div>
@@ -70,7 +78,7 @@ const SignIn = ({
         <AuthWith name="Google" />
         <AuthWith name="Apple" />
       </div>
-    </Layout>
+    </InfoLayout>
   );
 };
 

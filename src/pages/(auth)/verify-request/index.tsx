@@ -1,8 +1,8 @@
-import Layout from "@components/layouts/Layout";
+import { InfoLayout } from "@components/layouts";
 import { type NextPage } from "next";
 
 const VerifyRequest: NextPage = () => {
-  return <Layout layout="info">Verify Request</Layout>;
+  return <InfoLayout>Verify Request</InfoLayout>;
 };
 
 export default VerifyRequest;

@@ -3,6 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { SSRProvider } from "react-aria";
 import Head from "next/head";
+import { RootLayout } from "@components/layouts";
 import { api } from "@utils/api";
 import "@styles/globals.css";
 
@@ -19,7 +20,9 @@ const ParallelApp: AppType<{ session: Session | null }> = ({
       </Head>
       <SSRProvider>
         <SessionProvider session={session}>
-          <Component {...pageProps} />
+          <RootLayout>
+            <Component {...pageProps} />
+          </RootLayout>
         </SessionProvider>
       </SSRProvider>
     </>

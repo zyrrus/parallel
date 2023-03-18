@@ -1,6 +1,5 @@
 import { Button } from "@components/Button";
-import TextInput from "@components/TextInput";
-import Text from "@components/Text";
+import { TextInput } from "@components/TextInput";
 import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
@@ -11,8 +10,10 @@ import Divider from "@components/Divider";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect } from "react";
-import Layout from "@components/layouts/Layout";
+import { InfoLayout } from "@components/layouts";
 import { SignUpFields } from "@constants/auth";
+import { cx } from "class-variance-authority";
+import { typo } from "@styles/typography";
 
 const SignUp = ({
   csrfToken,
@@ -33,10 +34,15 @@ const SignUp = ({
   };
 
   return (
-    <Layout layout="auth">
-      <Text styleLike="h3" className="my-6 mx-10 text-center text-primary">
+    <InfoLayout>
+      <h1
+        className={cx(
+          typo({ tag: "h3" }),
+          "my-6 mx-10 text-center text-primary"
+        )}
+      >
         Sign up. Get Connected.
-      </Text>
+      </h1>
       <form
         onSubmit={handleEmailAuth}
         className="flex w-full max-w-lg flex-col items-center justify-center gap-y-2.5 px-4"
@@ -49,17 +55,18 @@ const SignUp = ({
           Sign Up
         </Button>
       </form>
-      <Text className="mt-8 mb-12">
+      <p className={cx(typo({ tag: "p" }), "mt-8 mb-12")}>
         Already have an account?{" "}
-        <Text
-          tag="a"
+        <Link
           href="/auth/sign-in"
-          weight="semibold"
-          className="text-tertiary hover:text-tertiary-600"
+          className={cx(
+            typo({ size: "base" }),
+            "font-semibold text-tertiary hover:text-tertiary-600"
+          )}
         >
           Sign in
-        </Text>
-      </Text>
+        </Link>
+      </p>
       <div className="w-full min-w-max max-w-md px-12">
         <Divider>or sign up with</Divider>
       </div>
@@ -68,7 +75,7 @@ const SignUp = ({
         <AuthWith name="Google" />
         <AuthWith name="Apple" />
       </div>
-    </Layout>
+    </InfoLayout>
   );
 };
 

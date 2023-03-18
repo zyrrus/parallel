@@ -1,35 +1,35 @@
-import Text from "@components/Text";
-import { cva } from "class-variance-authority";
+import { typo } from "@styles/typography";
+import { cva, cx } from "class-variance-authority";
 import type { ZodString } from "zod";
 
 const input = cva([
+  typo({ tag: "p" }),
   "appearance-none",
-  "w-full rounded border-[6px] py-2 px-3 md:py-3 md:px-4 leading-tight text-fg border-fg placeholder-fg/50 bg-fg/20",
+  "w-full rounded border-[6px] py-2 px-3 md:py-3 md:px-4 leading-tight border-fg placeholder-fg/50 bg-fg/20",
   "focus:outline-none",
 ]);
 
 interface Props {
   label: string;
-  validator: ZodString;
+  validator?: ZodString;
 }
 
-const TextInput: React.FC<
+export const TextInput: React.FC<
   Props &
     React.DetailedHTMLProps<
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >
-> = ({ label, validator, name, type = "text", ...inputProps }) => {
+> = ({ label, name, type = "text", ...inputProps }) => {
   return (
     <div className="w-full">
-      <label htmlFor={name} className="mb-1 block text-fg">
-        <Text weight="bold">{label}</Text>
+      <label
+        htmlFor={name}
+        className={cx(typo({ size: "base" }), "mb-1 block text-fg")}
+      >
+        {label}
       </label>
-      <Text size="h5">
-        <input name={name} type={type} className={input()} {...inputProps} />
-      </Text>
+      <input name={name} type={type} className={input()} {...inputProps} />
     </div>
   );
 };
-
-export default TextInput;

@@ -1,18 +1,13 @@
-import HomeFooter from "@components/HomeFooter";
-import HomeHeader from "@components/HomeHeader";
+import { Footer } from "@components/Footer";
+import { Header } from "@components/Header";
+import type { Children } from "@utils/types/props";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const HomeLayout: React.FC<Props> = ({ children }) => {
+export const HomeLayout: React.FC<Children> = ({ children }) => {
   return (
     <>
-      <HomeHeader />
+      <Header />
       {children}
-      <HomeFooter />
+      <Footer />
     </>
   );
 };
-
-export default HomeLayout;

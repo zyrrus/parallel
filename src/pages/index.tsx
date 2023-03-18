@@ -6,14 +6,15 @@ import type {
 import Image from "next/image";
 import { Button } from "@components/Button";
 import Divider from "@components/Divider";
-import Text from "@components/Text";
-import Layout from "@components/layouts/Layout";
 import { getServerAuthSession } from "@server/auth";
 import { signIn } from "next-auth/react";
+import { HomeLayout } from "@components/layouts";
+import { cx } from "class-variance-authority";
+import { typo } from "@styles/typography";
 
 const Home: NextPage = () => {
   return (
-    <Layout layout="home">
+    <HomeLayout>
       <Hero />
       <Divider />
       <About />
@@ -21,7 +22,7 @@ const Home: NextPage = () => {
       <Premium />
       <Divider />
       <CTA />
-    </Layout>
+    </HomeLayout>
   );
 };
 
@@ -47,14 +48,19 @@ const Hero: React.FC = () => {
   return (
     <section className="custom-home-bg">
       <div className="container">
-        <Text tag="h1" className="leading-tight text-primary drop-shadow-blur">
+        <h1
+          className={cx(
+            typo({ tag: "h1" }),
+            "leading-tight text-primary drop-shadow-blur"
+          )}
+        >
           Collaborate with experts.
           <br />
-          Educate the world.
-        </Text>
-        <Text size="h3" weight="bold" className="mt-6 mb-16 drop-shadow-blur">
+          Create educational content.
+        </h1>
+        <h3 className={cx(typo({ tag: "h3" }), "mt-6 mb-16 drop-shadow-blur")}>
           Get connected with Parallel
-        </Text>
+        </h3>
         <Button onClick={() => void signIn()}>Get Started</Button>
       </div>
     </section>
@@ -64,25 +70,33 @@ const Hero: React.FC = () => {
 const About: React.FC = () => {
   return (
     <section className="container">
-      <Text tag="h2" className="mb-5 text-center text-primary">
+      <h2 className={cx(typo({ tag: "h2" }), "mb-5 text-center text-primary")}>
         About Parallel
-      </Text>
-      <Text className="mx-auto mb-24 max-w-6xl text-center">
-        Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-        Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-        mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
-        tellus.
-      </Text>
+      </h2>
+      <p
+        className={cx(
+          typo({ tag: "p" }),
+          "mx-auto mb-24 max-w-6xl text-center"
+        )}
+      >
+        Parallel{"'"}s mission is to address the disparity between the number of
+        educators who can produce high-quality educational content and the
+        number of content creators who have the expertise to tackle complex
+        subject matter. We connect content creators with educators, enabling
+        them to collaborate and produce exceptional educational content. Users
+        can assemble teams, work together on projects, and then publish a final
+        piece to platforms like YouTube.
+      </p>
       <div className="grid grid-cols-1 gap-x-24 gap-y-9 md:grid-cols-[1fr_2fr_1fr] md:items-center">
         <div className="md:col-start-2">
-          <Text tag="h3" styleLike="h4" className="mb-3">
-            For Educators
-          </Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
-            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-            fringilla, mattis ligula consectetur, ultrices mauris.
-          </Text>
+          <h3 className={cx(typo({ tag: "h4" }), "mb-3")}>For Educators</h3>
+          <p className={typo({ tag: "p" })}>
+            Parallel provides educators with a platform to share their expertise
+            with a wider audience by collaborating with content creators. By
+            working together, educators can produce engaging and informative
+            videos that are accessible to students everywhere, without investing
+            too much time in video production.
+          </p>
         </div>
         <Image
           priority
@@ -101,14 +115,16 @@ const About: React.FC = () => {
           className="w-24 justify-self-end md:w-auto"
         />
         <div className="md:col-start-2">
-          <Text tag="h3" styleLike="h4" className="mb-3">
+          <h3 className={cx(typo({ tag: "h4" }), "mb-3")}>
             For Content Creators
-          </Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
-            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-            fringilla, mattis ligula consectetur, ultrices mauris.
-          </Text>
+          </h3>
+          <p className={typo({ tag: "p" })}>
+            Parallel empowers content creators to produce high-quality
+            educational content that they may not have had the expertise to
+            tackle on their own. By collaborating with educators, creators can
+            explore new topics and create more comprehensive videos that engage
+            and inform their audience.
+          </p>
         </div>
       </div>
     </section>
@@ -118,20 +134,21 @@ const About: React.FC = () => {
 const Premium: React.FC = () => {
   return (
     <section className="container text-center">
-      <Text tag="h2" className="text-primary">
+      <h2 className={cx(typo({ tag: "h2" }), "text-primary")}>
         Parallel Premium
-      </Text>
-      <Text className="my-5">
+      </h2>
+      <p className={cx(typo({ tag: "p" }), "my-5")}>
         Using Parallel is completely free, but you can enjoy exclusive features
         and support the platform with our premium version.
-      </Text>
-      <a href="#">
-        <Text
-          weight="semibold"
-          className="text-tertiary hover:text-tertiary-600"
-        >
-          Learn more about Premium
-        </Text>
+      </p>
+      <a
+        href="#"
+        className={cx(
+          typo({ tag: "p" }),
+          "font-semibold text-tertiary hover:text-tertiary-600"
+        )}
+      >
+        Learn more about Premium
       </a>
     </section>
   );

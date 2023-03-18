@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { cva, cx } from "class-variance-authority";
-import { Anchor, Button } from "@components/Button";
-import Text from "@components/Text";
+import { Button } from "@components/Button";
 import { signIn } from "next-auth/react";
+import { typo } from "@styles/typography";
 
 const header = cva(
   ["fixed top-0 z-50 w-full transition-all duration-300 ease-in-out"],
@@ -16,7 +16,7 @@ const header = cva(
   }
 );
 
-const HomeHeader: React.FC = () => {
+export const Header: React.FC = () => {
   const [isLargeBar, setIsLargeBar] = useState(true);
 
   // Scroll Listener
@@ -36,9 +36,7 @@ const HomeHeader: React.FC = () => {
   });
 
   const FlexDivider = () => (
-    <Text tag="span" styleLike="h4" className="text-fg/25">
-      ||
-    </Text>
+    <span className={cx(typo({ tag: "h4" }), "text-fg/25")}>||</span>
   );
 
   const Background = () => (
@@ -59,18 +57,19 @@ const HomeHeader: React.FC = () => {
     >
       <Background />
       <nav className="container flex flex-row items-center justify-between gap-x-4">
-        <a href="#">
-          <Text styleLike="h4" className="min-w-max text-primary">
-            <span className="text-fg">||</span> Parallel
-          </Text>
+        <a
+          href="#"
+          className={cx(typo({ tag: "h4" }), "min-w-max text-primary")}
+        >
+          <span className="text-fg">||</span> Parallel
         </a>
         <div className="flex flex-row items-center gap-x-4 sm:gap-x-8">
-          <a href="#">
-            <Text weight="medium">About Us</Text>
+          <a href="#" className={cx(typo({ tag: "p" }), "font-medium")}>
+            About Us
           </a>
           <FlexDivider />
-          <a href="#">
-            <Text weight="medium">Premium</Text>
+          <a href="#" className={cx(typo({ tag: "p" }), "font-medium")}>
+            Premium
           </a>
         </div>
         <Button variant={{ size: "small" }} onClick={() => void signIn()}>
@@ -80,5 +79,3 @@ const HomeHeader: React.FC = () => {
     </header>
   );
 };
-
-export default HomeHeader;

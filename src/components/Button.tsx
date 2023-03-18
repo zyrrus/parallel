@@ -1,6 +1,6 @@
+import { typo } from "@styles/typography";
 import type { VariantProps } from "class-variance-authority";
 import { cx, cva } from "class-variance-authority";
-import Text, { text } from "@components/Text";
 
 const button = cva(
   [
@@ -13,8 +13,8 @@ const button = cva(
   {
     variants: {
       size: {
-        default: "px-14 py-3",
-        small: "px-10 py-2",
+        default: cx(typo({ size: "2xl" }), "px-14 py-3"),
+        small: cx(typo({ size: "lg" }), "px-10 py-2"),
       },
     },
   }
@@ -37,14 +37,7 @@ export const Button: React.FC<
   ...buttonProps
 }) => {
   return (
-    <button
-      className={cx(
-        button(variant),
-        text({ size: variant.size === "default" ? "h4" : "h6" }),
-        className
-      )}
-      {...buttonProps}
-    >
+    <button className={cx(button(variant), className)} {...buttonProps}>
       {children}
     </button>
   );
@@ -63,13 +56,8 @@ export const Anchor: React.FC<
   ...anchorProps
 }) => {
   return (
-    <a {...anchorProps}>
-      <Text
-        styleLike={variant.size === "default" ? "h4" : "h6"}
-        className={cx(button(variant), className)}
-      >
-        {children}
-      </Text>
+    <a {...anchorProps} className={cx(button(variant), className)}>
+      {children}
     </a>
     // <div className={cx(button(variant), className)}>
     //   <a

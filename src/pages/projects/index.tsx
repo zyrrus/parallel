@@ -1,50 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { getServerAuthSession } from "@server/auth";
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
-import Text from "@components/Text";
-import { Button } from "@components/Button";
-import { signOut } from "next-auth/react";
-import Layout from "@components/layouts/Layout";
+import type { NextPage } from "next";
+import { MainLayout } from "@components/layouts";
+import { typo } from "@styles/typography";
 
-const Projects: NextPage = ({
-  session,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Projects: NextPage = () => {
   return (
-    <Layout>
-      <Text tag="h1">Projects</Text>
-      <Text>Signed in as {session?.user?.id}</Text>
-
-      <Button
-        onClick={() =>
-          void signOut({
-            callbackUrl: "/",
-            redirect: true,
-          })
-        }
-      >
-        Sign Out
-      </Button>
-    </Layout>
+    <MainLayout>
+      <h1 className={typo({ tag: "h1" })}>Projects</h1>
+    </MainLayout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => {
-  const session = await getServerAuthSession(ctx);
-
-  if (!session) {
-    return {
-      redirect: { destination: "/api/auth/signin", permanent: false },
-    };
-  }
-
-  return { props: { session } };
 };
 
 export default Projects;
