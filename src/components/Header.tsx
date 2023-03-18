@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
   });
 
   const FlexDivider = () => (
-    <span className={cx(typo({ tag: "h4" }), "text-fg/25")}>||</span>
+    <span className={typo({ tag: "h4", className: "text-fg/25" })}>||</span>
   );
 
   const Background = () => (
@@ -59,16 +59,16 @@ export const Header: React.FC = () => {
       <nav className="container flex flex-row items-center justify-between gap-x-4">
         <a
           href="#"
-          className={cx(typo({ tag: "h4" }), "min-w-max text-primary")}
+          className={typo({ tag: "h4", className: "min-w-max text-primary" })}
         >
           <span className="text-fg">||</span> Parallel
         </a>
         <div className="flex flex-row items-center gap-x-4 sm:gap-x-8">
-          <a href="#" className={cx(typo({ tag: "p" }), "font-medium")}>
+          <a href="#" className={typo({ tag: "p", className: "font-medium" })}>
             About Us
           </a>
           <FlexDivider />
-          <a href="#" className={cx(typo({ tag: "p" }), "font-medium")}>
+          <a href="#" className={typo({ tag: "p", className: "font-medium" })}>
             Premium
           </a>
         </div>

@@ -13,8 +13,8 @@ const button = cva(
   {
     variants: {
       size: {
-        default: cx(typo({ size: "2xl" }), "px-14 py-3"),
-        small: cx(typo({ size: "lg" }), "px-10 py-2"),
+        default: typo({ size: "2xl", className: "px-14 py-3" }),
+        small: typo({ size: "lg", className: "px-10 py-2" }),
       },
     },
   }

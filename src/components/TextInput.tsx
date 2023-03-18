@@ -1,5 +1,5 @@
 import { typo } from "@styles/typography";
-import { cva, cx } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import type { ZodString } from "zod";
 
 const input = cva([
@@ -25,7 +25,7 @@ export const TextInput: React.FC<
     <div className="w-full">
       <label
         htmlFor={name}
-        className={cx(typo({ size: "base" }), "mb-1 block text-fg")}
+        className={typo({ size: "base", className: "mb-1 block text-fg" })}
       >
         {label}
       </label>

@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { InfoLayout } from "@components/layouts";
 import { SignUpFields } from "@constants/auth";
-import { cx } from "class-variance-authority";
 import { typo } from "@styles/typography";
 
 const SignUp = ({
@@ -36,10 +35,10 @@ const SignUp = ({
   return (
     <InfoLayout>
       <h1
-        className={cx(
-          typo({ tag: "h3" }),
-          "my-6 mx-10 text-center text-primary"
-        )}
+        className={typo({
+          tag: "h3",
+          className: "my-6 mx-10 text-center text-primary",
+        })}
       >
         Sign up. Get Connected.
       </h1>
@@ -55,14 +54,14 @@ const SignUp = ({
           Sign Up
         </Button>
       </form>
-      <p className={cx(typo({ tag: "p" }), "mt-8 mb-12")}>
+      <p className={typo({ tag: "p", className: "mt-8 mb-12" })}>
         Already have an account?{" "}
         <Link
           href="/auth/sign-in"
-          className={cx(
-            typo({ size: "base" }),
-            "font-semibold text-tertiary hover:text-tertiary-600"
-          )}
+          className={typo({
+            size: "base",
+            className: "font-semibold text-tertiary hover:text-tertiary-600",
+          })}
         >
           Sign in
         </Link>
