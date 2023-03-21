@@ -96,7 +96,7 @@ const AuthWith: React.FC<{ name: string }> = ({ name }) => {
       className="rounded-full shadow-solid-medium transition-all hover:shadow-solid-medium-lowered active:shadow-solid-lowest"
     >
       <Image
-        src={`/${nameLowercase}.svg`}
+        src={`/images/${nameLowercase}.svg`}
         alt={`sign up with ${name}`}
         width={40}
         height={40}

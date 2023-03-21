@@ -28,12 +28,6 @@ const navItems: NavItem[] = [
 ];
 
 export const SidePanel: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <div
       id="side-panel"
@@ -66,74 +60,4 @@ export const SidePanel: React.FC = () => {
       </header>
     </div>
   );
-  //   return (
-  //     <>
-  //       <div className="fixed top-0 left-0 hidden h-full w-16 bg-gray-900 text-gray-50 shadow md:block">
-  //         <nav className="flex h-full flex-col justify-between">
-  //           <div className="mt-6 flex flex-col items-center">
-  //             <Link href="/" className="mb-8">
-  //               <FiHome size={28} />
-  //             </Link>
-  //             <Link href="/search" className="mb-8">
-  //               <FiSearch size={28} />
-  //             </Link>
-  //             <Link href="/proposals" className="mb-8">
-  //               <FiList size={28} />
-  //             </Link>
-  //             <Link href="/revisions" className="mb-8">
-  //               <FiEdit size={28} />
-  //             </Link>
-  //             <Link href="/archive" className="mb-8">
-  //               <FiArchive size={28} />
-  //             </Link>
-  //           </div>
-  //           <div className="mb-6 flex flex-col items-center">
-  //             <Link href="/profile">
-  //               <FiUser size={28} />
-  //             </Link>
-  //           </div>
-  //         </nav>
-  //       </div>
-  //       <div className="fixed top-0 right-0 m-4 md:hidden">
-  //         <button
-  //           className="text-gray-900 focus:outline-none"
-  //           onClick={toggleMenu}
-  //         >
-  //           <FiMenu size={28} />
-  //         </button>
-  //       </div>
-  //       <div
-  //         className={`${
-  //           isOpen ? "flex" : "hidden"
-  //         } fixed top-0 left-0 h-full w-full bg-gray-900 text-gray-50 shadow md:hidden`}
-  //       >
-  //         <nav className="flex h-full flex-col items-center justify-center">
-  //           <Link href="/" className="my-6">
-  //             <FiHome size={28} />
-  //             <span className="ml-4">Home</span>
-  //           </Link>
-  //           <Link href="/search" className="my-6">
-  //             <FiSearch size={28} />
-  //             <span className="ml-4">Search</span>
-  //           </Link>
-  //           <Link href="/proposals" className="my-6">
-  //             <FiList size={28} />
-  //             <span className="ml-4">Proposals</span>
-  //           </Link>
-  //           <Link href="/revisions" className="my-6">
-  //             <FiEdit size={28} />
-  //             <span className="ml-4">Revisions</span>
-  //           </Link>
-  //           <Link href="/archive" className="my-6">
-  //             <FiArchive size={28} />
-  //             <span className="ml-4">Archive</span>
-  //           </Link>
-  //           <Link href="/profile" className="my-6">
-  //             <FiUser size={28} />
-  //             <span className="ml-4">Profile</span>
-  //           </Link>
-  //         </nav>
-  //       </div>
-  //     </>
-  //   );
 };

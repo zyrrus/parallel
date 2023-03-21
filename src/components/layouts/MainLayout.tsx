@@ -5,7 +5,7 @@ export const MainLayout: React.FC<Children> = ({ children }) => {
   return (
     <>
       <SidePanel />
-      <main>{children}</main>
+      <main className="mx-96">{children}</main>
     </>
   );
 };
