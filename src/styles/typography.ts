@@ -1,8 +1,8 @@
 import { cva, cx } from "class-variance-authority";
 
 const responsiveText = {
-  base: "text-sm md:text-base 2xl:text-lg",
-  lg: "text-sm md:text-base 2xl:text-lg",
+  base: "text-sm md:text-base xl:text-lg",
+  lg: "text-sm md:text-base xl:text-lg",
   xl: "text-base md:text-lg 2xl:text-xl",
   "2xl": "text-lg md:text-xl 2xl:text-2xl",
   "3xl": "text-xl md:text-2xl 2xl:text-3xl",
