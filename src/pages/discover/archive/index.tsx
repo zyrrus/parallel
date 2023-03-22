@@ -1,6 +1,11 @@
-import type { NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+} from "next";
 import { DiscoverLayout } from "@components/layouts";
 import { typo } from "@styles/typography";
+import { getServerAuthSession } from "@server/auth";
 
 const Archive: NextPage = () => {
   return (
@@ -11,3 +16,17 @@ const Archive: NextPage = () => {
 };
 
 export default Archive;
+
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session === null || session.user === null || session.user.id === null) {
+    return {
+      redirect: { destination: "/api/auth/signin", permanent: false },
+    };
+  }
+
+  return { props: { session } };
+};

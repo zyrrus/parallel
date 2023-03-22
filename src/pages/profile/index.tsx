@@ -13,6 +13,7 @@ interface Props {
 
 const Profile: NextPage<Props> = ({ session }) => {
   const { data, status } = useSession();
+
   return (
     <MainLayout>
       <h1 className={typo({ tag: "h1" })}>Profile</h1>

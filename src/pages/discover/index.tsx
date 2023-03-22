@@ -1,5 +1,7 @@
 import { DiscoverLayout } from "@components/layouts";
+import { getServerAuthSession } from "@server/auth";
 import type {
+  GetServerSideProps,
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
   NextPage,
@@ -7,14 +9,22 @@ import type {
 
 const Discover: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ query }) => {
+> = () => {
   return <DiscoverLayout />;
 };
 
 export default Discover;
 
-export function getServerSideProps(context: GetServerSidePropsContext) {
-  const query = context.query;
-  // Call a backend endpoint and return that list
-  return { props: { query } };
-}
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session === null || session.user === null || session.user.id === null) {
+    return {
+      redirect: { destination: "/api/auth/signin", permanent: false },
+    };
+  }
+
+  return { props: { session } };
+};
