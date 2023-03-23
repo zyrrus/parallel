@@ -52,9 +52,12 @@ model VerificationToken {
 }
 
 model Project {
-    id         String   @id
-    title      String
-    isComplete Boolean  @default(false)
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+
+    title       String
+    description String
+    authorId    String
+
+    @@index([authorId])
 }
