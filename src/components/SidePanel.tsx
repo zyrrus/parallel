@@ -31,7 +31,7 @@ export const SidePanel: React.FC = () => {
   return (
     <div
       id="side-panel"
-      className="fixed top-0 left-0 hidden h-full bg-bg-600 shadow md:block"
+      className="fixed top-0 left-0 hidden h-full w-64 bg-bg-600 md:block"
     >
       <header className="mx-12 my-8 flex flex-col">
         <h1>

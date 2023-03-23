@@ -5,21 +5,23 @@ import type {
 } from "next";
 import Image from "next/image";
 import { Button } from "@components/Button";
-import Divider from "@components/Divider";
+import { Divider } from "@components/Divider";
 import { getServerAuthSession } from "@server/auth";
 import { signIn } from "next-auth/react";
 import { HomeLayout } from "@components/layouts";
 import { typo } from "@styles/typography";
 
 const Home: NextPage = () => {
+  const SpacedDivider = () => <Divider className="container my-24" />;
+
   return (
     <HomeLayout>
       <Hero />
-      <Divider />
+      <SpacedDivider />
       <About />
-      <Divider />
+      <SpacedDivider />
       <Premium />
-      <Divider />
+      <SpacedDivider />
       <CTA />
     </HomeLayout>
   );

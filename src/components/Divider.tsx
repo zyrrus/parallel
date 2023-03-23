@@ -1,16 +1,53 @@
 import type { Children } from "@utils/types/props";
+import { cx } from "class-variance-authority";
 
-const Divider: React.FC<Children> = ({ children }) => {
+interface Props {
+  className?: string;
+  containerClassName?: string;
+  barsClassName?: string;
+}
+
+export const Divider: React.FC<Children & Props> = ({
+  children,
+  className,
+  containerClassName,
+  barsClassName,
+}) => {
   if (children === undefined)
-    return <div className="container my-24 h-1.5 border-y-2 border-y-fg/10" />;
+    return (
+      <div
+        className={cx(
+          "h-1.5 border-y-2 border-y-fg/10",
+          className,
+          containerClassName,
+          barsClassName
+        )}
+      />
+    );
 
   return (
-    <div className="flex w-full flex-row items-center gap-x-2">
-      <div className="h-1.5 flex-grow border-y-2 border-y-fg/10" />
+    <div
+      className={cx(
+        "flex w-full flex-row items-center gap-x-2",
+        className,
+        containerClassName
+      )}
+    >
+      <div
+        className={cx(
+          "h-1.5 flex-grow border-y-2 border-y-fg/10",
+          className,
+          barsClassName
+        )}
+      />
       {children}
-      <div className="h-1.5 flex-grow border-y-2 border-y-fg/10" />
+      <div
+        className={cx(
+          "h-1.5 flex-grow border-y-2 border-y-fg/10",
+          className,
+          barsClassName
+        )}
+      />
     </div>
   );
 };
-
-export default Divider;
