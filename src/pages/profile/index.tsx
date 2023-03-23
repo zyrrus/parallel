@@ -2,28 +2,24 @@ import { Button } from "@components/Button";
 import { MainLayout } from "@components/layouts";
 import { getServerAuthSession } from "@server/auth";
 import { typo } from "@styles/typography";
-import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
 import { type NextPage } from "next";
-import type { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 
-interface Props {
-  session: Session;
-}
-
-const Profile: NextPage<Props> = ({ session }) => {
+const Profile: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = () => {
   const { data, status } = useSession();
 
   return (
     <MainLayout>
       <h1 className={typo({ tag: "h1" })}>Profile</h1>
       <p className={typo({ tag: "p" })}>{status}</p>
-      <p className={typo({ tag: "p" })}>
-        (Server side) Signed in as {session?.user.name}
-      </p>
-      <p className={typo({ tag: "p" })}>
-        (Client side) Signed in as {data?.user.name}
-      </p>
+      <p className={typo({ tag: "p" })}>Signed in as {data?.user.name}</p>
 
       <Button
         onClick={() =>
@@ -39,7 +35,7 @@ const Profile: NextPage<Props> = ({ session }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
+export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
   const session = await getServerAuthSession(ctx);
