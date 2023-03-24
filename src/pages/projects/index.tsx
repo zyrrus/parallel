@@ -10,7 +10,9 @@ import { getServerAuthSession } from "@server/auth";
 const Projects: NextPage = () => {
   return (
     <MainLayout>
-      <h1 className={typo({ tag: "h1" })}>Projects</h1>
+      <h1 className={typo({ tag: "h1", className: "text-primary" })}>
+        Projects
+      </h1>
     </MainLayout>
   );
 };

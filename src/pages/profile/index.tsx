@@ -17,7 +17,9 @@ const Profile: NextPage<
 
   return (
     <MainLayout>
-      <h1 className={typo({ tag: "h1" })}>Profile</h1>
+      <h1 className={typo({ tag: "h1", className: "text-primary" })}>
+        Profile
+      </h1>
       <p className={typo({ tag: "p" })}>{status}</p>
       <p className={typo({ tag: "p" })}>Signed in as {data?.user.name}</p>
 

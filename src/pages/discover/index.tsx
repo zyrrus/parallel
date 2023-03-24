@@ -16,6 +16,7 @@ const Discover: NextPage<
 
   return (
     <DiscoverLayout>
+      <h2 className={typo({ tag: "h2", className: "mb-8" })}>Favorites</h2>
       {data?.map((project) => (
         <div key={project.id}>
           <h4 className={typo({ tag: "h4" })}>{project.title}</h4>
