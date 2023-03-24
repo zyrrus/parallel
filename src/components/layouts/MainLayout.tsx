@@ -14,6 +14,11 @@ import {
 import type { IconType } from "react-icons/lib";
 import { Button } from "@components/Button";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import * as Dialog from "@radix-ui/react-dialog";
+import { cx } from "class-variance-authority";
+import { TextInput } from "@components/TextInput";
+import { Divider } from "@components/Divider";
+import { ImageInput } from "@components/ImageInput";
 
 export const MainLayout: React.FC<Children> = ({ children }) => {
   return (
@@ -72,11 +77,65 @@ export const SidePanel: React.FC = () => {
               </Link>
             ))}
           </nav>
-          <Button variant={{ size: "small" }}>New Proposal</Button>
+          <NewProposalButton />
         </div>
         <MoreMenu />
       </header>
     </div>
+  );
+};
+
+const NewProposalButton: React.FC = () => {
+  const container =
+    typeof window !== "undefined" ? document.getElementById("root") : null;
+
+  const FullDivider = () => (
+    <div className="my-4 -mx-10">
+      <Divider />
+    </div>
+  );
+
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button variant={{ size: "small" }}>New Proposal</Button>
+      </Dialog.Trigger>
+
+      <Dialog.Portal container={container}>
+        <Dialog.Overlay className="fixed inset-0 bg-black/40 data-[state=open]:animate-overlayShow" />
+
+        <Dialog.Content
+          className={cx(
+            "fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[750px] translate-x-[-50%] translate-y-[-50%]",
+            "rounded-3xl bg-bg p-10",
+            "focus:outline-none data-[state=open]:animate-contentShow"
+          )}
+        >
+          <Dialog.Title>
+            <h1 className={typo({ tag: "h5", className: "text-primary" })}>
+              Create new proposal
+            </h1>
+          </Dialog.Title>
+          <Dialog.Description>
+            Let others know a little about your project idea.
+          </Dialog.Description>
+          <FullDivider />
+          <div className="mb-8 flex flex-col gap-y-4">
+            <TextInput label="Title" />
+            <TextInput
+              label="Description"
+              placeholder="Describe your project"
+            />
+            <ImageInput label="Image" />
+          </div>
+          <Dialog.Close asChild>
+            <div className="flex flex-row justify-end">
+              <Button variant={{ size: "small" }}>Create</Button>
+            </div>
+          </Dialog.Close>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };
 
