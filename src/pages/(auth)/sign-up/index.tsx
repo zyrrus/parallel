@@ -6,7 +6,7 @@ import type {
 } from "next";
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import Divider from "@components/Divider";
+import { Divider } from "@components/Divider";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect } from "react";
