@@ -62,11 +62,7 @@ export const Button: React.FC<Props> = (props) => {
   if (linkProps.href) {
     const { href, ...rest } = linkProps;
     return (
-      <Link
-        href={href}
-        {...rest}
-        className={cx(button(variant), className, "bg-red-500")}
-      >
+      <Link href={href} {...rest} className={cx(button(variant), className)}>
         {buttonContent}
       </Link>
     );
