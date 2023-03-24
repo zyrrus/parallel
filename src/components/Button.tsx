@@ -1,6 +1,9 @@
+import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 import { typo } from "@styles/typography";
 import type { VariantProps } from "class-variance-authority";
 import { cx, cva } from "class-variance-authority";
+import type { LinkProps } from "next/link";
+import Link from "next/link";
 
 const button = cva(
   [
@@ -20,52 +23,61 @@ const button = cva(
   }
 );
 
-interface Props {
+interface CommonProps {
+  children: ReactNode;
+  prefixIcon?: ReactNode;
+  suffixIcon?: ReactNode;
+  className?: string;
   variant?: VariantProps<typeof button>;
 }
 
-export const Button: React.FC<
-  Props &
-    React.DetailedHTMLProps<
-      React.ButtonHTMLAttributes<HTMLButtonElement>,
-      HTMLButtonElement
-    >
-> = ({
-  variant = { size: "default" },
-  children,
-  className,
-  ...buttonProps
-}) => {
-  return (
-    <button className={cx(button(variant), className)} {...buttonProps}>
+type ButtonProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
+
+type Props = CommonProps & ButtonProps & Partial<LinkProps>;
+
+export const Button: React.FC<Props> = (props) => {
+  // Destructure props by subtype
+  const {
+    children,
+    prefixIcon,
+    suffixIcon,
+    className,
+    variant = { size: "default" },
+  }: CommonProps = props;
+  const linkProps: Partial<LinkProps> = props;
+  const buttonProps: ButtonProps = props;
+
+  const buttonContent = (
+    <>
+      {prefixIcon && prefixIcon}
       {children}
+      {suffixIcon && suffixIcon}
+    </>
+  );
+
+  // Render a Link if href is provided
+  if (linkProps.href) {
+    const { href, ...rest } = linkProps;
+    return (
+      <Link
+        href={href}
+        {...rest}
+        className={cx(button(variant), className, "bg-red-500")}
+      >
+        {buttonContent}
+      </Link>
+    );
+  }
+
+  // Otherwise, render a standard button
+  return (
+    <button {...buttonProps} className={cx(button(variant), className)}>
+      {buttonContent}
     </button>
   );
 };
 
-export const Anchor: React.FC<
-  Props &
-    React.DetailedHTMLProps<
-      React.AnchorHTMLAttributes<HTMLAnchorElement>,
-      HTMLAnchorElement
-    >
-> = ({
-  variant = { size: "default" },
-  children,
-  className,
-  ...anchorProps
-}) => {
-  return (
-    <a {...anchorProps} className={cx(button(variant), className)}>
-      {children}
-    </a>
-    // <div className={cx(button(variant), className)}>
-    //   <a
-    //     className={text({ size: variant.size === "default" ? "h4" : "h6" })}
-    //     {...anchorProps}
-    //   >
-    //     {children}
-    //   </a>
-    // </div>
-  );
-};
+export default Button;
