@@ -19,13 +19,13 @@ const Discover: NextPage<
 
   return (
     <DiscoverLayout>
-      <h2 className="text-r-4xl mb-8">Favorites</h2>
+      <h2 className="text-r-4xl mb-8 font-bold">Favorites</h2>
       {isLoading ? (
         <p>Loading ...</p>
       ) : (
         data?.map((project) => (
           <div key={project.id} className="mb-4">
-            <h4 className="text-r-2xl">{project.title}</h4>
+            <h4 className="text-r-2xl font-medium">{project.title}</h4>
             <p className="text-r-sm">{dayjs(project.createdAt).fromNow()}</p>
             <p className="text-r-lg">{project.description}</p>
           </div>

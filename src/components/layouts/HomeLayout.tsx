@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { cva, cx } from "class-variance-authority";
 import { Button } from "@components/Button";
 import { signIn } from "next-auth/react";
-import { typo } from "@styles/typography";
 
 export const HomeLayout: React.FC<Children> = ({ children }) => {
   return (
@@ -48,9 +47,7 @@ const Header: React.FC = () => {
     };
   });
 
-  const FlexDivider = () => (
-    <span className={typo({ tag: "h4", className: "text-fg/25" })}>||</span>
-  );
+  const FlexDivider = () => <span className="text-r-2xl text-fg/25">||</span>;
 
   const Background = () => (
     <div
@@ -70,18 +67,15 @@ const Header: React.FC = () => {
     >
       <Background />
       <nav className="container flex flex-row items-center justify-between gap-x-4">
-        <a
-          href="#"
-          className={typo({ tag: "h4", className: "min-w-max text-primary" })}
-        >
+        <a href="#" className="text-r-2xl min-w-max font-bold text-primary">
           <span className="text-fg">||</span> Parallel
         </a>
         <div className="flex flex-row items-center gap-x-4 sm:gap-x-8">
-          <a href="#" className={typo({ tag: "p", className: "font-medium" })}>
+          <a href="#" className="text-r-lg font-medium">
             About Us
           </a>
           <FlexDivider />
-          <a href="#" className={typo({ tag: "p", className: "font-medium" })}>
+          <a href="#" className="text-r-lg font-medium">
             Premium
           </a>
         </div>
@@ -99,7 +93,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="container flex flex-row justify-center py-32">
       {/* <nav> */}
-      <h2 className={typo({ tag: "h2" })}>Footer goes here!</h2>
+      <h2 className="text-r-4xl font-bold">Footer goes here!</h2>
       {/* </nav> */}
     </footer>
   );

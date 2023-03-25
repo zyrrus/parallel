@@ -4,13 +4,12 @@ import type {
   NextPage,
 } from "next";
 import { DiscoverLayout } from "@components/layouts";
-import { typo } from "@styles/typography";
 import { getServerAuthSession } from "@server/auth";
 
 const Proposals: NextPage = () => {
   return (
     <DiscoverLayout>
-      <h2 className={typo({ tag: "h2" })}>Proposals</h2>
+      <h2 className="text-r-4xl font-bold">Proposals</h2>
     </DiscoverLayout>
   );
 };

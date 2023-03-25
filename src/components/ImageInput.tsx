@@ -1,12 +1,10 @@
-import { typo } from "@styles/typography";
 import { cva } from "class-variance-authority";
 import type { ChangeEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const input = cva([
-  typo({ tag: "p" }),
-  "w-full rounded border-[6px] py-2 px-3 md:py-3 md:px-4 leading-tight border-fg placeholder-fg/50 bg-fg/20",
+  "text-r-lg w-full rounded border-[6px] py-2 px-3 md:py-3 md:px-4 leading-tight border-fg placeholder-fg/50 bg-fg/20",
   "focus:outline-none",
 ]);
 
@@ -50,11 +48,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
 
   return (
     <div className="flex flex-col">
-      <label
-        className={typo({ size: "base", className: "mb-1 block text-fg" })}
-      >
-        {label}
-      </label>
+      <label className="text-r-lg mb-1 block text-fg">{label}</label>
       <div className="relative h-32 w-full overflow-clip rounded border-[6px] border-fg bg-fg/20">
         {preview ? (
           <div className={"h-full w-full"}>
@@ -74,9 +68,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
                 height={225}
               />
             ) : (
-              <span className={typo({ tag: "p", className: "text-fg/50" })}>
-                Click to add image
-              </span>
+              <span className="text-r-lg text-fg/50">Click to add image</span>
             )}
           </div>
         )}

@@ -37,12 +37,7 @@ const SignIn = ({
 
   return (
     <InfoLayout>
-      <h1
-        className={typo({
-          tag: "h3",
-          className: "my-6 mx-10 text-center text-primary",
-        })}
-      >
+      <h1 className="text-r-3xl my-6 mx-10 text-center text-primary">
         Welcome back. Sign in.
       </h1>
       <form
@@ -57,14 +52,11 @@ const SignIn = ({
           Sign In
         </Button>
       </form>
-      <p className={typo({ tag: "p", className: "mt-8 mb-12" })}>
+      <p className="text-r-lg mt-8 mb-12">
         {"Don't have an account? "}
         <Link
           href="/auth/sign-in"
-          className={typo({
-            size: "base",
-            className: "font-semibold text-tertiary hover:text-tertiary-600",
-          })}
+          className="text-r-lg font-semibold text-tertiary hover:text-tertiary-600"
         >
           Sign up
         </Link>

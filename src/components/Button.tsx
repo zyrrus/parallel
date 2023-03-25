@@ -1,5 +1,4 @@
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
-import { typo } from "@styles/typography";
 import type { VariantProps } from "class-variance-authority";
 import { cx, cva } from "class-variance-authority";
 import type { LinkProps } from "next/link";
@@ -16,8 +15,8 @@ const button = cva(
   {
     variants: {
       size: {
-        default: typo({ size: "2xl", className: "px-14 py-3" }),
-        small: typo({ size: "lg", className: "px-10 py-2" }),
+        default: "text-r-2xl px-14 py-3",
+        small: "text-r-lg px-10 py-2",
       },
     },
   }

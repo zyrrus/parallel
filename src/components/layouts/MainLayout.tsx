@@ -62,7 +62,7 @@ export const SidePanel: React.FC = () => {
       <header className="flex h-screen flex-col justify-between gap-y-8 px-12 py-8">
         <div>
           <h1>
-            <Link href="/" className="text-r-3xl text-primary">
+            <Link href="/" className="text-r-3xl font-bold text-primary">
               <span className="text-fg">||</span> Parallel
             </Link>
           </h1>

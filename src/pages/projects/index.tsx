@@ -4,15 +4,12 @@ import type {
   NextPage,
 } from "next";
 import { MainLayout } from "@components/layouts";
-import { typo } from "@styles/typography";
 import { getServerAuthSession } from "@server/auth";
 
 const Projects: NextPage = () => {
   return (
     <MainLayout>
-      <h1 className={typo({ tag: "h1", className: "text-primary" })}>
-        Projects
-      </h1>
+      <h1 className="text-r-5xl font-bold text-primary">Projects</h1>
     </MainLayout>
   );
 };

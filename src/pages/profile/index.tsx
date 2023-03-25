@@ -1,7 +1,6 @@
 import { Button } from "@components/Button";
 import { MainLayout } from "@components/layouts";
 import { getServerAuthSession } from "@server/auth";
-import { typo } from "@styles/typography";
 import type {
   GetServerSideProps,
   GetServerSidePropsContext,
@@ -17,11 +16,9 @@ const Profile: NextPage<
 
   return (
     <MainLayout>
-      <h1 className={typo({ tag: "h1", className: "text-primary" })}>
-        Profile
-      </h1>
-      <p className={typo({ tag: "p" })}>{status}</p>
-      <p className={typo({ tag: "p" })}>Signed in as {data?.user.name}</p>
+      <h1 className="text-r-5xl font-bold text-primary">Profile</h1>
+      <p className="text-r-lg">{status}</p>
+      <p className="text-r-lg">Signed in as {data?.user.name}</p>
 
       <Button
         onClick={() =>

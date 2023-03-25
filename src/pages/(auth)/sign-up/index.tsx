@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { InfoLayout } from "@components/layouts";
 import { SignUpFields } from "@constants/auth";
-import { typo } from "@styles/typography";
 
 const SignUp = ({
   csrfToken,
@@ -34,12 +33,7 @@ const SignUp = ({
 
   return (
     <InfoLayout>
-      <h1
-        className={typo({
-          tag: "h3",
-          className: "my-6 mx-10 text-center text-primary",
-        })}
-      >
+      <h1 className="text-r-3xl my-6 mx-10 text-center text-primary">
         Sign up. Get Connected.
       </h1>
       <form
@@ -54,14 +48,11 @@ const SignUp = ({
           Sign Up
         </Button>
       </form>
-      <p className={typo({ tag: "p", className: "mt-8 mb-12" })}>
+      <p className="text-r-lg mt-8 mb-12">
         Already have an account?{" "}
         <Link
           href="/auth/sign-in"
-          className={typo({
-            size: "base",
-            className: "font-semibold text-tertiary hover:text-tertiary-600",
-          })}
+          className="text-r-lg font-semibold text-tertiary hover:text-tertiary-600"
         >
           Sign in
         </Link>
