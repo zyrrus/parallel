@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { InfoLayout } from "@components/layouts";
 import { SignInFields } from "@constants/auth";
-import { typo } from "@styles/typography";
 import Link from "next/link";
 
 const SignIn = ({
