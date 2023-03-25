@@ -13,6 +13,29 @@ a {
   @apply text-lg;
 }
 
+/* Typography */
+
+.text-r-2xl {
+  @apply text-2xl;
+}
+.text-r-xl {
+  @apply text-xl;
+}
+.text-r-lg {
+  @apply text-lg;
+}
+.text-r-me {
+  @apply text-base;
+}
+.text-r-sm {
+  @apply text-sm;
+}
+.text-r-xs {
+  @apply text-xs;
+}
+
+/* Special  */
+
 .custom-home-bg {
   @apply relative z-0 flex min-h-screen items-center overflow-x-clip;
 }
