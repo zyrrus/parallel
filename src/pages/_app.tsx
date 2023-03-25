@@ -6,6 +6,7 @@ import Head from "next/head";
 import { RootLayout } from "@components/layouts";
 import { api } from "@utils/api";
 import "@styles/globals.css";
+import { Toaster } from "react-hot-toast";
 
 const ParallelApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -41,6 +42,7 @@ const ParallelApp: AppType<{ session: Session | null }> = ({
       <SSRProvider>
         <SessionProvider session={session}>
           <RootLayout>
+            <Toaster position="top-center" />
             <Component {...pageProps} />
           </RootLayout>
         </SessionProvider>

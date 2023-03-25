@@ -1,5 +1,4 @@
 import type { Children } from "@utils/types/props";
-import { typo } from "@styles/typography";
 import Link from "next/link";
 import {
   FiMenu,
@@ -19,6 +18,14 @@ import { cx } from "class-variance-authority";
 import { TextInput } from "@components/TextInput";
 import { Divider } from "@components/Divider";
 import { ImageInput } from "@components/ImageInput";
+import { api } from "@utils/api";
+import { getRootContainer } from "@constants/elements";
+import toast from "react-hot-toast";
+import { SubmitErrorHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { proposalSchema } from "@constants/schema";
+import type { z } from "zod";
+import type { SubmitHandler } from "react-hook-form";
 
 export const MainLayout: React.FC<Children> = ({ children }) => {
   return (
@@ -55,10 +62,7 @@ export const SidePanel: React.FC = () => {
       <header className="flex h-screen flex-col justify-between gap-y-8 px-12 py-8">
         <div>
           <h1>
-            <Link
-              href="/"
-              className={typo({ tag: "h3", className: "text-primary" })}
-            >
+            <Link href="/" className="text-r-3xl text-primary">
               <span className="text-fg">||</span> Parallel
             </Link>
           </h1>
@@ -67,11 +71,7 @@ export const SidePanel: React.FC = () => {
               <Link
                 key={label}
                 href={route}
-                className={typo({
-                  size: "2xl",
-                  className:
-                    "flex flex-row items-center gap-x-2 font-medium hover:font-bold hover:text-fg-400",
-                })}
+                className="text-r-2xl flex flex-row items-center gap-x-2 font-medium hover:font-bold hover:text-fg-400"
               >
                 <Icon size={28} /> {label}
               </Link>
@@ -85,9 +85,39 @@ export const SidePanel: React.FC = () => {
   );
 };
 
+type ProposalForm = z.infer<typeof proposalSchema>;
+
 const NewProposalButton: React.FC = () => {
-  const container =
-    typeof window !== "undefined" ? document.getElementById("root") : null;
+  // === Constants ============================================================
+
+  const container = getRootContainer();
+
+  // === Hooks ================================================================
+
+  const { handleSubmit, register, formState, reset } = useForm<ProposalForm>({
+    resolver: zodResolver(proposalSchema),
+  });
+
+  const ctx = api.useContext();
+
+  const { mutate, isLoading: isPosting } =
+    api.projects.createProposal.useMutation({
+      onSuccess: () => {
+        reset();
+        void ctx.projects.getAll.invalidate();
+      },
+      onError: (e) => {
+        toast.error(e.message);
+      },
+    });
+
+  // === Functions ============================================================
+
+  const onSubmit: SubmitHandler<ProposalForm> = (data): void => {
+    console.log("Submitting form data", data);
+    mutate(data);
+  };
+  // === Components ===========================================================
 
   const FullDivider = () => (
     <div className="my-4 -mx-10">
@@ -96,7 +126,11 @@ const NewProposalButton: React.FC = () => {
   );
 
   return (
-    <Dialog.Root>
+    <Dialog.Root
+      onOpenChange={(isOpen) => {
+        if (!isOpen) reset();
+      }}
+    >
       <Dialog.Trigger asChild>
         <Button variant={{ size: "small" }}>New Proposal</Button>
       </Dialog.Trigger>
@@ -111,28 +145,38 @@ const NewProposalButton: React.FC = () => {
             "focus:outline-none data-[state=open]:animate-contentShow"
           )}
         >
-          <Dialog.Title>
-            <h1 className={typo({ tag: "h5", className: "text-primary" })}>
-              Create new proposal
-            </h1>
+          <Dialog.Title asChild>
+            <h1 className="text-r-xl text-primary">Create new proposal</h1>
           </Dialog.Title>
-          <Dialog.Description>
-            Let others know a little about your project idea.
+          <Dialog.Description asChild>
+            <p className="text-r-lg">
+              Let others know a little about your project idea.
+            </p>
           </Dialog.Description>
           <FullDivider />
-          <div className="mb-8 flex flex-col gap-y-4">
-            <TextInput label="Title" />
-            <TextInput
-              label="Description"
-              placeholder="Describe your project"
-            />
-            <ImageInput label="Image" />
-          </div>
-          <Dialog.Close asChild>
-            <div className="flex flex-row justify-end">
-              <Button variant={{ size: "small" }}>Create</Button>
+          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-8 flex flex-col gap-y-4">
+              <TextInput
+                label="Title"
+                placeholder={proposalSchema.shape.title.description}
+                error={formState.errors.title?.message}
+                {...register("title")}
+              />
+              <TextInput
+                label="Description"
+                placeholder={proposalSchema.shape.description.description}
+                error={formState.errors.description?.message}
+                {...register("description")}
+              />
+              {/* <ImageInput label="Image" /> */}
             </div>
-          </Dialog.Close>
+            <div className="flex flex-row justify-end">
+              <Button variant={{ size: "small" }} type="submit">
+                Create
+              </Button>
+            </div>
+          </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -140,19 +184,12 @@ const NewProposalButton: React.FC = () => {
 };
 
 const MoreMenu: React.FC = () => {
-  const container =
-    typeof window !== "undefined" ? document.getElementById("root") : null;
+  const container = getRootContainer();
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button
-          className={typo({
-            size: "2xl",
-            className:
-              "flex flex-row items-center gap-x-2 font-medium hover:font-bold hover:text-fg-400",
-          })}
-        >
+        <button className="text-r-2xl flex flex-row items-center gap-x-2 font-medium hover:font-bold hover:text-fg-400">
           <FiMenu size={28} /> More
         </button>
       </DropdownMenu.Trigger>
@@ -163,8 +200,8 @@ const MoreMenu: React.FC = () => {
           className="min-w-[250px] rounded-md bg-bg-700 p-3 data-[side=top]:animate-slideUpAndFade"
           sideOffset={10}
         >
-          <DropdownMenu.Item className="flex select-none items-center justify-between px-[5px] pl-[25px] text-lg outline-none">
-            <p className={typo({ tag: "p" })}>Settings</p>
+          <DropdownMenu.Item className="flex select-none items-center justify-between px-[5px] pl-[25px] outline-none">
+            <p className="text-r-lg">Settings</p>
             <FiSettings />
           </DropdownMenu.Item>
         </DropdownMenu.Content>

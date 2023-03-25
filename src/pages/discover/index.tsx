@@ -1,6 +1,5 @@
 import { DiscoverLayout } from "@components/layouts";
 import { getServerAuthSession } from "@server/auth";
-import { typo } from "@styles/typography";
 import { api } from "@utils/api";
 import type {
   GetServerSideProps,
@@ -8,21 +7,30 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const Discover: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
-  const { data } = api.projects.getAll.useQuery();
+  const { data, isLoading } = api.projects.getAll.useQuery();
 
   return (
     <DiscoverLayout>
-      <h2 className={typo({ tag: "h2", className: "mb-8" })}>Favorites</h2>
-      {data?.map((project) => (
-        <div key={project.id}>
-          <h4 className={typo({ tag: "h4" })}>{project.title}</h4>
-          <p>{project.description}</p>
-        </div>
-      ))}
+      <h2 className="text-r-4xl mb-8">Favorites</h2>
+      {isLoading ? (
+        <p>Loading ...</p>
+      ) : (
+        data?.map((project) => (
+          <div key={project.id} className="mb-4">
+            <h4 className="text-r-2xl">{project.title}</h4>
+            <p className="text-r-sm">{dayjs(project.createdAt).fromNow()}</p>
+            <p className="text-r-lg">{project.description}</p>
+          </div>
+        ))
+      )}
     </DiscoverLayout>
   );
 };
