@@ -14,14 +14,15 @@ import type { IconType } from "react-icons/lib";
 import { Button } from "@components/Button";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Dialog from "@radix-ui/react-dialog";
+import * as ScrollArea from "@radix-ui/react-scroll-area";
 import { cx } from "class-variance-authority";
-import { TextInput } from "@components/TextInput";
+import { TextInput, MultilineTextInput } from "@components/TextInput";
 import { Divider } from "@components/Divider";
 import { ImageInput } from "@components/ImageInput";
 import { api } from "@utils/api";
 import { getRootContainer } from "@constants/elements";
 import toast from "react-hot-toast";
-import { SubmitErrorHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { proposalSchema } from "@constants/schema";
 import type { z } from "zod";
@@ -114,13 +115,14 @@ const NewProposalButton: React.FC = () => {
   // === Functions ============================================================
 
   const onSubmit: SubmitHandler<ProposalForm> = (data): void => {
-    console.log("Submitting form data", data);
+    if (isPosting) return;
     mutate(data);
   };
+
   // === Components ===========================================================
 
   const FullDivider = () => (
-    <div className="my-4 -mx-10">
+    <div className="mt-4">
       <Divider />
     </div>
   );
@@ -140,43 +142,59 @@ const NewProposalButton: React.FC = () => {
 
         <Dialog.Content
           className={cx(
-            "fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[750px] translate-x-[-50%] translate-y-[-50%]",
-            "rounded-3xl bg-bg p-10",
-            "focus:outline-none data-[state=open]:animate-contentShow"
+            "fixed left-[50%] top-[50%] w-[90vw] max-w-[750px] translate-x-[-50%] translate-y-[-50%]",
+            "rounded-3xl bg-bg",
+            "focus:outline-none data-[state=open]:animate-contentShow",
+            "overflow-clip"
           )}
         >
-          <Dialog.Title asChild>
-            <h1 className="text-r-xl text-primary">Create new proposal</h1>
-          </Dialog.Title>
-          <Dialog.Description asChild>
-            <p className="text-r-lg">
-              Let others know a little about your project idea.
-            </p>
-          </Dialog.Description>
+          <div className="px-10 pt-10">
+            <Dialog.Title asChild>
+              <h1 className="text-r-xl font-bold text-primary">
+                Create new proposal
+              </h1>
+            </Dialog.Title>
+            <Dialog.Description asChild>
+              <p className="text-r-lg">
+                Let others know a little about your project idea.
+              </p>
+            </Dialog.Description>
+          </div>
           <FullDivider />
-          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-8 flex flex-col gap-y-4">
-              <TextInput
-                label="Title"
-                placeholder={proposalSchema.shape.title.description}
-                error={formState.errors.title?.message}
-                {...register("title")}
-              />
-              <TextInput
-                label="Description"
-                placeholder={proposalSchema.shape.description.description}
-                error={formState.errors.description?.message}
-                {...register("description")}
-              />
-              {/* <ImageInput label="Image" /> */}
-            </div>
-            <div className="flex flex-row justify-end">
-              <Button variant={{ size: "small" }} type="submit">
-                Create
-              </Button>
-            </div>
-          </form>
+
+          <WithScroll height="70vh">
+            <form
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onSubmit={handleSubmit(onSubmit)}
+              className="mt-4 px-10 pb-10"
+            >
+              <div className="mb-8 flex flex-col gap-y-4">
+                <TextInput
+                  label="Title"
+                  placeholder={proposalSchema.shape.title.description}
+                  error={formState.errors.title?.message}
+                  {...register("title")}
+                />
+                <MultilineTextInput
+                  hasAdaptiveHeight
+                  label="Description"
+                  placeholder={proposalSchema.shape.description.description}
+                  error={formState.errors.description?.message}
+                  {...register("description")}
+                />
+                {/* <ImageInput label="Image" /> */}
+              </div>
+              <div className="flex flex-row justify-end">
+                <Button
+                  variant={{ size: "small" }}
+                  type="submit"
+                  disabled={isPosting}
+                >
+                  Create
+                </Button>
+              </div>
+            </form>
+          </WithScroll>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
@@ -207,5 +225,27 @@ const MoreMenu: React.FC = () => {
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
+  );
+};
+
+export const WithScroll: React.FC<Children & { height: string }> = ({
+  height,
+  children,
+}) => {
+  return (
+    <ScrollArea.Root
+      type="auto"
+      className={`h-${height} w-full overflow-hidden`}
+    >
+      <ScrollArea.Viewport className="h-full w-full">
+        {children}
+      </ScrollArea.Viewport>
+      <ScrollArea.Scrollbar
+        className="flex touch-none select-none bg-bg-600 p-0.5 transition-colors duration-150 ease-out hover:bg-bg-700 data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
+        orientation="vertical"
+      >
+        <ScrollArea.Thumb className="relative flex-1 rounded-full bg-fg-700 before:absolute before:top-1/2 before:left-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-[''] hover:bg-fg" />
+      </ScrollArea.Scrollbar>
+    </ScrollArea.Root>
   );
 };

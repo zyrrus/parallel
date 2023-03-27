@@ -7,10 +7,7 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-
-dayjs.extend(relativeTime);
+import { ProjectCard } from "@components/projects/ProjectCard";
 
 const Discover: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -24,11 +21,7 @@ const Discover: NextPage<
         <p>Loading ...</p>
       ) : (
         data?.map((project) => (
-          <div key={project.id} className="mb-4">
-            <h4 className="text-r-2xl font-medium">{project.title}</h4>
-            <p className="text-r-sm">{dayjs(project.createdAt).fromNow()}</p>
-            <p className="text-r-lg">{project.description}</p>
-          </div>
+          <ProjectCard key={project.id} project={project} />
         ))
       )}
     </DiscoverLayout>

@@ -1,20 +1,36 @@
+import { DiscoverLayout } from "@components/layouts";
+import { getServerAuthSession } from "@server/auth";
+import { api } from "@utils/api";
 import type {
   GetServerSideProps,
   GetServerSidePropsContext,
+  InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import { DiscoverLayout } from "@components/layouts";
-import { getServerAuthSession } from "@server/auth";
+import { ProjectCard } from "@components/projects/ProjectCard";
 
-const Archive: NextPage = () => {
+const Discover: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = () => {
+  const { data, isLoading } = api.projects.getAllByState.useQuery({
+    state: "COMPLETE",
+  });
+
   return (
     <DiscoverLayout>
-      <h2 className="text-r-4xl font-bold">Archive</h2>
+      <h2 className="text-r-4xl mb-8 font-bold">Archive</h2>
+      {isLoading ? (
+        <p>Loading ...</p>
+      ) : (
+        data?.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))
+      )}
     </DiscoverLayout>
   );
 };
 
-export default Archive;
+export default Discover;
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
