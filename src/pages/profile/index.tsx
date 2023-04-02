@@ -1,4 +1,5 @@
 import { Button } from "@components/Button";
+import { requireAuth } from "@components/HOC/requireAuth";
 import { MainLayout } from "@components/layouts";
 import { getServerAuthSession } from "@server/auth";
 import type {
@@ -34,18 +35,9 @@ const Profile: NextPage<
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => {
-  const session = await getServerAuthSession(ctx);
-
-  if (session === null || session.user === null || session.user.id === null) {
-    return {
-      redirect: { destination: "/api/auth/signin", permanent: false },
-    };
-  }
-
-  return { props: { session } };
-};
-
 export default Profile;
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getServerSideProps = requireAuth(async (ctx) => {
+  return { props: {} };
+});

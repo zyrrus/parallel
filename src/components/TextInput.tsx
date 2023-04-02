@@ -1,3 +1,4 @@
+import type { TextInputProps, MultilineInputProps } from "@utils/types/props";
 import { cva } from "class-variance-authority";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 
@@ -8,15 +9,7 @@ const input = cva([
   "focus:outline-none",
 ]);
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  placeholder?: string;
-  error?: string;
-  prefixIcon?: React.ReactNode;
-  suffixIcon?: React.ReactNode;
-}
-
-export const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
+export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   ({ label, placeholder, error, prefixIcon, suffixIcon, ...rest }, ref) => {
     return (
       <fieldset className="w-full">
@@ -52,17 +45,9 @@ TextInput.displayName = "TextInput";
 
 // === Multiline Text Input ===================================================
 
-interface MultilineProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-  placeholder?: string;
-  error?: string;
-  hasAdaptiveHeight?: boolean;
-}
-
 export const MultilineTextInput = React.forwardRef<
   HTMLTextAreaElement,
-  MultilineProps
+  MultilineInputProps
 >(({ label, placeholder, error, hasAdaptiveHeight = false, ...rest }, ref) => {
   const innerRef = useRef<HTMLTextAreaElement>(null);
   useImperativeHandle(ref, () => innerRef.current as HTMLTextAreaElement);

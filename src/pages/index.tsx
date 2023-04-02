@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   if (session && session.user) {
     return {
-      redirect: { destination: "/projects", permanent: true },
+      redirect: { destination: "/projects", permanent: false },
     };
   }
 
@@ -56,7 +56,16 @@ const Hero: React.FC = () => {
         <h3 className="text-r-3xl mt-6 mb-16 font-bold drop-shadow-blur">
           Get connected with Parallel
         </h3>
-        <Button onClick={() => void signIn()}>Get Started</Button>
+        <Button
+          onClick={() =>
+            void signIn(undefined, {
+              callbackUrl: "/projects",
+              redirect: false,
+            })
+          }
+        >
+          Get Started
+        </Button>
       </div>
     </section>
   );
@@ -140,7 +149,12 @@ const Premium: React.FC = () => {
 const CTA: React.FC = () => {
   return (
     <section>
-      <Button onClick={() => void signIn()} className="mx-auto block">
+      <Button
+        onClick={() =>
+          void signIn(undefined, { callbackUrl: "/projects", redirect: false })
+        }
+        className="mx-auto block"
+      >
         Sign Up Now
       </Button>
     </section>

@@ -20,11 +20,11 @@ import { TextInput, MultilineTextInput } from "@components/TextInput";
 import { Divider } from "@components/Divider";
 import { ImageInput } from "@components/ImageInput";
 import { api } from "@utils/api";
-import { getRootContainer } from "@constants/elements";
+import { getRootContainer } from "@constants/htmlTools";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { proposalSchema } from "@constants/schema";
+import { proposalSchema } from "@constants/schema/project";
 import type { z } from "zod";
 import type { SubmitHandler } from "react-hook-form";
 

@@ -1,10 +1,6 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextPage,
-} from "next";
+import type { NextPage } from "next";
 import { MainLayout } from "@components/layouts";
-import { getServerAuthSession } from "@server/auth";
+import { requireAuth } from "@components/HOC/requireAuth";
 
 const Projects: NextPage = () => {
   return (
@@ -16,16 +12,7 @@ const Projects: NextPage = () => {
 
 export default Projects;
 
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => {
-  const session = await getServerAuthSession(ctx);
-
-  if (session === null || session.user === null || session.user.id === null) {
-    return {
-      redirect: { destination: "/api/auth/signin", permanent: false },
-    };
-  }
-
-  return { props: { session } };
-};
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getServerSideProps = requireAuth(async (ctx) => {
+  return { props: {} };
+});

@@ -79,7 +79,15 @@ const Header: React.FC = () => {
             Premium
           </a>
         </div>
-        <Button variant={{ size: "small" }} onClick={() => void signIn()}>
+        <Button
+          variant={{ size: "small" }}
+          onClick={() =>
+            void signIn(undefined, {
+              callbackUrl: "/projects",
+              redirect: false,
+            })
+          }
+        >
           Sign In
         </Button>
       </nav>

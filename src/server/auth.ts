@@ -52,6 +52,15 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      // This fixes the refresh token bug, but always asks for permissions
+      // Shouldn't be needed in prod
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
     /**
      * ...add more providers here
@@ -64,11 +73,8 @@ export const authOptions: NextAuthOptions = {
      **/
   ],
   pages: {
-    // signIn: "/auth/sign-in",
+    signIn: "/auth/sign-in",
     // signOut: "/auth/sign-out",
-    // error: "/auth/error", // Error code passed in query string as ?error=
-    // verifyRequest: "/auth/verify-request", // (used for check email message)
-    // newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 };
 

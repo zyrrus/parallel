@@ -8,6 +8,7 @@ import type {
   NextPage,
 } from "next";
 import { ProjectCard } from "@components/projects/ProjectCard";
+import { requireAuth } from "@components/HOC/requireAuth";
 
 const Discover: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -30,16 +31,7 @@ const Discover: NextPage<
 
 export default Discover;
 
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => {
-  const session = await getServerAuthSession(ctx);
-
-  if (session === null || session.user === null || session.user.id === null) {
-    return {
-      redirect: { destination: "/api/auth/signin", permanent: false },
-    };
-  }
-
-  return { props: { session } };
-};
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getServerSideProps = requireAuth(async (ctx) => {
+  return { props: {} };
+});
