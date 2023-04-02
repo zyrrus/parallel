@@ -9,7 +9,7 @@ import { InfoLayout } from "@components/layouts";
 import { SignUpFields } from "@constants/authInputFields";
 import { toast } from "react-hot-toast";
 import type { z } from "zod";
-import { signupSchema } from "@constants/schema/profile";
+import { editAccountDetailsSchema } from "@constants/schema/profile";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getServerAuthSession } from "@server/auth";
@@ -19,8 +19,8 @@ import superjson from "superjson";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { api } from "@utils/api";
 
-export type SignUpSchema = z.infer<typeof signupSchema>;
-type ValidName = keyof typeof signupSchema.shape;
+export type EditAccountDetailsSchema = z.infer<typeof editAccountDetailsSchema>;
+type ValidName = keyof typeof editAccountDetailsSchema.shape;
 
 const SignUp = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { mutateAsync } = api.account.disableNewUserStatus.useMutation({
@@ -35,9 +35,10 @@ const SignUp = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { asPath, query } = router;
 
-  const { register, formState, handleSubmit } = useForm<SignUpSchema>({
-    resolver: zodResolver(signupSchema),
-  });
+  const { register, formState, handleSubmit } =
+    useForm<EditAccountDetailsSchema>({
+      resolver: zodResolver(editAccountDetailsSchema),
+    });
 
   //   const onSubmit = useCallback((data) => {}, []);
 
