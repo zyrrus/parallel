@@ -5,8 +5,8 @@ import { SSRProvider } from "react-aria";
 import Head from "next/head";
 import { RootLayout } from "@components/layouts";
 import { api } from "@utils/api";
-import "@styles/globals.css";
 import { Toaster } from "react-hot-toast";
+import "@utils/styles/globals.css";
 
 const ParallelApp: AppType<{ session: Session | null }> = ({
   Component,

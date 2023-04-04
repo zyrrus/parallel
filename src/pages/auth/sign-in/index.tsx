@@ -101,7 +101,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (isNewUser) {
     return {
       redirect: {
-        destination: "/auth/sign-up",
+        destination: "/auth/user-info",
         permanent: false,
       },
     };

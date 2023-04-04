@@ -1,4 +1,4 @@
-import { proposalSchema } from "@constants/schema/project";
+import { proposalSchema } from "@utils/constants/schema/project";
 import { ProjectLifecycle } from "@prisma/client";
 import { z } from "zod";
 

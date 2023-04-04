@@ -17,11 +17,21 @@ export const SignInFields: TextInputProps[] = [
   },
 ];
 
-export const SignUpFields: TextInputProps[] = [
+export const UserInfoFields: TextInputProps[] = [
   {
     name: "username",
+    required: true,
     label: "Username",
     placeholder: "Enter your username",
   },
-  ...SignInFields,
+  {
+    name: "name",
+    label: "Name",
+    placeholder: "Enter your name",
+  },
+  {
+    name: "bio",
+    label: "Bio",
+    placeholder: "Enter your bio",
+  },
 ];

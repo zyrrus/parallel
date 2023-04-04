@@ -19,10 +19,8 @@
     "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
-      "@constants/*": ["constants/*"],
       "@pages/*": ["pages/*"],
       "@server/*": ["server/*"],
-      "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]
     }
   },
