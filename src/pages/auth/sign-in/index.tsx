@@ -98,7 +98,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   if (isNewUser) {
     return {
       redirect: {
-        destination: "/auth/user-info",
+        destination: "/auth/setup-profile",
         permanent: false,
       },
     };
