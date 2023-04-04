@@ -10,12 +10,25 @@ const input = cva([
 ]);
 
 export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
-  ({ label, placeholder, error, prefixIcon, suffixIcon, ...rest }, ref) => {
+  (
+    {
+      label,
+      placeholder,
+      required = false,
+      optional = false,
+      error,
+      prefixIcon,
+      suffixIcon,
+      ...rest
+    },
+    ref
+  ) => {
     return (
       <fieldset className="w-full">
         {label && (
-          <label className="text-r-lg mb-1 block text-fg">{label}</label>
+          <Label label={label} required={required} optional={optional} />
         )}
+
         <div
           className={input({
             className: "flex flex-row items-center gap-x-2 px-2",
@@ -31,11 +44,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           />
           {suffixIcon && suffixIcon}
         </div>
-        {error && (
-          <p className="text-r-md overflow-clip overflow-ellipsis whitespace-nowrap text-error">
-            {error}
-          </p>
-        )}
+        {error && <Error error={error} />}
       </fieldset>
     );
   }
@@ -48,51 +57,90 @@ TextInput.displayName = "TextInput";
 export const MultilineTextInput = React.forwardRef<
   HTMLTextAreaElement,
   MultilineInputProps
->(({ label, placeholder, error, hasAdaptiveHeight = false, ...rest }, ref) => {
-  const innerRef = useRef<HTMLTextAreaElement>(null);
-  useImperativeHandle(ref, () => innerRef.current as HTMLTextAreaElement);
+>(
+  (
+    {
+      label,
+      placeholder,
+      required = false,
+      optional = false,
+      error,
+      hasAdaptiveHeight = false,
+      ...rest
+    },
+    ref
+  ) => {
+    const innerRef = useRef<HTMLTextAreaElement>(null);
+    useImperativeHandle(ref, () => innerRef.current as HTMLTextAreaElement);
 
-  // Handle adaptive height
-  useEffect(() => {
-    const r = innerRef.current;
+    // Handle adaptive height
+    useEffect(() => {
+      const r = innerRef.current;
 
-    function updateHeight() {
-      if (!r) return;
-      const scrollHeight = r.scrollHeight;
-      r.style.height = `${scrollHeight}px`;
-    }
+      function updateHeight() {
+        if (!r) return;
+        const scrollHeight = r.scrollHeight;
+        r.style.height = `${scrollHeight}px`;
+      }
 
-    if (hasAdaptiveHeight) {
-      r?.addEventListener("input", updateHeight);
-    }
+      if (hasAdaptiveHeight) {
+        r?.addEventListener("input", updateHeight);
+      }
 
-    return () => {
-      r?.removeEventListener("input", updateHeight);
-    };
-  }, [innerRef.current?.scrollHeight, hasAdaptiveHeight]);
+      return () => {
+        r?.removeEventListener("input", updateHeight);
+      };
+    }, [innerRef.current?.scrollHeight, hasAdaptiveHeight]);
 
-  return (
-    <fieldset className="w-full">
-      {label && <label className="text-r-lg mb-1 block text-fg">{label}</label>}
-      <div
-        className={input({
-          className: "flex flex-row items-center gap-x-2 px-2",
-        })}
-      >
-        <textarea
-          placeholder={placeholder}
-          className="max-h-64 min-h-[150px] w-full appearance-none overflow-y-hidden border-none bg-transparent leading-tight text-fg placeholder-fg/50 outline-none transition-all"
-          ref={innerRef}
-          {...rest}
-        />
-      </div>
-      {error && (
-        <p className="text-r-md overflow-clip overflow-ellipsis whitespace-nowrap text-error">
-          {error}
-        </p>
-      )}
-    </fieldset>
-  );
-});
+    return (
+      <fieldset className="w-full">
+        {label && (
+          <Label label={label} required={required} optional={optional} />
+        )}
+        <div
+          className={input({
+            className: "flex flex-row items-center gap-x-2 px-2",
+          })}
+        >
+          <textarea
+            placeholder={placeholder}
+            className="max-h-64 min-h-[150px] w-full appearance-none overflow-y-hidden border-none bg-transparent leading-tight text-fg placeholder-fg/50 outline-none transition-all"
+            ref={innerRef}
+            {...rest}
+          />
+        </div>
+        {error && <Error error={error} />}
+      </fieldset>
+    );
+  }
+);
 
 MultilineTextInput.displayName = "MultilineTextInput";
+
+// === Pieces =================================================================
+
+const Label: React.FC<{
+  label: string;
+  required?: boolean;
+  optional?: boolean;
+}> = ({ label, required = false, optional = false }) => {
+  return (
+    <label className="text-r-lg mb-1 block text-fg">
+      {label}
+      {required && (
+        <span className="text-r-md italic text-tertiary"> · Required</span>
+      )}
+      {optional && (
+        <span className="text-r-md italic text-fg/50"> · Optional</span>
+      )}
+    </label>
+  );
+};
+
+const Error: React.FC<{ error: string }> = ({ error }) => {
+  return (
+    <p className="text-r-md overflow-clip overflow-ellipsis whitespace-nowrap text-error">
+      {error}
+    </p>
+  );
+};

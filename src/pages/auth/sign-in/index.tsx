@@ -4,12 +4,9 @@ import type {
 } from "next";
 import { getProviders, signIn } from "next-auth/react";
 import { Divider } from "@components/Divider";
-import { useRouter } from "next/router";
 import { InfoLayout } from "@components/layouts";
 import toast from "react-hot-toast";
 import { SignInWith } from "@components/SignInWith";
-import { api } from "@utils/api";
-import { getQueryOrDefault } from "@utils/filters";
 import { getServerAuthSession } from "@server/auth";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "@server/api/root";
@@ -97,7 +94,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     transformer: superjson,
   });
 
-  const isNewUser = await ssg.account.getNewUserStatus.fetch();
+  const isNewUser = await ssg.account.checkIsNewUser.fetch();
   if (isNewUser) {
     return {
       redirect: {

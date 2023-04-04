@@ -40,11 +40,11 @@ model Session {
 model User {
     id String @id @default(cuid())
 
-    name          String?
-    isNewUser     Boolean   @default(true)
-    username      String?   @unique
     email         String    @unique
     emailVerified DateTime?
+    username      String?   @unique
+    name          String?
+    bio           String?
     image         String?
 
     accounts Account[]
