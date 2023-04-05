@@ -8,6 +8,7 @@ import {
   FiEdit,
   FiArchive,
   FiUser,
+  FiLogOut,
   FiSettings,
 } from "react-icons/fi";
 import type { IconType } from "react-icons/lib";
@@ -27,6 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { proposalSchema } from "@utils/constants/schema/project";
 import type { z } from "zod";
 import type { SubmitHandler } from "react-hook-form";
+import { signOut } from "next-auth/react";
 
 export const MainLayout: React.FC<Children> = ({ children }) => {
   return (
@@ -218,9 +220,24 @@ const MoreMenu: React.FC = () => {
           className="min-w-[250px] rounded-md bg-bg-700 p-3 data-[side=top]:animate-slideUpAndFade"
           sideOffset={10}
         >
-          <DropdownMenu.Item className="flex select-none items-center justify-between px-[5px] pl-[25px] outline-none">
-            <p className="text-r-lg">Settings</p>
-            <FiSettings />
+          <DropdownMenu.Item>
+            <Link
+              href="/settings"
+              className="flex w-full select-none items-center justify-between px-[5px] pl-[25px] outline-none"
+            >
+              <p className="text-r-lg">Settings</p>
+              <FiSettings />
+            </Link>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <button
+              type="button"
+              className="flex w-full select-none items-center justify-between px-[5px] pl-[25px] outline-none"
+              onClick={() => void signOut()}
+            >
+              <p className="text-r-lg">Sign Out</p>
+              <FiLogOut />
+            </button>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
