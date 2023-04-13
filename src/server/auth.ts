@@ -20,6 +20,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      username?: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -39,10 +40,17 @@ declare module "next-auth" {
  **/
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
+        const prismaUser = await prisma.user.findUnique({
+          where: { id: user.id },
+        });
+
+        if (prismaUser) {
+          session.user.id = user.id;
+          session.user.username = prismaUser.username ?? undefined;
+          // session.user.role = user.role; <-- put other properties on the session here
+        }
       }
       return session;
     },

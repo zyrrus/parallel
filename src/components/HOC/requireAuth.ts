@@ -1,8 +1,23 @@
-import type { GetServerSideProps, GetServerSidePropsContext } from "next";
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { getServerAuthSession } from "@server/auth";
+import type { Session } from "next-auth";
+
+type GetServerSidePropsWithAuth = (
+  ctx: GetServerSidePropsContext,
+  session: Session
+) =>
+  | Promise<
+      GetServerSidePropsResult<{
+        [key: string]: any;
+      }>
+    >
+  | GetServerSidePropsResult<{
+      [key: string]: any;
+    }>;
 
 export const requireAuth =
-  (func: GetServerSideProps) => async (ctx: GetServerSidePropsContext) => {
+  (func: GetServerSidePropsWithAuth) =>
+  async (ctx: GetServerSidePropsContext) => {
     const session = await getServerAuthSession(ctx);
 
     if (!session) {
@@ -14,5 +29,5 @@ export const requireAuth =
       };
     }
 
-    return await func(ctx);
+    return await func(ctx, session);
   };

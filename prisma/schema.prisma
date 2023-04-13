@@ -37,6 +37,14 @@ model Session {
     @@index([userId])
 }
 
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
 model User {
     id String @id @default(cuid())
 
@@ -49,27 +57,39 @@ model User {
 
     accounts Account[]
     sessions Session[]
-}
 
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
+    authoredProjects Project[] @relation("author")
+    projects         Project[] @relation("members")
 }
 
 model Project {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
 
-    title       String
-    description String
-    authorId    String
+    title          String
+    description    String
+    bannerImageUrl String?
 
-    state ProjectLifecycle @default(PROPOSAL)
+    authorId String
+    author   User   @relation("author", fields: [authorId], references: [id])
+    members  User[] @relation("members")
+
+    state    ProjectLifecycle @default(PROPOSAL)
+    previews ProjectPreview[]
 
     @@index([authorId])
+}
+
+model ProjectPreview {
+    projectState ProjectLifecycle
+    projectId    String
+    project      Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+    title        String?
+    description  String?
+    cardImageUrl String?
+
+    @@unique([projectId, projectState])
 }
 
 enum ProjectLifecycle {
