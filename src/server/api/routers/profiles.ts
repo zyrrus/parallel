@@ -13,6 +13,7 @@ export const profileRouter = createTRPCRouter({
           name: true,
           bio: true,
           image: true,
+          authoredProjects: true,
           projects: true,
         },
       });

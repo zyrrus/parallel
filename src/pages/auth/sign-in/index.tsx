@@ -80,7 +80,16 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerAuthSession(ctx);
 
   if (!session) {
-    const providers = await getProviders();
+    // const providers = await getProviders();
+    const providers = {
+      google: {
+        id: "google",
+        name: "Google",
+        type: "oauth",
+        signinUrl: "http://localhost:3000/api/auth/signin/google",
+        callbackUrl: "http://localhost:3000/api/auth/callback/google",
+      },
+    };
     return {
       props: {
         providers,

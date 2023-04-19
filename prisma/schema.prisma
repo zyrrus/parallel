@@ -1,100 +1,102 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
-    @@index([userId])
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
+  @@index([userId])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model User {
-    id String @id @default(cuid())
-
-    email         String    @unique
-    emailVerified DateTime?
-    username      String?   @unique
-    name          String?
-    bio           String?
-    image         String?
-
-    accounts Account[]
-    sessions Session[]
-
-    authoredProjects Project[] @relation("author")
-    projects         Project[] @relation("members")
+  id               String    @id @default(cuid())
+  username         String?   @unique
+  name             String?
+  email            String    @unique
+  emailVerified    DateTime?
+  image            String?
+  bio              String?
+  accounts         Account[]
+  sessions         Session[]
+  authoredProjects Project[] @relation("author")
+  projects         Project[] @relation("members")
 }
 
 model Project {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
+  id             String           @id @default(cuid())
+  createdAt      DateTime         @default(now())
+  title          String
+  description    String
+  authorId       String
+  bannerImageUrl String?
+  state          ProjectLifecycle @default(PROPOSAL)
+  author         User             @relation("author", fields: [authorId], references: [id])
+  members        User[]           @relation("members")
+  previews       ProjectPreview[]
 
-    title          String
-    description    String
-    bannerImageUrl String?
-
-    authorId String
-    author   User   @relation("author", fields: [authorId], references: [id])
-    members  User[] @relation("members")
-
-    state    ProjectLifecycle @default(PROPOSAL)
-    previews ProjectPreview[]
-
-    @@index([authorId])
+  @@index([authorId])
 }
 
 model ProjectPreview {
-    projectState ProjectLifecycle
-    projectId    String
-    project      Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectState ProjectLifecycle
+  projectId    String
+  title        String?
+  description  String?
+  cardImageUrl String?
+  project      Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-    title        String?
-    description  String?
-    cardImageUrl String?
+  @@unique([projectId, projectState])
+}
 
-    @@unique([projectId, projectState])
+model members {
+  A String
+  B String
+
+  @@unique([A, B], map: "_members_AB_unique")
+  @@index([B], map: "_members_B_index")
+  @@map("_members")
 }
 
 enum ProjectLifecycle {
-    PROPOSAL
-    IN_PROGRESS
-    REVISION
-    COMPLETE
+  PROPOSAL
+  IN_PROGRESS
+  REVISION
+  COMPLETE
 }

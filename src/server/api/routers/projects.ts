@@ -1,5 +1,5 @@
 import { proposalSchema } from "@utils/constants/schema/project";
-import { Project, ProjectLifecycle } from "@prisma/client";
+import { ProjectLifecycle } from "@prisma/client";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
@@ -9,6 +9,12 @@ export const projectsRouter = createTRPCRouter({
     return ctx.prisma.project.findMany({
       take: 100,
       orderBy: [{ createdAt: "desc" }],
+    });
+  }),
+  getAllByCurrentUser: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.user.findUnique({
+      where: { id: ctx.session.user.id },
+      select: { authoredProjects: true, projects: true },
     });
   }),
   getAllByUserId: publicProcedure
@@ -34,6 +40,17 @@ export const projectsRouter = createTRPCRouter({
         where: { state: input.state },
         take: 100,
         orderBy: [{ createdAt: "desc" }],
+      });
+    }),
+  getProjectById: publicProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+      })
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.project.findUnique({
+        where: { id: input.projectId },
       });
     }),
   createProposal: protectedProcedure

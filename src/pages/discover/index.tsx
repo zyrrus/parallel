@@ -7,7 +7,7 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import { ProjectCard } from "@components/projects/ProjectCard";
+import { ProjectCard } from "@components/projects/DisplayProjectCard";
 import { requireAuth } from "@components/HOC/requireAuth";
 
 const Discover: NextPage<
