@@ -67,17 +67,18 @@ const SignUp = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full max-w-lg flex-col items-center justify-center gap-y-2.5 px-4"
       >
-        {UserInfoFields.map(({ name, ...fieldProps }) => {
-          const isValidName = (name: string | undefined): name is ValidName =>
-            name !== undefined;
+        {UserInfoFields.map(({ name: fieldName, ...fieldProps }) => {
+          const isValidName = (
+            fieldName: string | undefined
+          ): fieldName is ValidName => fieldName !== undefined;
 
-          if (isValidName(name))
+          if (isValidName(fieldName))
             return (
               <TextInput
-                key={name}
-                error={formState.errors[name]?.message}
+                key={fieldName}
+                error={formState.errors[fieldName]?.message}
                 {...fieldProps}
-                {...register(name)}
+                {...register(fieldName)}
                 disabled={disableForm}
               />
             );

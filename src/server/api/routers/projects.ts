@@ -1,5 +1,5 @@
 import { proposalSchema } from "@utils/constants/schema/project";
-import { ProjectLifecycle } from "@prisma/client";
+import { Project, ProjectLifecycle, User } from "@prisma/client";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
@@ -8,6 +8,7 @@ export const projectsRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.project.findMany({
       take: 100,
+      include: { members: true, author: true },
       orderBy: [{ createdAt: "desc" }],
     });
   }),
@@ -35,12 +36,32 @@ export const projectsRouter = createTRPCRouter({
         state: z.nativeEnum(ProjectLifecycle),
       })
     )
-    .query(({ ctx, input }) => {
-      return ctx.prisma.project.findMany({
+    .query(async ({ ctx, input }) => {
+      const projects = await ctx.prisma.project.findMany({
         where: { state: input.state },
+        select: {
+          author: true,
+          members: true,
+          bannerImageUrl: true,
+          createdAt: true,
+          description: true,
+          state: true,
+          title: true,
+        },
         take: 100,
         orderBy: [{ createdAt: "desc" }],
       });
+      projects.map((p) => ({
+        members: (() => {
+          p.members.push(p.author);
+          return p.members.map((m) => m.username);
+        })(),
+        createdAt: p.createdAt,
+        title: p.title,
+        description: p.description,
+        bannerImageUrl: p.bannerImageUrl,
+        state: p.state,
+      }));
     }),
   getProjectById: publicProcedure
     .input(
