@@ -2,7 +2,8 @@ import type { Children } from "@utils/types/props";
 import { useState, useEffect } from "react";
 import { cva, cx } from "class-variance-authority";
 import { Button } from "@components/Button";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const HomeLayout: React.FC<Children> = ({ children }) => {
   return (
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
 
   // Scroll Listener
   useEffect(() => {
-    const listenScrollEvent = () => {
+    const listenScrollEvent: () => void = () => {
       const threshold = 25;
       setIsLargeBar(
         document.body.scrollTop < threshold &&
@@ -46,18 +47,6 @@ const Header: React.FC = () => {
       window.removeEventListener("scroll", listenScrollEvent);
     };
   });
-
-  const FlexDivider = () => <span className="text-r-2xl text-fg/25">||</span>;
-
-  const Background = () => (
-    <div
-      className={cx(
-        "absolute inset-0 -z-10",
-        "bg-gradient-to-b from-bg via-bg/60 to-transparent",
-        "backdrop-blur [mask:linear-gradient(black_75%,transparent)]"
-      )}
-    />
-  );
 
   return (
     <header
@@ -79,19 +68,57 @@ const Header: React.FC = () => {
             Premium
           </a>
         </div>
-        <Button
-          variant={{ size: "small" }}
-          onClick={() =>
-            void signIn(undefined, {
-              callbackUrl: "/projects",
-              redirect: false,
-            })
-          }
-        >
-          Sign In
-        </Button>
+        <CTAButton />
       </nav>
     </header>
+  );
+};
+
+const FlexDivider: React.FC = () => (
+  <span className="text-r-2xl text-fg/25">||</span>
+);
+
+const Background: React.FC = () => (
+  <div
+    className={cx(
+      "absolute inset-0 -z-10",
+      "bg-gradient-to-b from-bg via-bg/60 to-transparent",
+      "backdrop-blur [mask:linear-gradient(black_75%,transparent)]"
+    )}
+  />
+);
+
+const CTAButton: React.FC = () => {
+  const session = useSession();
+  const router = useRouter();
+
+  if (session.status === "authenticated") {
+    const username = session.data.user.username ?? "";
+
+    return (
+      <Button
+        variant={{ size: "small" }}
+        onClick={() => {
+          void signIn(undefined, {
+            callbackUrl: `/profile/${username}`,
+            redirect: false,
+          });
+        }}
+      >
+        {username}
+      </Button>
+    );
+  }
+
+  return (
+    <Button
+      variant={{ size: "small" }}
+      onClick={() => {
+        void router.push(`/projects`);
+      }}
+    >
+      Sign In
+    </Button>
   );
 };
 

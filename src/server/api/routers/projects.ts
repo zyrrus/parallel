@@ -40,6 +40,7 @@ export const projectsRouter = createTRPCRouter({
       const projects = await ctx.prisma.project.findMany({
         where: { state: input.state },
         select: {
+          id: true,
           author: true,
           members: true,
           bannerImageUrl: true,
@@ -51,11 +52,15 @@ export const projectsRouter = createTRPCRouter({
         take: 100,
         orderBy: [{ createdAt: "desc" }],
       });
-      projects.map((p) => ({
+
+      return projects.map((p) => ({
         members: (() => {
           p.members.push(p.author);
-          return p.members.map((m) => m.username);
+          return p.members
+            .map((m) => m.username)
+            .filter((username) => !!username) as string[];
         })(),
+        id: p.id,
         createdAt: p.createdAt,
         title: p.title,
         description: p.description,
@@ -84,5 +89,19 @@ export const projectsRouter = createTRPCRouter({
       });
 
       return proposal;
+    }),
+  updateState: protectedProcedure
+    .input(
+      z.object({
+        state: z.nativeEnum(ProjectLifecycle),
+        projectId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { projectId, state } = input;
+      await ctx.prisma.project.update({
+        where: { id: projectId },
+        data: { state },
+      });
     }),
 });

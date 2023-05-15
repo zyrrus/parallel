@@ -10,6 +10,7 @@ import {
   FiUser,
   FiLogOut,
   FiSettings,
+  FiExternalLink,
 } from "react-icons/fi";
 import type { IconType } from "react-icons/lib";
 import { Button } from "@components/Button";
@@ -220,6 +221,7 @@ const MoreMenu: React.FC = () => {
           className="min-w-[250px] rounded-md bg-bg-700 p-3 data-[side=top]:animate-slideUpAndFade"
           sideOffset={10}
         >
+          {/* Settings */}
           <DropdownMenu.Item>
             <Link
               href="/settings"
@@ -229,6 +231,19 @@ const MoreMenu: React.FC = () => {
               <FiSettings />
             </Link>
           </DropdownMenu.Item>
+
+          {/* Landing page */}
+          <DropdownMenu.Item>
+            <Link
+              href="/"
+              className="flex w-full select-none items-center justify-between px-[5px] pl-[25px] outline-none"
+            >
+              <p className="text-r-lg">Parallel Homepage</p>
+              <FiExternalLink />
+            </Link>
+          </DropdownMenu.Item>
+
+          {/* Sign out */}
           <DropdownMenu.Item>
             <button
               type="button"

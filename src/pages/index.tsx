@@ -31,13 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const session = await getServerAuthSession(ctx);
 
-  if (session && session.user) {
-    return {
-      redirect: { destination: "/projects", permanent: false },
-    };
-  }
-
-  return { props: { session } };
+  return { props: { session: session } };
 };
 
 export default Home;
