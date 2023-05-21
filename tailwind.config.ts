@@ -1,5 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import { type Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
+import plugin from "tailwindcss/plugin";
+
+interface RecursiveKeyValuePair<K extends keyof any = string, V = string> {
+  [key: string]: V | RecursiveKeyValuePair<K, V>;
+}
+type CSSRuleObject = RecursiveKeyValuePair<string, null | string | string[]>;
+
+export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     container: {
@@ -107,29 +115,32 @@ module.exports = {
         // === Radix UI =======================================================
         // DropdownMenu
         slideDownAndFade: {
-          from: { opacity: 0, transform: "translateY(-2px)" },
-          to: { opacity: 1, transform: "translateY(0)" },
+          from: { opacity: "0%", transform: "translateY(-2px)" },
+          to: { opacity: "100%", transform: "translateY(0)" },
         },
         slideLeftAndFade: {
-          from: { opacity: 0, transform: "translateX(2px)" },
-          to: { opacity: 1, transform: "translateX(0)" },
+          from: { opacity: "0%", transform: "translateX(2px)" },
+          to: { opacity: "100%", transform: "translateX(0)" },
         },
         slideUpAndFade: {
-          from: { opacity: 0, transform: "translateY(2px)" },
-          to: { opacity: 1, transform: "translateY(0)" },
+          from: { opacity: "0%", transform: "translateY(2px)" },
+          to: { opacity: "100%", transform: "translateY(0)" },
         },
         slideRightAndFade: {
-          from: { opacity: 0, transform: "translateX(2px)" },
-          to: { opacity: 1, transform: "translateX(0)" },
+          from: { opacity: "0%", transform: "translateX(2px)" },
+          to: { opacity: "100%", transform: "translateX(0)" },
         },
         // Dialog
         overlayShow: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
+          from: { opacity: "0%" },
+          to: { opacity: "100%" },
         },
         contentShow: {
-          from: { opacity: 0, transform: "translate(-50%, -48%) scale(0.96)" },
-          to: { opacity: 1, transform: "translate(-50%, -50%) scale(1)" },
+          from: {
+            opacity: "0%",
+            transform: "translate(-50%, -48%) scale(0.96)",
+          },
+          to: { opacity: "100%", transform: "translate(-50%, -50%) scale(1)" },
         },
       },
       animation: {
@@ -148,5 +159,41 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-};
+  plugins: [
+    // Responsive Typography
+    plugin(function ({ addUtilities, theme }) {
+      const fontSizes = Object.keys(theme("fontSize"));
+
+      const buildCSS = (fontSize: string): CSSRuleObject => {
+        const fsIndex = fontSizes.indexOf(fontSize);
+
+        if (fsIndex > 1) {
+          const desktop = fontSize;
+          const tablet = fontSizes[fsIndex - 1] ?? fontSize;
+          const mobile = fontSizes[fsIndex - 2] ?? fontSize;
+
+          return {
+            "font-size": theme(`fontSize.${mobile}`),
+            "@screen md": {
+              "font-size": theme(`fontSize.${tablet}`),
+            },
+            "@screen 2xl": {
+              "font-size": theme(`fontSize.${desktop}`),
+            },
+          };
+        }
+
+        return { "font-size": theme(`fontSize.${fontSize}`) };
+      };
+
+      addUtilities({
+        ".text-r-3xl": buildCSS("3xl"),
+        ".text-r-2xl": buildCSS("2xl"),
+        ".text-r-xl": buildCSS("xl"),
+        ".text-r-lg": buildCSS("lg"),
+        ".text-r-base": buildCSS("base"),
+        ".text-r-sm": buildCSS("sm"),
+      });
+    }),
+  ],
+} satisfies Config;
