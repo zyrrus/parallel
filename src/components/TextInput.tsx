@@ -38,7 +38,7 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           <input
             type="text"
             placeholder={placeholder}
-            className="w-full appearance-none border-none bg-transparent leading-tight text-fg placeholder-fg/50 outline-none"
+            className="w-full appearance-none border-none bg-transparent text-fg placeholder-fg/50 outline-none"
             ref={ref}
             {...rest}
           />
@@ -125,7 +125,7 @@ const Label: React.FC<{
   optional?: boolean;
 }> = ({ label, required = false, optional = false }) => {
   return (
-    <label className="text-r-lg mb-1 block text-fg">
+    <label className="mb-1 block text-fg text-r-lg">
       {label}
       {required && (
         <span className="text-r-md italic text-tertiary"> · Required</span>

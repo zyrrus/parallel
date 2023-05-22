@@ -1,7 +1,7 @@
 import { DiscoverLayout } from "@components/layouts";
 import { api } from "@utils/api";
 import type { InferGetServerSidePropsType, NextPage } from "next";
-import { DisplayProjectCard } from "@components/projects/DisplayProjectCard";
+import { ProjectCard } from "@components/projects/ProjectCards";
 import { requireAuth } from "@components/HOC/requireAuth";
 
 const Discover: NextPage<
@@ -16,7 +16,7 @@ const Discover: NextPage<
         <p>Loading ...</p>
       ) : (
         data?.map((project) => (
-          <DisplayProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.id} project={project} />
         ))
       )}
     </DiscoverLayout>

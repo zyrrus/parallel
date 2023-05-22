@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const button = cva(
   [
-    "w-fit rounded-full border-8 min-w-max font-medium shadow-solid transition-all",
+    "w-fit rounded-full border-8 min-w-max flex gap-x-1 flex-row items-center font-medium shadow-solid transition-all",
     "hover:shadow-solid-lowered",
     "active:shadow-solid-lowest",
     "disabled:bg-fg-400/10 disabled:text-fg-600/50 disabled:border-fg-600/10 disabled:shadow-none",
@@ -14,9 +14,15 @@ const button = cva(
   ],
   {
     variants: {
+      icon: {
+        none: "",
+        prefix: "",
+        suffix: "",
+        both: "",
+      },
       size: {
-        default: "text-r-2xl px-14 py-3",
-        small: "text-r-lg px-10 py-2",
+        default: "text-r-2xl py-3",
+        small: "text-r-lg py-2",
       },
       role: {
         primary: [
@@ -31,15 +37,59 @@ const button = cva(
         ],
       },
     },
+    compoundVariants: [
+      {
+        icon: "none",
+        size: "default",
+        className: "px-14",
+      },
+      {
+        icon: "prefix",
+        size: "default",
+        className: "pr-14 pl-12",
+      },
+      {
+        icon: "suffix",
+        size: "default",
+        className: "pl-14 pr-12",
+      },
+      {
+        icon: "both",
+        size: "default",
+        className: "px-12",
+      },
+      {
+        icon: "none",
+        size: "small",
+        className: "px-10",
+      },
+      {
+        icon: "prefix",
+        size: "small",
+        className: "pr-10 pl-7",
+      },
+      {
+        icon: "suffix",
+        size: "small",
+        className: "pl-10 pr-7",
+      },
+      {
+        icon: "both",
+        size: "small",
+        className: "px-7",
+      },
+    ],
   }
 );
+
+type ButtonVariantProps = VariantProps<typeof button>;
 
 interface CommonProps {
   children: ReactNode;
   prefixIcon?: ReactNode;
   suffixIcon?: ReactNode;
   className?: string;
-  variant?: VariantProps<typeof button>;
+  variant?: Omit<ButtonVariantProps, "icon">;
 }
 
 type ButtonProps = DetailedHTMLProps<
@@ -58,13 +108,22 @@ export const Button: React.FC<Props> = (props) => {
 
   const buttonContent = (
     <>
-      {prefixIcon && prefixIcon}
+      {prefixIcon}
       {children}
-      {suffixIcon && suffixIcon}
+      {suffixIcon}
     </>
   );
 
-  const defaultVariant = { size: "default", role: "primary" };
+  const defaultVariant: ButtonVariantProps = {
+    size: "default",
+    role: "primary",
+    icon: (() => {
+      if (prefixIcon && suffixIcon) return "both";
+      if (prefixIcon) return "prefix";
+      if (suffixIcon) return "suffix";
+      return "none";
+    })(),
+  };
   const updatedVariant = Object.assign(defaultVariant, variant);
 
   // Render a Link if href is provided

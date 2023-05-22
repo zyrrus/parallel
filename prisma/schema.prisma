@@ -63,7 +63,7 @@ model Project {
     id             String           @id @default(cuid())
     createdAt      DateTime         @default(now())
     title          String
-    description    String
+    description    String           @db.Text()
     authorId       String
     bannerImageUrl String?
     state          ProjectLifecycle @default(PROPOSAL)
