@@ -92,6 +92,7 @@ export default {
         success: "#ACD161",
         error: "#E24536",
         warning: "#EDC25E",
+        disabled: "#857A7E",
       },
       fontFamily: {
         sans: ["var(--font-murecho)"],
@@ -106,6 +107,7 @@ export default {
         "solid-lowered": "10px 20px 0px rgba(0, 0, 0, 0.2)",
         "solid-medium": "8px 16px 0px rgba(0, 0, 0, 0.2)",
         "solid-medium-lowered": "6px 12px 0px rgba(0, 0, 0, 0.2)",
+        "solid-small": "4px 8px 0px rgba(0, 0, 0, 0.2)",
         "solid-lowest": "2px 4px 0px rgba(0, 0, 0, 0.2)",
       },
       dropShadow: {
@@ -113,7 +115,7 @@ export default {
       },
       keyframes: {
         // === Radix UI =======================================================
-        // DropdownMenu
+        // DropdownMenu + Tooltip
         slideDownAndFade: {
           from: { opacity: "0%", transform: "translateY(-2px)" },
           to: { opacity: "100%", transform: "translateY(0)" },
