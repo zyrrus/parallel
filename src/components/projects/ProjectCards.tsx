@@ -9,8 +9,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { getRootContainer } from "@utils/constants/htmlTools";
 import { NewProposalPopup } from "@components/NewProposalPopup";
 import Link from "next/link";
-import { Herr_Von_Muellerhoff } from "@next/font/google";
-import { WithScroll } from "@components/SidePanel";
+import { WithScroll } from "@components/WithScroll";
 
 // === Styles =================================================================
 
@@ -42,9 +41,12 @@ type ProjectCardContainerProps = Children &
   VariantProps<typeof container>;
 
 type ProjectCardProps = Component & {
-  project: Omit<Project, "authorId"> & {
-    members: User[];
-  };
+  id: string;
+  title: string;
+  description: string;
+  state: ProjectLifecycle;
+  createdAt: Date;
+  bannerImageUrl: string | null;
 };
 
 type NewProjectCardProps = Component & { onSubmit?: () => void };
@@ -58,14 +60,19 @@ const ProjectCardContainer: React.FC<ProjectCardContainerProps> = ({
 }) => <Tag className={container({ activity: activity })}>{children}</Tag>;
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
-  project,
+  id,
+  title,
+  description,
+  state,
   component,
+  createdAt,
+  bannerImageUrl,
 }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
     <ProjectCardContainer activity="interactive" component={component}>
-      <Link href={`/projects/${project.id}`} className="h-full w-full">
+      <Link href={`/projects/${id}`} className="h-full w-full">
         <div
           className="flex h-full w-full flex-col"
           onMouseEnter={() => setShowMore(true)}
@@ -83,28 +90,26 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               fill
               className="object-cover object-top"
               src={
-                project.bannerImageUrl ??
-                `https://picsum.photos/seed/${project.id}/300/400.webp`
+                bannerImageUrl ??
+                `https://picsum.photos/seed/${id}/300/400.webp`
               }
-              alt={project.title}
+              alt={title}
             />
           </div>
           <div className="mx-4 my-4 flex flex-grow flex-col justify-between gap-y-2 overflow-hidden overflow-ellipsis transition-all">
             <label className="block overflow-x-clip overflow-ellipsis whitespace-nowrap text-left font-bold text-r-xl">
-              {project.title}
+              {title}
             </label>
             {showMore && (
               <WithScroll height="full">
-                <p className="mr-3 max-h-full flex-grow">
-                  {project.description}
-                </p>
+                <p className="mr-3 max-h-full flex-grow">{description}</p>
               </WithScroll>
             )}
             <div className="flex flex-row items-center gap-x-3">
-              <ProjectLifecycleIndicator state={project.state} />
+              <ProjectLifecycleIndicator state={state} />
               <p className="overflow-ellipsis">
                 {/* TODO: Change to time last updated */}
-                Created {formatDate(project.createdAt)}
+                Created {formatDate(createdAt)}
               </p>
             </div>
           </div>

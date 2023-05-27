@@ -87,7 +87,7 @@ const Projects: NextPage = () => {
         {isLoading || isFetching
           ? Array(5).fill(<LoadingProjectCard component="li" />)
           : sortedProjects.map((p) => (
-              <ProjectCard key={p.id} project={p} component="li" />
+              <ProjectCard key={p.id} {...p} component="li" />
             ))}
       </ul>
     </MainLayout>

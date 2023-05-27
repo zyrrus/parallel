@@ -17,9 +17,7 @@ const Discover: NextPage<
       {isLoading ? (
         <p>Loading ...</p>
       ) : (
-        data?.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))
+        data?.map((project) => <ProjectCard key={project.id} {...project} />)
       )}
     </DiscoverLayout>
   );

@@ -9,7 +9,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import Button from "./Button";
 import { Divider } from "./Divider";
-import { WithScroll } from "./SidePanel";
+import { WithScroll } from "./WithScroll";
 import { TextInput, MultilineTextInput } from "./TextInput";
 import type { z } from "zod";
 import { useState } from "react";
