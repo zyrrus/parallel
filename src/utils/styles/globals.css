@@ -10,49 +10,7 @@ body {
 
 p,
 a {
-  @apply text-lg;
-}
-
-/* Typography */
-
-.text-r-6xl {
-  @apply text-6xl;
-}
-.text-r-5xl {
-  /* H1 */
-  @apply text-5xl;
-}
-.text-r-4xl {
-  /* H2 */
-  @apply text-4xl;
-}
-.text-r-3xl {
-  /* H3 */
-  @apply text-3xl;
-}
-.text-r-2xl {
-  /* H4 */
-  @apply text-2xl;
-}
-.text-r-xl {
-  /* H5 */
-  @apply text-xl;
-}
-.text-r-lg {
-  /* H6 / Base */
-  @apply text-lg;
-}
-.text-r-md {
-  /*  */
-  @apply text-base;
-}
-.text-r-sm {
-  /*  */
-  @apply text-sm;
-}
-.text-r-xs {
-  /*  */
-  @apply text-xs;
+  @apply text-r-lg;
 }
 
 /* Special  */

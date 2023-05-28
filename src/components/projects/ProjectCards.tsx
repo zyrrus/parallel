@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Project, ProjectLifecycle, User } from "@prisma/client";
+import type { ProjectLifecycle } from "@prisma/client";
 import { formatDate } from "@utils/filters";
-import type { Children } from "@utils/types/props";
+import type { Children, ProjectCardDetails } from "@utils/types/props";
 import { FiPlus } from "react-icons/fi";
 import { type VariantProps, cva, cx } from "class-variance-authority";
 import Image from "next/image";
@@ -40,14 +40,7 @@ type ProjectCardContainerProps = Children &
   Component &
   VariantProps<typeof container>;
 
-type ProjectCardProps = Component & {
-  id: string;
-  title: string;
-  description: string;
-  state: ProjectLifecycle;
-  createdAt: Date;
-  bannerImageUrl: string | null;
-};
+type ProjectCardProps = Component & ProjectCardDetails;
 
 type NewProjectCardProps = Component & { onSubmit?: () => void };
 

@@ -3,21 +3,15 @@ import { MainLayout } from "@components/layouts";
 import { requireAuth } from "@components/HOC/requireAuth";
 import { api } from "@utils/api";
 import { useMemo, useState } from "react";
-import {
-  NewProjectCard,
-  ProjectCard,
-  LoadingProjectCard,
-} from "@components/projects/ProjectCards";
 import { SearchBar } from "@components/SearchBar";
 import { Divider } from "@components/Divider";
 import { useSession } from "next-auth/react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { cx } from "class-variance-authority";
+import { ProjectCardList } from "@components/projects/ProjectCardList";
 
 const Projects: NextPage = () => {
   // === Hooks ================================================================
 
-  const [animationRef] = useAutoAnimate();
   const { data: session, status } = useSession();
   const [searchText, setSearchText] = useState("");
 
@@ -65,7 +59,7 @@ const Projects: NextPage = () => {
     <MainLayout>
       <h1
         className={cx(
-          "text-r-5xl mx-11 mb-6 mt-8 font-bold",
+          "mx-11 mb-6 mt-8 font-bold text-r-5xl",
           status === "loading"
             ? "max-w-md animate-pulse rounded bg-primary/25 text-primary/0"
             : "text-primary"
@@ -82,14 +76,11 @@ const Projects: NextPage = () => {
         />
       </div>
       <Divider className="my-11" />
-      <ul className="m-11 flex flex-row flex-wrap gap-11" ref={animationRef}>
-        <NewProjectCard component="li" />
-        {isLoading || isFetching
-          ? Array(5).fill(<LoadingProjectCard component="li" />)
-          : sortedProjects.map((p) => (
-              <ProjectCard key={p.id} {...p} component="li" />
-            ))}
-      </ul>
+      <ProjectCardList
+        showNewProjectButton
+        projects={sortedProjects}
+        showLoading={isLoading || isFetching}
+      />
     </MainLayout>
   );
 };

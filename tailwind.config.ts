@@ -189,6 +189,9 @@ export default {
       };
 
       addUtilities({
+        ".text-r-6xl": buildCSS("6xl"),
+        ".text-r-5xl": buildCSS("5xl"),
+        ".text-r-4xl": buildCSS("4xl"),
         ".text-r-3xl": buildCSS("3xl"),
         ".text-r-2xl": buildCSS("2xl"),
         ".text-r-xl": buildCSS("xl"),

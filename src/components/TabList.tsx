@@ -21,7 +21,7 @@ const tabItems: TabItemProps[] = [
 export const TabList: React.FC<Children> = ({ children }) => {
   return (
     <Tabs.Root>
-      <Divider className="mt-4 -mb-[5px]" />
+      <Divider className="-mb-[5px] mt-11" />
       <Tabs.List
         className="mx-auto flex justify-center gap-x-8"
         aria-label="Discover projects"
@@ -38,7 +38,7 @@ export const TabItem: React.FC<TabItemProps> = ({ label, route, Icon }) => {
   return (
     <Tabs.Trigger
       // Useful pseudo-selectors: hover, data-[state=active/inactive], first, last
-      className="border-t-4 border-transparent px-2 text-lg font-medium text-fg/70 hover:border-fg/10 hover:text-fg-300 data-[state=active]:border-fg/50 data-[state=active]:text-fg-400"
+      className="border-t-4 border-transparent px-2 font-medium text-fg/70 text-r-lg hover:border-fg/10 hover:text-fg-300 data-[state=active]:border-fg/50 data-[state=active]:text-fg-400"
       value={label}
     >
       <Link

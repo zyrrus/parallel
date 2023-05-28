@@ -1,6 +1,25 @@
-import type { TextInputProps, MultilineInputProps } from "@utils/types/props";
 import { cva } from "class-variance-authority";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
+
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  placeholder?: string;
+  required?: boolean;
+  optional?: boolean;
+  error?: string;
+  prefixIcon?: React.ReactNode;
+  suffixIcon?: React.ReactNode;
+}
+
+interface MultilineInputProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  required?: boolean;
+  optional?: boolean;
+  placeholder?: string;
+  error?: string;
+  hasAdaptiveHeight?: boolean;
+}
 
 // === Text Input =============================================================
 
@@ -128,10 +147,10 @@ const Label: React.FC<{
     <label className="mb-1 block text-fg text-r-lg">
       {label}
       {required && (
-        <span className="text-r-md italic text-tertiary"> · Required</span>
+        <span className="italic text-tertiary text-r-base"> · Required</span>
       )}
       {optional && (
-        <span className="text-r-md italic text-fg/50"> · Optional</span>
+        <span className="italic text-fg/50 text-r-base"> · Optional</span>
       )}
     </label>
   );
@@ -139,7 +158,7 @@ const Label: React.FC<{
 
 const Error: React.FC<{ error: string }> = ({ error }) => {
   return (
-    <p className="text-r-md overflow-clip overflow-ellipsis whitespace-nowrap text-error">
+    <p className="overflow-clip overflow-ellipsis whitespace-nowrap text-error text-r-base">
       {error}
     </p>
   );

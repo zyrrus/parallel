@@ -1,25 +1,21 @@
 import { DiscoverLayout } from "@components/layouts";
 import { api } from "@utils/api";
 import type { InferGetServerSidePropsType, NextPage } from "next";
-import { ProjectCard } from "@components/projects/ProjectCards";
 import { requireAuth } from "@components/HOC/requireAuth";
 
 const Discover: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
-  const { data, isLoading } = api.projects.getAllByState.useQuery({
+  const { data, isLoading, isFetching } = api.projects.getAllByState.useQuery({
     state: "COMPLETE",
   });
 
   return (
-    <DiscoverLayout>
-      <h2 className="text-r-4xl mb-8 font-bold">Archive</h2>
-      {isLoading ? (
-        <p>Loading ...</p>
-      ) : (
-        data?.map((project) => <ProjectCard key={project.id} {...project} />)
-      )}
-    </DiscoverLayout>
+    <DiscoverLayout
+      subtitle="Archive"
+      projects={data}
+      showLoading={isLoading || isFetching}
+    />
   );
 };
 
