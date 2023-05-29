@@ -3,22 +3,18 @@ import * as Tabs from "@radix-ui/react-tabs";
 import Link from "next/link";
 import { Divider } from "@components/Divider";
 import type { IconType } from "react-icons/lib";
-import { FiArchive, FiClipboard, FiEdit, FiStar } from "react-icons/fi";
 
-interface TabItemProps {
+export interface TabItemProps {
   label: string;
   route: string;
   Icon?: IconType;
 }
 
-const tabItems: TabItemProps[] = [
-  { label: "Favorites", route: "/discover", Icon: FiStar },
-  { label: "Proposals", route: "/discover/proposals", Icon: FiClipboard },
-  { label: "Revisions", route: "/discover/revisions", Icon: FiEdit },
-  { label: "Archive", route: "/discover/archive", Icon: FiArchive },
-];
+interface TabListProps {
+  tabs: TabItemProps[];
+}
 
-export const TabList: React.FC<Children> = ({ children }) => {
+export const TabList: React.FC<TabListProps> = ({ tabs }) => {
   return (
     <Tabs.Root>
       <Divider className="-mb-[5px] mt-11" />
@@ -26,7 +22,7 @@ export const TabList: React.FC<Children> = ({ children }) => {
         className="mx-auto flex justify-center gap-x-8"
         aria-label="Discover projects"
       >
-        {tabItems.map((item) => (
+        {tabs.map((item) => (
           <TabItem key={item.label} {...item} />
         ))}
       </Tabs.List>

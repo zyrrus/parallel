@@ -12,6 +12,21 @@ import { getRootContainer } from "@utils/constants/htmlTools";
 import { signOut } from "next-auth/react";
 import { navItems } from "@utils/constants/sidepanel";
 import { NewProposalPopup } from "./NewProposalPopup";
+import { cva } from "class-variance-authority";
+
+const links = cva(
+  [
+    "flex flex-row items-center gap-x-2 font-medium text-r-2xl",
+    "hover:font-bold hover:text-fg-400",
+  ],
+  {
+    variants: {
+      state: {
+        selected: "bg-red-500",
+      },
+    },
+  }
+);
 
 export const SidePanel: React.FC = () => {
   return (
@@ -27,11 +42,7 @@ export const SidePanel: React.FC = () => {
             </h1>
             <nav className="my-8 flex flex-col gap-y-5">
               {navItems.map(({ label, route, Icon }) => (
-                <Link
-                  key={label}
-                  href={route}
-                  className="flex flex-row items-center gap-x-2 font-medium text-r-2xl hover:font-bold hover:text-fg-400"
-                >
+                <Link key={label} href={route} className={links({})}>
                   <Icon size={28} /> {label}
                 </Link>
               ))}

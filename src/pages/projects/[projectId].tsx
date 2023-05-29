@@ -13,10 +13,15 @@ const SpecificProject: NextPage<
 > = ({ projectId }) => {
   const ctx = api.useContext();
 
-  const { data, isRefetching } = api.projects.getProjectById.useQuery({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    projectId,
-  });
+  const { data, isRefetching } = api.projects.getProjectById.useQuery(
+    {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      projectId,
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { mutate, isLoading: isUpdatingState } =
     api.projects.updateState.useMutation({
@@ -43,7 +48,10 @@ const SpecificProject: NextPage<
 
   return (
     <MainLayout>
-      {!data ? (
+      <h1 className="mx-11 mb-6 mt-8 font-bold text-primary text-r-5xl">
+        {data?.title}
+      </h1>
+      {/* {!data ? (
         <p>Loading...</p>
       ) : (
         <>
@@ -73,7 +81,7 @@ const SpecificProject: NextPage<
             </Button>
           </div>
         </>
-      )}
+      )} */}
     </MainLayout>
   );
 };

@@ -6,9 +6,14 @@ import { requireAuth } from "@components/HOC/requireAuth";
 const Discover: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = () => {
-  const { data, isLoading, isFetching } = api.projects.getAllByState.useQuery({
-    state: "REVISION",
-  });
+  const { data, isLoading, isFetching } = api.projects.getAllByState.useQuery(
+    {
+      state: "REVISION",
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <DiscoverLayout

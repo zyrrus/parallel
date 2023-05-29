@@ -1,15 +1,23 @@
 import { MainLayout } from "@components/layouts";
 import { ProjectCardList } from "@components/projects/ProjectCardList";
 import { SearchBar } from "@components/SearchBar";
-import { TabList } from "@components/TabList";
+import { type TabItemProps, TabList } from "@components/TabList";
 import type { ProjectCardDetails } from "@utils/types/props";
 import { useState, useMemo } from "react";
+import { FiArchive, FiClipboard, FiEdit, FiStar } from "react-icons/fi";
 
 interface DiscoverLayoutProps {
   subtitle: string;
   projects?: ProjectCardDetails[];
   showLoading?: boolean;
 }
+
+const tabs: TabItemProps[] = [
+  { label: "Favorites", route: "/discover", Icon: FiStar },
+  { label: "Proposals", route: "/discover/proposals", Icon: FiClipboard },
+  { label: "Revisions", route: "/discover/revisions", Icon: FiEdit },
+  { label: "Archive", route: "/discover/archive", Icon: FiArchive },
+];
 
 export const DiscoverLayout: React.FC<DiscoverLayoutProps> = ({
   subtitle,
@@ -47,7 +55,7 @@ export const DiscoverLayout: React.FC<DiscoverLayoutProps> = ({
           clearInput={() => setSearchText("")}
         />
       </div>
-      <TabList />
+      <TabList tabs={tabs} />
       <h2 className="mx-11 mb-8 font-bold text-r-4xl">{subtitle}</h2>
       <ProjectCardList projects={sortedProjects} showLoading={showLoading} />
     </MainLayout>

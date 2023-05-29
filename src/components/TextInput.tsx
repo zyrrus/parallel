@@ -1,25 +1,6 @@
+import type { TextInputProps, MultilineInputProps } from "@utils/types/props";
 import { cva } from "class-variance-authority";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
-
-interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  placeholder?: string;
-  required?: boolean;
-  optional?: boolean;
-  error?: string;
-  prefixIcon?: React.ReactNode;
-  suffixIcon?: React.ReactNode;
-}
-
-interface MultilineInputProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-  required?: boolean;
-  optional?: boolean;
-  placeholder?: string;
-  error?: string;
-  hasAdaptiveHeight?: boolean;
-}
 
 // === Text Input =============================================================
 
