@@ -1,16 +1,24 @@
-import Button from "@components/Button";
-import { requireAuth } from "@components/HOC/requireAuth";
 import { MainLayout } from "@components/layouts";
 import { ProjectLifecycle } from "@prisma/client";
 import { api } from "@utils/api";
-import { formatDate } from "@utils/filters";
-import type { InferGetServerSidePropsType, NextPage } from "next";
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
+import { serialize } from "next-mdx-remote/serialize";
+import { prisma } from "@server/db";
+import superjson from "superjson";
+import { appRouter } from "@server/api/root";
+import { getServerAuthSession } from "@server/auth";
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { MDX } from "@components/MDX";
 
 const StateOrder: ProjectLifecycle[] = Object.values(ProjectLifecycle);
 
 const SpecificProject: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ projectId }) => {
+> = ({ projectId, description }) => {
   const ctx = api.useContext();
 
   const { data, isRefetching } = api.projects.getProjectById.useQuery(
@@ -48,9 +56,12 @@ const SpecificProject: NextPage<
 
   return (
     <MainLayout>
-      <h1 className="mx-11 mb-6 mt-8 font-bold text-primary text-r-5xl">
-        {data?.title}
-      </h1>
+      <article className="mx-11">
+        <h1 className="mb-6 mt-8 font-bold text-primary text-r-5xl">
+          {data?.title}
+        </h1>
+        <MDX {...description} />
+      </article>
       {/* {!data ? (
         <p>Loading...</p>
       ) : (
@@ -88,7 +99,82 @@ const SpecificProject: NextPage<
 
 export default SpecificProject;
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export const getServerSideProps = requireAuth(async (ctx) => {
-  return { props: { projectId: ctx.params?.projectId } };
-});
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/sign-in",
+        permanent: false,
+      },
+    };
+  }
+
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: { prisma, session },
+    transformer: superjson,
+  });
+
+  if (!ctx.params?.projectId)
+    return {
+      redirect: {
+        destination: "/projects",
+        permanent: false,
+      },
+    };
+
+  const projectId = Array.isArray(ctx.params.projectId)
+    ? ctx.params.projectId.join("")
+    : ctx.params.projectId;
+  // const project = await ssg.projects.getProjectById.fetch({ projectId });
+  // const projectDescription = project?.description ?? "";
+  // const mdxSource = await serialize(projectDescription);
+
+  const mdxSource = await serialize(`
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+Paragraph text.
+
+[Link](#)
+
+> Blockquote text
+
+Some \`inline code\` example.
+
+---
+
+![Image](#)
+
+- List item 1
+- List item 2
+- List item 3
+
+1. Ordered item 1
+2. Ordered item 2
+3. Ordered item 3
+
+\`\`\`javascript
+function greet() {
+  console.log("Hello, world!");
+}
+\`\`\`
+
+*Emphasized* text.
+
+**Strong** text.
+      `);
+
+  return { props: { projectId, description: mdxSource } };
+};

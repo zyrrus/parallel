@@ -1,6 +1,6 @@
 import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 interface RecursiveKeyValuePair<K extends keyof any = string, V = string> {
   [key: string]: V | RecursiveKeyValuePair<K, V>;
@@ -95,7 +95,8 @@ export default {
         disabled: "#857A7E",
       },
       fontFamily: {
-        sans: ["var(--font-murecho)"],
+        sans: ["var(--font-murecho)", ...defaultTheme.fontFamily.sans],
+        mono: ["var(--font-cutive-mono)", ...defaultTheme.fontFamily.mono],
       },
       backgroundImage: {
         radial:

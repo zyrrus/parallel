@@ -5,7 +5,7 @@ import React, { useEffect, useImperativeHandle, useRef } from "react";
 // === Text Input =============================================================
 
 const input = cva([
-  "text-r-lg w-full rounded border-[6px] py-2 px-3 md:py-3 md:px-4 leading-tight border-fg placeholder-fg/50 bg-fg/20",
+  "text-r-lg w-full rounded border-[6px] py-2 px-3 md:py-3 md:px-4 border-fg placeholder-fg/50 bg-fg/20",
   "focus:outline-none",
 ]);
 
@@ -104,7 +104,7 @@ export const MultilineTextInput = React.forwardRef<
         >
           <textarea
             placeholder={placeholder}
-            className="max-h-64 min-h-[150px] w-full appearance-none overflow-y-hidden border-none bg-transparent leading-tight text-fg placeholder-fg/50 outline-none transition-all"
+            className="max-h-64 min-h-[150px] w-full appearance-none overflow-y-hidden border-none bg-transparent text-fg placeholder-fg/50 outline-none transition-all"
             ref={innerRef}
             {...rest}
           />

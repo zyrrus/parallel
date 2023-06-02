@@ -1,4 +1,3 @@
-import type { Children } from "@utils/types/props";
 import * as Tabs from "@radix-ui/react-tabs";
 import Link from "next/link";
 import { Divider } from "@components/Divider";
@@ -19,7 +18,7 @@ export const TabList: React.FC<TabListProps> = ({ tabs }) => {
     <Tabs.Root>
       <Divider className="-mb-[5px] mt-11" />
       <Tabs.List
-        className="mx-auto flex justify-center gap-x-8"
+        className="mx-11 flex justify-start gap-x-8"
         aria-label="Discover projects"
       >
         {tabs.map((item) => (

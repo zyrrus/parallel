@@ -95,7 +95,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </label>
             {showMore && (
               <WithScroll height="full">
-                <p className="mr-3 max-h-full flex-grow">{description}</p>
+                <p className="mr-3 max-h-full flex-grow whitespace-pre-wrap">
+                  {description}
+                </p>
               </WithScroll>
             )}
             <div className="flex flex-row items-center gap-x-3">
