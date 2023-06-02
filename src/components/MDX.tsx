@@ -4,6 +4,7 @@ import type {
   ComponentPropsWithoutRef,
   HTMLAttributes,
 } from "react";
+import "highlight.js/styles/base16/gruvbox-dark-medium.css";
 
 type Tag<T> = JSX.IntrinsicAttributes & ClassAttributes<T> & HTMLAttributes<T>;
 type HTMLTag = Tag<HTMLElement>;
@@ -26,7 +27,10 @@ const components = {
     />
   ),
   blockquote: (props: Tag<HTMLQuoteElement>) => (
-    <blockquote className="border-l-4 border-fg-700 pl-4 italic" {...props} />
+    <blockquote
+      className="rounded border-l-4 border-fg-700 pl-4 italic"
+      {...props}
+    />
   ),
   br: (props: Tag<HTMLBRElement>) => <br {...props} />,
   code: (props: HTMLTag) => (
@@ -34,7 +38,7 @@ const components = {
   ),
   em: (props: HTMLTag) => <em className="italic" {...props} />,
   hr: (props: Tag<HTMLHRElement>) => (
-    <hr className="my-4 border-2 border-fg-700" {...props} />
+    <hr className="my-4 rounded border-2 border-fg-700" {...props} />
   ),
   img: (props: Tag<HTMLImageElement>) => (
     <img className="max-w-full" {...props} />
@@ -47,7 +51,7 @@ const components = {
     <ul className="ml-4 list-disc" {...props} />
   ),
   pre: (props: Tag<HTMLPreElement>) => (
-    <pre className="overflow-auto rounded bg-bg-600 p-4" {...props} />
+    <pre className="overflow-auto rounded" {...props} />
   ),
   strong: (props: HTMLTag) => <strong className="font-bold" {...props} />,
 };

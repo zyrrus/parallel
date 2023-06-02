@@ -6,6 +6,7 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
+import rehypeHighlight from "rehype-highlight";
 import { serialize } from "next-mdx-remote/serialize";
 import { prisma } from "@server/db";
 import superjson from "superjson";
@@ -132,7 +133,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   // const projectDescription = project?.description ?? "";
   // const mdxSource = await serialize(projectDescription);
 
-  const mdxSource = await serialize(`
+  const mdxSource = await serialize(
+    `
 # Heading 1
 
 ## Heading 2
@@ -174,7 +176,9 @@ function greet() {
 *Emphasized* text.
 
 **Strong** text.
-      `);
+      `,
+    { mdxOptions: { rehypePlugins: [rehypeHighlight] } }
+  );
 
   return { props: { projectId, description: mdxSource } };
 };
