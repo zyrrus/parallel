@@ -89,8 +89,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               alt={title}
             />
           </div>
-          <div className="mx-4 my-4 flex flex-grow flex-col justify-between gap-y-2 overflow-hidden overflow-ellipsis transition-all">
-            <label className="block overflow-x-clip overflow-ellipsis whitespace-nowrap text-left font-bold text-r-xl">
+          <div className="mx-4 flex flex-grow flex-col justify-between gap-y-2 overflow-hidden overflow-ellipsis transition-all">
+            <label className="mt-4 block overflow-x-clip overflow-ellipsis whitespace-nowrap text-left font-bold text-r-xl">
               {title}
             </label>
             {showMore && (
@@ -100,7 +100,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 </p>
               </WithScroll>
             )}
-            <div className="flex flex-row items-center gap-x-3">
+            <div className="mb-4 flex flex-row items-center gap-x-3">
               <ProjectLifecycleIndicator state={state} />
               <p className="overflow-ellipsis">
                 {/* TODO: Change to time last updated */}

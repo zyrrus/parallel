@@ -57,43 +57,13 @@ const SpecificProject: NextPage<
 
   return (
     <MainLayout>
-      <article className="mx-11">
+      <article className="mx-11 max-w-4xl flex-grow">
         <h1 className="mb-6 mt-8 font-bold text-primary text-r-5xl">
           {data?.title}
         </h1>
         <MDX {...description} />
       </article>
-      {/* {!data ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <p>{data.title}</p>
-          <p>{formatDate(data.createdAt)}</p>
-          <p>{data.description}</p>
-          <p>ID: {data.id}</p>
-          <p>State: {data.state}</p>
-          <div className="flex flex-row gap-x-4">
-            <Button
-              variant={{ size: "small" }}
-              disabled={
-                data.state === "PROPOSAL" || isUpdatingState || isRefetching
-              }
-              onClick={() => changeState(-1)}
-            >
-              Prev State
-            </Button>
-            <Button
-              variant={{ size: "small" }}
-              disabled={
-                data.state === "COMPLETE" || isUpdatingState || isRefetching
-              }
-              onClick={() => changeState(1)}
-            >
-              Next State
-            </Button>
-          </div>
-        </>
-      )} */}
+      {/* Right side panel */}
     </MainLayout>
   );
 };
@@ -129,56 +99,12 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const projectId = Array.isArray(ctx.params.projectId)
     ? ctx.params.projectId.join("")
     : ctx.params.projectId;
-  // const project = await ssg.projects.getProjectById.fetch({ projectId });
-  // const projectDescription = project?.description ?? "";
-  // const mdxSource = await serialize(projectDescription);
 
-  const mdxSource = await serialize(
-    `
-# Heading 1
-
-## Heading 2
-
-### Heading 3
-
-#### Heading 4
-
-##### Heading 5
-
-###### Heading 6
-
-Paragraph text.
-
-[Link](#)
-
-> Blockquote text
-
-Some \`inline code\` example.
-
----
-
-![Image](#)
-
-- List item 1
-- List item 2
-- List item 3
-
-1. Ordered item 1
-2. Ordered item 2
-3. Ordered item 3
-
-\`\`\`javascript
-function greet() {
-  console.log("Hello, world!");
-}
-\`\`\`
-
-*Emphasized* text.
-
-**Strong** text.
-      `,
-    { mdxOptions: { rehypePlugins: [rehypeHighlight] } }
-  );
+  const project = await ssg.projects.getProjectById.fetch({ projectId });
+  const projectDescription = project?.description ?? "";
+  const mdxSource = await serialize(projectDescription, {
+    mdxOptions: { rehypePlugins: [rehypeHighlight] },
+  });
 
   return { props: { projectId, description: mdxSource } };
 };

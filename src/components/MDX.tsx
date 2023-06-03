@@ -28,7 +28,7 @@ const components = {
   ),
   blockquote: (props: Tag<HTMLQuoteElement>) => (
     <blockquote
-      className="rounded border-l-4 border-fg-700 pl-4 italic"
+      className="my-4 rounded border-l-4 border-fg-700 pl-4 italic"
       {...props}
     />
   ),
@@ -41,17 +41,17 @@ const components = {
     <hr className="my-4 rounded border-2 border-fg-700" {...props} />
   ),
   img: (props: Tag<HTMLImageElement>) => (
-    <img className="max-w-full" {...props} />
+    <img className="my-4 max-w-full rounded" {...props} />
   ),
   li: (props: Tag<HTMLLIElement>) => <li className="ml-4" {...props} />,
   ol: (props: Tag<HTMLOListElement>) => (
-    <ol className="ml-4 list-decimal" {...props} />
+    <ol className="my-2 ml-4 list-decimal" {...props} />
   ),
   ul: (props: Tag<HTMLUListElement>) => (
-    <ul className="ml-4 list-disc" {...props} />
+    <ul className="my-2 ml-4 list-disc" {...props} />
   ),
   pre: (props: Tag<HTMLPreElement>) => (
-    <pre className="overflow-auto rounded" {...props} />
+    <pre className="my-4 overflow-auto rounded" {...props} />
   ),
   strong: (props: HTMLTag) => <strong className="font-bold" {...props} />,
 };

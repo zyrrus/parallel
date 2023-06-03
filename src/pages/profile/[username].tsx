@@ -22,12 +22,20 @@ const Profile: NextPage<
         <p>{data?.bio}</p>
       </div>
       <Divider className="my-11" />
-      <h3 className="mx-11 font-bold text-r-3xl">My Projects</h3>
-      <ProjectCardList projects={data?.authoredProjects} />
-      <h3 className="mx-11 font-bold text-r-3xl">
+      <h2 className="mx-11 font-bold text-r-4xl">My Projects</h2>
+      {data && data.authoredProjects.length > 0 ? (
+        <ProjectCardList projects={data?.authoredProjects} />
+      ) : (
+        <p className="mx-11">There are no projects here yet.</p>
+      )}
+      <h2 className="mx-11 font-bold text-r-4xl">
         Projects I{"'"}ve Worked On
-      </h3>
-      <ProjectCardList projects={data?.projects} />
+      </h2>
+      {data && data.projects.length > 0 ? (
+        <ProjectCardList projects={data?.projects} />
+      ) : (
+        <p className="mx-11">There are no projects here yet.</p>
+      )}
     </MainLayout>
   );
 };
