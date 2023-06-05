@@ -14,6 +14,8 @@ import { appRouter } from "@server/api/root";
 import { getServerAuthSession } from "@server/auth";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { MDX } from "@components/MDX";
+import Image from "next/image";
+import { FiEdit3 } from "react-icons/fi";
 
 const StateOrder: ProjectLifecycle[] = Object.values(ProjectLifecycle);
 
@@ -57,12 +59,23 @@ const SpecificProject: NextPage<
 
   return (
     <MainLayout>
-      <article className="mx-11 max-w-4xl flex-grow">
-        <h1 className="mb-6 mt-8 font-bold text-primary text-r-5xl">
-          {data?.title}
-        </h1>
-        <MDX {...description} />
-      </article>
+      <div className="max-w-4xl">
+        <BannerImage
+          bannerImageUrl={
+            data?.bannerImageUrl ??
+            `https://picsum.photos/seed/${data?.id ?? "A"}/800/200.webp`
+          }
+        />
+        <article className="mx-11 mt-8 flex-grow">
+          <div className="flex flex-row items-start justify-between">
+            <h1 className="font-bold text-primary text-r-5xl">{data?.title}</h1>
+            <button className="rounded-full p-3 hover:bg-bg-300/30">
+              <FiEdit3 size={24} className="font-bold" />
+            </button>
+          </div>
+          <MDX {...description} />
+        </article>
+      </div>
       {/* Right side panel */}
     </MainLayout>
   );
@@ -107,4 +120,24 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   });
 
   return { props: { projectId, description: mdxSource } };
+};
+
+const BannerImage: React.FC<{ bannerImageUrl: string }> = ({
+  bannerImageUrl,
+}) => {
+  // TODO: On hover, show edit button + popup for a new image picker
+  return (
+    <button className="relative h-44 w-full shadow hover:opacity-80">
+      <Image
+        src={bannerImageUrl}
+        alt="project banner"
+        className="object-cover"
+        fill
+      />
+    </button>
+  );
+};
+
+const ProjectDetails: React.FC<{ title: string }> = ({ title }) => {
+  return <></>;
 };

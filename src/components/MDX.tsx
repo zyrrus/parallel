@@ -10,7 +10,7 @@ type Tag<T> = JSX.IntrinsicAttributes & ClassAttributes<T> & HTMLAttributes<T>;
 type HTMLTag = Tag<HTMLElement>;
 type HTag = Tag<HTMLHeadingElement>;
 
-const components = {
+export const components = {
   h1: (props: HTag) => <h1 className="font-bold text-r-5xl" {...props} />,
   h2: (props: HTag) => <h2 className="font-bold text-r-4xl" {...props} />,
   h3: (props: HTag) => <h3 className="font-bold text-r-3xl" {...props} />,

@@ -59,7 +59,7 @@ const About: React.FC = () => {
         About Parallel
       </h2>
       <p className="mx-auto mb-24 max-w-6xl text-center text-r-lg">
-        Parallel{"'"}s mission is to address the disparity between the number of
+        Parallel's mission is to address the disparity between the number of
         educators who can produce high-quality educational content and the
         number of content creators who have the expertise to tackle complex
         subject matter. We connect content creators with educators, enabling

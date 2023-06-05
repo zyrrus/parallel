@@ -28,9 +28,7 @@ const Profile: NextPage<
       ) : (
         <p className="mx-11">There are no projects here yet.</p>
       )}
-      <h2 className="mx-11 font-bold text-r-4xl">
-        Projects I{"'"}ve Worked On
-      </h2>
+      <h2 className="mx-11 font-bold text-r-4xl">Projects I've Worked On</h2>
       {data && data.projects.length > 0 ? (
         <ProjectCardList projects={data?.projects} />
       ) : (

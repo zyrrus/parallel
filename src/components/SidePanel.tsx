@@ -42,7 +42,7 @@ export const SidePanel: React.FC = () => {
             </h1>
             <nav className="my-8 flex flex-col gap-y-5">
               {navItems.map(({ label, route, Icon }) => (
-                <Link key={label} href={route} className={links({})}>
+                <Link key={label} href={route} className={links()}>
                   <Icon size={28} /> {label}
                 </Link>
               ))}
