@@ -145,7 +145,7 @@ const ProjectLifecycleIndicator: React.FC<{ state: ProjectLifecycle }> = ({
           <Tooltip.Content
             side="right"
             sideOffset={4}
-            className="animate-slideRightAndFade rounded border-4 border-fg bg-quaternary-600 px-3 py-2 text-r-lg"
+            className="animate-slideRightAndFade rounded-md bg-bg-700 p-3 px-3 py-2 text-r-lg"
           >
             {lifecycleTooltips[state]}
             {/* <Tooltip.Arrow className="fill-fg" /> */}

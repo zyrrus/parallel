@@ -77,6 +77,7 @@ export const projectsRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.prisma.project.findUnique({
         where: { id: input.projectId },
+        include: { author: true, members: true, previews: true },
       });
     }),
   createProposal: protectedProcedure
