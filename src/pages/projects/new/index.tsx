@@ -88,7 +88,7 @@ const CreateNewProposal: NextPage = () => {
               error={formState.errors.description?.message}
               {...register("description")}
             />
-            {/* <ImageInput label="Image" /> */}
+            {/* <ImageInputp label="Image" /> */}
           </div>
           <div className="flex flex-row justify-end">
             <Button

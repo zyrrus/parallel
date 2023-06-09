@@ -18,19 +18,16 @@ import superjson from "superjson";
 import { appRouter } from "@server/api/root";
 import { getServerAuthSession } from "@server/auth";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import { MDX } from "@components/MDX";
-import Image from "next/image";
-import { FiEdit3 } from "react-icons/fi";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import React, { useState } from "react";
-import * as Avatar from "@radix-ui/react-avatar";
-
-enum PageMode {
-  visitor,
-  member,
-  editor,
-  preview,
-}
+import React, { useEffect, useMemo, useState } from "react";
+import { ProfilePicture } from "@components/ProfilePicture";
+import {
+  EditorDisplay,
+  MemberDisplay,
+  PreviewDisplay,
+  VisitorDisplay,
+} from "@components/projects/Displays";
+import { useSession } from "next-auth/react";
+import { ProjectPageMode } from "@utils/types/projects";
 
 type FetchedProjectAsProps = {
   project:
@@ -43,14 +40,25 @@ type FetchedProjectAsProps = {
     | undefined;
 };
 
+const componentsByMode = {
+  // dont show edit button
+  [ProjectPageMode.visitor]: VisitorDisplay,
+  // show edit button
+  [ProjectPageMode.member]: MemberDisplay,
+  // show cancel + save buttons + editable fields
+  [ProjectPageMode.editor]: EditorDisplay,
+  // show visitor and replace edit button with back/end preview button
+  [ProjectPageMode.preview]: PreviewDisplay,
+};
+
 const StateOrder: ProjectLifecycle[] = Object.values(ProjectLifecycle);
 
 const SpecificProject: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ projectId, description }) => {
-  const [mode, setMode] = useState(PageMode.visitor);
+  const [mode, setMode] = useState(ProjectPageMode.visitor);
 
-  const ctx = api.useContext();
+  const session = useSession();
 
   const { data, isRefetching } = api.projects.getProjectById.useQuery(
     {
@@ -61,6 +69,16 @@ const SpecificProject: NextPage<
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    setMode(
+      session.status === "authenticated"
+        ? ProjectPageMode.member
+        : ProjectPageMode.visitor
+    );
+  }, [session.status]);
+
+  //   const ctx = api.useContext();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   //   const { mutate, isLoading: isUpdatingState } =
   //     api.projects.updateState.useMutation({
@@ -85,30 +103,16 @@ const SpecificProject: NextPage<
   //     }
   //   };
 
-  //   TODO: Make edit mode do something
-  const componentsByMode = {
-    [PageMode.visitor]: (
-      <DisplayProject project={data} description={description} />
-    ),
-    [PageMode.member]: (
-      <DisplayProject project={data} description={description} />
-    ),
-    [PageMode.editor]: (
-      <DisplayProject project={data} description={description} />
-    ),
-    [PageMode.preview]: (
-      <DisplayProject project={data} description={description} />
-    ),
-  };
+  const Display = useMemo(() => componentsByMode[mode], [mode]);
 
   return (
     <MainLayout>
       <div className="flex flex-row justify-between">
-        <DisplayProject project={data} description={description} />
+        <Display project={data} description={description} setMode={setMode} />
         {/* Right side panel */}
         <div className="sticky top-0 flex h-screen w-96 flex-row">
           <div className="w-1.5 border-x-2 border-x-fg/10" />
-          <aside className="flex w-full flex-col gap-y-4 overflow-x-hidden px-11 py-8">
+          <aside className="flex w-full flex-col gap-y-4 overflow-x-hidden px-5 py-8">
             <div>
               <h2 className="mb-2 font-bold text-primary text-r-4xl">
                 Contributors
@@ -117,10 +121,15 @@ const SpecificProject: NextPage<
                 {/* TODO: Handle overflow */}
                 <ProfilePicture
                   name={data?.author.name}
+                  username={data?.author.username}
                   image={data?.author.image}
                 />
                 {data?.members.map((member) => (
-                  <ProfilePicture name={member.name} image={member.image} />
+                  <ProfilePicture
+                    name={member.name}
+                    username={member.username}
+                    image={member.image}
+                  />
                 ))}
               </div>
             </div>
@@ -184,29 +193,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   return { props: { projectId, description: mdxSource } };
 };
 
-interface ProfilePictureProps {
-  name: string | undefined | null;
-  image: string | undefined | null;
-}
-
-const ProfilePicture: React.FC<ProfilePictureProps> = ({ name, image }) => {
-  return (
-    <Avatar.Root className="flex min-w-max select-none items-center justify-center overflow-hidden rounded-full bg-quaternary p-2 align-middle shadow-solid-medium">
-      <Avatar.Image
-        className="h-10 w-10 rounded-[inherit] object-cover"
-        src={image ?? undefined}
-        alt={name ?? "User avatar"}
-      />
-      <Avatar.Fallback
-        className="leading-1 flex h-10 w-10 items-center justify-center rounded-[inherit] bg-tertiary font-medium"
-        delayMs={600}
-      >
-        {name?.charAt(0)}
-      </Avatar.Fallback>
-    </Avatar.Root>
-  );
-};
-
 interface ProjectProgressProps {
   progress: ProjectLifecycle | undefined | null;
 }
@@ -227,45 +213,6 @@ const ProjectProgress: React.FC<ProjectProgressProps> = ({ progress }) => {
           </div>
         );
       })}
-    </div>
-  );
-};
-
-interface DisplayProjectProps extends FetchedProjectAsProps {
-  description: MDXRemoteSerializeResult<
-    Record<string, unknown>,
-    Record<string, unknown>
-  >;
-}
-
-const DisplayProject: React.FC<DisplayProjectProps> = ({
-  project,
-  description,
-}) => {
-  return (
-    <div className="flex-1">
-      <div className="relative h-44 w-full shadow">
-        <Image
-          src={
-            project?.bannerImageUrl ??
-            `https://picsum.photos/seed/${project?.id ?? "A"}/800/200.webp`
-          }
-          alt="project banner"
-          className="object-cover"
-          fill
-        />
-      </div>
-      <article className="mx-5 mt-8">
-        <div className="flex flex-row items-start justify-between">
-          <h1 className="font-bold text-primary text-r-5xl">
-            {project?.title}
-          </h1>
-          <button className="-mr-3 mt-1 rounded-full p-3 hover:bg-bg-300/30">
-            <FiEdit3 className="font-bold text-r-4xl" />
-          </button>
-        </div>
-        <MDX {...description} />
-      </article>
     </div>
   );
 };
