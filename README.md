@@ -1,5 +1,7 @@
 # Parallel
 
+[![View it live](https://img.shields.io/badge/Live-parallel.zyrrus.dev-DEB887)](https://parallel.zyrrus.dev/)
+
 A platform where educators and content creators can meet up and create videos together.
 
 Built with [`create-t3-app`](https://create.t3.gg/).
