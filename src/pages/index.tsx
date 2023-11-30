@@ -13,10 +13,9 @@ const Home: NextPage = () => {
       <Hero />
       <SpacedDivider />
       <About />
+      {/* <SpacedDivider />
+      <Premium /> */}
       <SpacedDivider />
-      <Premium />
-      <SpacedDivider />
-      <CTA />
     </HomeLayout>
   );
 };
@@ -123,21 +122,6 @@ const Premium: React.FC = () => {
       >
         Learn more about Premium
       </a>
-    </section>
-  );
-};
-
-const CTA: React.FC = () => {
-  return (
-    <section>
-      <Button
-        onClick={() =>
-          void signIn(undefined, { callbackUrl: "/projects", redirect: false })
-        }
-        className="mx-auto block"
-      >
-        Sign Up Now
-      </Button>
     </section>
   );
 };

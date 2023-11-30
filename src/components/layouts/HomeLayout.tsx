@@ -56,18 +56,18 @@ const Header: React.FC = () => {
     >
       <Background />
       <nav className="container flex flex-row items-center justify-between gap-x-4">
-        <a href="#" className="text-r-2xl min-w-max font-bold text-primary">
+        <a href="#" className="min-w-max font-bold text-primary text-r-2xl">
           <span className="text-fg">||</span> Parallel
         </a>
-        <div className="flex flex-row items-center gap-x-4 sm:gap-x-8">
-          <a href="#" className="text-r-lg font-medium">
-            About Us
+        {/*<div className="flex flex-row items-center gap-x-4 sm:gap-x-8">
+          <a href="#" className="font-medium text-r-lg">
+            About
           </a>
-          <FlexDivider />
-          <a href="#" className="text-r-lg font-medium">
+           <FlexDivider />
+          <a href="#" className="font-medium text-r-lg">
             Premium
-          </a>
-        </div>
+          </a> 
+        </div>*/}
         <CTAButton />
       </nav>
     </header>
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
 };
 
 const FlexDivider: React.FC = () => (
-  <span className="text-r-2xl text-fg/25">||</span>
+  <span className="text-fg/25 text-r-2xl">||</span>
 );
 
 const Background: React.FC = () => (
@@ -125,11 +125,55 @@ const CTAButton: React.FC = () => {
 // === Footer =================================================================
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="container flex flex-row justify-center py-32">
-      {/* <nav> */}
-      <h2 className="text-r-4xl font-bold">Footer goes here!</h2>
-      {/* </nav> */}
+    <footer className="mx-auto max-w-xl px-6 pt-4">
+      <div className="grid items-center gap-y-8 md:grid-cols-2 ">
+        <a
+          href="#"
+          className="-ml-[0.8em] min-w-max font-bold text-primary text-r-4xl"
+        >
+          <span className="text-fg">||</span> Parallel
+        </a>
+
+        <div className="hidden md:block" />
+
+        <div>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://zyrrus.dev"
+            className="hover:opacity- block"
+          >
+            Created by Zyrrus
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/zyrrus/parallel"
+            className="hover:opacity- block"
+          >
+            Check it out on GitHub
+          </a>
+        </div>
+        <Button
+          onClick={() =>
+            void signIn(undefined, {
+              callbackUrl: "/projects",
+              redirect: false,
+            })
+          }
+          variant={{ size: "small" }}
+          className="md:ml-auto"
+        >
+          Sign Up Now
+        </Button>
+      </div>
+
+      <p className="col-span-2 mb-8 mt-28 text-center text-r-base">
+        Copyright © {year} Parallel
+      </p>
     </footer>
   );
 };

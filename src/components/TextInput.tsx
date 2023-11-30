@@ -1,3 +1,4 @@
+import { cn } from "@utils/cn";
 import type { TextInputProps, MultilineInputProps } from "@utils/types/props";
 import { cva } from "class-variance-authority";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
@@ -66,6 +67,7 @@ export const MultilineTextInput = React.forwardRef<
       optional = false,
       error,
       hasAdaptiveHeight = false,
+      className,
       ...rest
     },
     ref
@@ -74,23 +76,23 @@ export const MultilineTextInput = React.forwardRef<
     useImperativeHandle(ref, () => innerRef.current as HTMLTextAreaElement);
 
     // Handle adaptive height
-    useEffect(() => {
-      const r = innerRef.current;
+    // useEffect(() => {
+    //   const r = innerRef.current;
 
-      function updateHeight() {
-        if (!r) return;
-        const scrollHeight = r.scrollHeight;
-        r.style.height = `${scrollHeight}px`;
-      }
+    //   function updateHeight() {
+    //     if (!r) return;
+    //     const scrollHeight = r.scrollHeight;
+    //     r.style.height = `${scrollHeight}px`;
+    //   }
 
-      if (hasAdaptiveHeight) {
-        r?.addEventListener("input", updateHeight);
-      }
+    //   if (hasAdaptiveHeight) {
+    //     r?.addEventListener("input", updateHeight);
+    //   }
 
-      return () => {
-        r?.removeEventListener("input", updateHeight);
-      };
-    }, [innerRef.current?.scrollHeight, hasAdaptiveHeight]);
+    //   return () => {
+    //     r?.removeEventListener("input", updateHeight);
+    //   };
+    // }, [innerRef.current?.scrollHeight, hasAdaptiveHeight]);
 
     return (
       <fieldset className="w-full">
@@ -104,7 +106,10 @@ export const MultilineTextInput = React.forwardRef<
         >
           <textarea
             placeholder={placeholder}
-            className="max-h-64 min-h-[150px] w-full appearance-none overflow-y-hidden border-none bg-transparent text-fg placeholder-fg/50 outline-none transition-all"
+            className={cn(
+              "min-h-[150px] w-full appearance-none overflow-y-hidden border-none bg-transparent text-fg placeholder-fg/50 outline-none transition-all",
+              className
+            )}
             ref={innerRef}
             {...rest}
           />

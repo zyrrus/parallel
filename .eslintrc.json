@@ -18,6 +18,6 @@
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "warn",
-    "react/no-unescaped-entities": "no"
+    "react/no-unescaped-entities": "off"
   }
 }

@@ -91,6 +91,18 @@ export const projectsRouter = createTRPCRouter({
 
       return proposal;
     }),
+  editProject: protectedProcedure
+    .input(proposalSchema.extend({ projectId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { title, description, projectId } = input;
+      await ctx.prisma.project.update({
+        where: { id: projectId },
+        data: {
+          title,
+          description,
+        },
+      });
+    }),
   updateState: protectedProcedure
     .input(
       z.object({

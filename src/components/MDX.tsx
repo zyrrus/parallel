@@ -11,12 +11,12 @@ type HTMLTag = Tag<HTMLElement>;
 type HTag = Tag<HTMLHeadingElement>;
 
 export const components = {
-  h1: (props: HTag) => <h1 className="font-bold text-r-5xl" {...props} />,
-  h2: (props: HTag) => <h2 className="font-bold text-r-4xl" {...props} />,
-  h3: (props: HTag) => <h3 className="font-bold text-r-3xl" {...props} />,
-  h4: (props: HTag) => <h4 className="font-bold text-r-2xl" {...props} />,
-  h5: (props: HTag) => <h5 className="font-bold text-r-xl" {...props} />,
-  h6: (props: HTag) => <h1 className="font-bold text-r-lg" {...props} />,
+  h1: (props: HTag) => <h1 className="font-bold text-r-4xl" {...props} />,
+  h2: (props: HTag) => <h2 className="font-bold text-r-3xl" {...props} />,
+  h3: (props: HTag) => <h3 className="font-bold text-r-2xl" {...props} />,
+  h4: (props: HTag) => <h4 className="font-bold text-r-xl" {...props} />,
+  h5: (props: HTag) => <h5 className="font-bold text-r-lg" {...props} />,
+  h6: (props: HTag) => <h1 className="font-bold text-r-base" {...props} />,
   p: (props: Tag<HTMLParagraphElement>) => (
     <p className="text-r-lg" {...props} />
   ),

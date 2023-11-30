@@ -1,10 +1,6 @@
 import { MainLayout } from "@components/layouts";
-import {
-  Project,
-  ProjectLifecycle,
-  ProjectPreview,
-  User,
-} from "@prisma/client";
+import type { Project, ProjectPreview, User } from "@prisma/client";
+import { ProjectLifecycle } from "@prisma/client";
 import { api } from "@utils/api";
 import type {
   GetServerSidePropsContext,
@@ -55,7 +51,7 @@ const StateOrder: ProjectLifecycle[] = Object.values(ProjectLifecycle);
 
 const SpecificProject: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ projectId, description }) => {
+> = ({ projectId, description, descriptionAsString }) => {
   const [mode, setMode] = useState(ProjectPageMode.visitor);
 
   const session = useSession();
@@ -108,7 +104,12 @@ const SpecificProject: NextPage<
   return (
     <MainLayout>
       <div className="flex flex-row justify-between">
-        <Display project={data} description={description} setMode={setMode} />
+        <Display
+          project={data}
+          description={description}
+          descriptionAsString={descriptionAsString}
+          setMode={setMode}
+        />
         {/* Right side panel */}
         <div className="sticky top-0 flex h-screen w-96 flex-row">
           <div className="w-1.5 border-x-2 border-x-fg/10" />
@@ -120,12 +121,13 @@ const SpecificProject: NextPage<
               <div className="flex flex-row gap-x-4">
                 {/* TODO: Handle overflow */}
                 <ProfilePicture
-                  name={data?.author.name}
-                  username={data?.author.username}
-                  image={data?.author.image}
+                  name={data?.author?.name}
+                  username={data?.author?.username}
+                  image={data?.author?.image}
                 />
                 {data?.members.map((member) => (
                   <ProfilePicture
+                    key={member.id}
                     name={member.name}
                     username={member.username}
                     image={member.image}
@@ -190,7 +192,13 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     mdxOptions: { rehypePlugins: [rehypeHighlight] },
   });
 
-  return { props: { projectId, description: mdxSource } };
+  return {
+    props: {
+      projectId,
+      description: mdxSource,
+      descriptionAsString: projectDescription,
+    },
+  };
 };
 
 interface ProjectProgressProps {
